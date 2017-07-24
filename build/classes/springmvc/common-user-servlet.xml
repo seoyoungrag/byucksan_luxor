@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="userController" name="/user/*.do" class="com.sds.acube.luxor.common.controller.UserController">
+        <property name="orgProvider4WS" ref="wsClientOrgProviderService" />
+		<property name="userService" ref="userService" />
+        <property name="orgService" ref="orgService" />
+        <property name="portalMenuService" ref="portalMenuService" />
+        <property name="userSettingService" ref="userSettingService" />
+        <property name="portalPageThemeService" ref="portalPageThemeService" />
+        <property name="portalPageZoneService" ref="portalPageZoneService" />
+        <property name="portalPageLayoutService" ref="portalPageLayoutService" />
+		<property name="methodNameResolver" ref="userControllerResolver" />
+        <property name="userView" value="/luxor/common/user/userInfo.jsp" />
+        <property name="userOne" value="/luxor/common/user/userListOne.jsp" />
+        <property name="userList" value="/luxor/common/user/userList.jsp" />
+        <property name="treeView" value="/luxor/common/user/userMng.jsp" />
+        <property name="userTree" value="/luxor/common/user/acl/userTree.jsp" />
+        <property name="aclUser" value="/luxor/common/user/acl/aclUserInfo.jsp" />
+        <property name="virtualGroupList" value="/luxor/common/user/acl/virtualGroupList.jsp" />
+        <property name="roleList" value="/luxor/common/user/acl/roleList.jsp" />
+        <property name="aclGroupList" value="/luxor/common/user/acl/aclGroupList.jsp" />
+        <property name="changeUserInformationView" value="/luxor/common/user/changeUserInformation.jsp" />
+        <property name="changePasswordView" value="/luxor/common/user/changePassword.jsp" />
+        <property name="setTimezoneView" value="/luxor/common/user/setTimezone.jsp" />
+        <property name="setThemeView" value="/luxor/common/user/setTheme.jsp" />
+        <property name="setHomeView" value="/luxor/common/user/setHome.jsp" />
+	</bean>
+
+	<bean id="userControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/user/getUser.do">getUser</prop>
+                <prop key="/user/getOneUser.do">getOneUser</prop>
+                <prop key="/user/getUserList.do">getUserList</prop>
+                <prop key="/user/userMng.do">userMng</prop>
+                <prop key="/user/getUserTree.do">getUserTree</prop>
+                <prop key="/user/getAclUser.do">getAclUser</prop>
+                <prop key="/user/getVirtualGroupList.do">getVirtualGroupList</prop>
+                <prop key="/user/getRoleList.do">getRoleList</prop>
+                <prop key="/user/getAclGroupList.do">getAclGroupList</prop>
+                <prop key="/user/getChangeUserInformationView.do">getChangeUserInformationView</prop>
+                <prop key="/user/getChangePasswordView.do">getChangePasswordView</prop>
+                <prop key="/user/setTimezoneView.do">setTimezoneView</prop>
+                <prop key="/user/setThemeView.do">setThemeView</prop>
+                <prop key="/user/setHomeView.do">setHomeView</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

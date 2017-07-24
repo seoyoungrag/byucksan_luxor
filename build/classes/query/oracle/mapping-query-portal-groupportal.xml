@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.insert">
+			<statement>
+			<![CDATA[
+				insert into tlxr_portal_group (
+                        tenant_id, 
+                        portal_id,
+                        portal_name,
+                        parent_id,                
+                        related_compid, 
+                        related_compname,                         
+                        related_portalinfo,                         
+                        default_flag,
+                        last_update_date,
+                        child_portal
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.portalName,
+                        :vo.parentId,
+                        :vo.relatedCompid,
+                        :vo.relatedCompname,                        
+                        :vo.relatedPortalinfo,
+                        :vo.defaultFlag,
+                        :vo.regDate,
+                        :vo.childPortal
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.update">
+			<statement>
+			<![CDATA[
+				 update tlxr_portal_group set 
+                        portal_name = :vo.portalName,
+                        related_compid = :vo.relatedCompid, 
+                        related_compname = :vo.relatedCompname,                       
+                        related_portalinfo = :vo.relatedPortalinfo,                         
+                        last_update_date = :vo.regDate,
+                        parent_id = :vo.parentId
+                  where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+			]]>
+			</statement>
+		</query>
+		
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.updateChildPortal">
+			<statement>
+			<![CDATA[
+				 update tlxr_portal_group set 
+                        child_portal = :vo.childPortal
+                  where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+			]]>
+			</statement>
+		</query>
+
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.setDefault">
+			<statement>
+			<![CDATA[
+				 update tlxr_portal_group set 
+                        default_flag = 1,
+                        last_update_date = :vo.regDate 
+                  where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+			]]>
+			</statement>
+		</query>
+		
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.unsetDefault">
+			<statement>
+			<![CDATA[
+				 update tlxr_portal_group set 
+                        default_flag = 0,
+                        last_update_date = :vo.regDate 
+                  where tenant_id = :vo.tenantId
+                    and default_flag = 1
+			]]>
+			</statement>
+		</query>
+		
+        <query id="com.sds.acube.luxor.common.admin.portalgroup.delete">
+            <statement>
+            <![CDATA[
+                delete from tlxr_portal_group 
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.admin.portalgroup.get">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portal_group 
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.GroupPortalVO"/>
+        </query>
+        
+        <query id="com.sds.acube.luxor.common.admin.portalgroup.getDefault">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portal_group 
+                 where tenant_id = :vo.tenantId
+                   and default_flag = 1
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.GroupPortalVO"/>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.common.admin.portalgroup.getList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portal_group
+                 where tenant_id = :vo.tenantId
+                 order by last_update_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.GroupPortalVO"/>
+        </query>
+
+        <!-- ########### 포탈복사 Insert Query - START ########### -->
+        <query id="insert_tlxr_message">
+            <statement>
+            <![CDATA[
+            insert into tlxr_message
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   message_id, message_name, message_type, lang_type 
+              from tlxr_message 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_admin_menu">
+            <statement>
+            <![CDATA[
+            insert into tlxr_admin_menu
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   parent_id, menu_id, menu_name_id, menu_url, reg_date, mod_date, 
+                   reg_user_id, mod_user_id, seq, is_active, is_home 
+              from tlxr_admin_menu 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_page">
+            <statement>
+            <![CDATA[
+            insert into tlxr_page
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   page_id, page_layout_id, page_theme_id, page_desc, reg_date, mod_date, reg_user_id, mod_user_id, seq, is_home, is_personal, is_active, is_template 
+              from tlxr_page 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_page_layout">
+            <statement>
+            <![CDATA[
+            insert into tlxr_page_layout
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   concat(layout_id, :vo.portalId), layout_name_id, layout_css, reg_date, mod_date, reg_user_id, mod_user_id, is_default 
+              from tlxr_page_layout 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_page_theme">
+            <statement>
+            <![CDATA[
+            insert into tlxr_page_theme
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   concat(theme_id, :vo.portalId), theme_name_id, theme_css_url, theme_image_url, reg_date, mod_date, 
+                   reg_user_id, mod_user_id, is_default 
+              from tlxr_page_theme 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_portlet_category">
+            <statement>
+            <![CDATA[
+            insert into tlxr_portlet_category
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   concat(category_id, :vo.portalId), category_name, last_update_date 
+              from tlxr_portlet_category 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_portlet_context">
+            <statement>
+            <![CDATA[
+            insert into tlxr_portlet_context
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   context_name, type_of_portlet, concat(category_id, :vo.portalId), status_code, deploy_description_xml, 
+                   last_update_date, exception 
+              from tlxr_portlet_context 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_environment">
+            <statement>
+            <![CDATA[
+            insert into tlxr_environment
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   env_id, env_value, env_desc , env_value_set , reg_date
+              from tlxr_environment 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_tree">
+            <statement>
+            <![CDATA[
+            insert into tlxr_tree
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   tree_id, concat(node_id, :vo.portalId), node_name_id, parent_id, has_child, depth, seq, is_active, use_personal
+              from tlxr_tree 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insert_tlxr_content">
+            <statement>
+            <![CDATA[
+            insert into tlxr_content
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   concat(parent_id, :vo.portalId), concat(content_id, :vo.portalId), content_name_id, portlet_id, 
+                   content_style, content_desc, reg_date, mod_date, 
+                   reg_user_id, mod_user_id, seq, is_active, use_personal
+              from tlxr_content 
+             where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="insert_tlxr_login_plug">
+            <statement>
+            <![CDATA[
+            insert into tlxr_login_plug
+            select replace(tenant_id, :vo.oldTenantId, :vo.tenantId), replace(portal_id, :vo.oldPortalId, :vo.portalId), 
+                   plug_id, plug_title, plug_url, plug_type, start_date, end_date, reg_date, reg_user_id, is_active, is_external
+            from tlxr_login_plug 
+            where tenant_id=:vo.oldTenantId and portal_id=:vo.oldPortalId
+            ]]>
+            </statement>
+        </query>
+        <!-- ########### 포탈복사 Insert Query - END ########### -->
+
+        <query id="delete_tlxr_admin_menu">
+            <statement>
+            <![CDATA[
+            delete from tlxr_admin_menu
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_admin_user">
+            <statement>
+            <![CDATA[
+            delete from tlxr_admin_user
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_content">
+            <statement>
+            <![CDATA[
+            delete from tlxr_content
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_content_statistics">
+            <statement>
+            <![CDATA[
+            delete from tlxr_content_statistics
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_environment">
+            <statement>
+            <![CDATA[
+            delete from tlxr_environment
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_login_history">
+            <statement>
+            <![CDATA[
+            delete from tlxr_login_history
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_logoutsys">
+            <statement>
+            <![CDATA[
+            delete from tlxr_logoutsys
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_menu">
+            <statement>
+            <![CDATA[
+            delete from tlxr_menu
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_message">
+            <statement>
+            <![CDATA[
+            delete from tlxr_message
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_page">
+            <statement>
+            <![CDATA[
+            delete from tlxr_page
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_page_layout">
+            <statement>
+            <![CDATA[
+            delete from tlxr_page_layout
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_page_statistics">
+            <statement>
+            <![CDATA[
+            delete from tlxr_page_statistics
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_page_theme">
+            <statement>
+            <![CDATA[
+            delete from tlxr_page_theme
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_page_zone">
+            <statement>
+            <![CDATA[
+            delete from tlxr_page_zone
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_portlet_category">
+            <statement>
+            <![CDATA[
+            delete from tlxr_portlet_category
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_portlet_context">
+            <statement>
+            <![CDATA[
+            delete from tlxr_portlet_context
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="delete_tlxr_tree">
+            <statement>
+            <![CDATA[
+            delete from tlxr_tree
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="delete_tlxr_login_plug">
+            <statement>
+            <![CDATA[
+            delete from tlxr_login_plug
+             where tenant_id=:vo.tenantId and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+        
+		<query id="com.sds.acube.luxor.common.admin.portalgroup.getParentPortal">
+            <statement>
+            <![CDATA[
+                select *
+				from tlxr_portal_group 
+				where tenant_id = :vo.tenantId
+				    and portal_id = (select parent_id
+				from tlxr_portal_group 
+				where tenant_id = :vo.tenantId
+				    and portal_id = :vo.portalId)
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.GroupPortalVO"/>
+        </query>
+        
+        <query id="com.sds.acube.luxor.common.admin.portalgroup.checkDuplication">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portal_group 
+                 where tenant_id = :vo.tenantId
+                   and portal_id like '%' || :vo.portalId || '%' ESCAPE '_'  
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.GroupPortalVO"/>
+        </query>
+        
+	</queries>
+</queryservice>

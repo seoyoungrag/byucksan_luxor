@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90">
+
+	<context-root>ep</context-root>
+
+	<jsp-descriptor>
+		<page-check-seconds>1</page-check-seconds>
+		<verbose>true</verbose>
+		<keepgenerated>true</keepgenerated>
+	</jsp-descriptor>
+
+	<session-descriptor>
+		<cookie-name>JSESSIONID_LUXOR</cookie-name>
+	</session-descriptor>
+
+</weblogic-web-app>

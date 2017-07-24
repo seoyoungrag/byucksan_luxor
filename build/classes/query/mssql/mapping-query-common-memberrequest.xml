@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="getMemberRequestList">
+            <statement>
+            <![CDATA[
+                select a.*, b.dept_name as dept_name, b.comp_name as comp_name, b.grade_name as grade_name
+                from tlxr_member_request a, tlxr_member_request_key b
+                where a.tenant_id = b.tenant_id
+                and a.portal_id = b.portal_id
+                and a.request_key = b.request_key
+                and a.tenant_id = :vo.tenantId
+                and a.portal_id = :vo.portalId
+                #if ($vo.requestId && !$vo.requestId.equals(""))
+                    and a.request_id = :vo.requestId
+                #end
+                #if ($vo.loginId && !$vo.loginId.equals(""))
+                    and a.login_id = :vo.loginId
+                #end
+                #if ($vo.loginPassword && !$vo.loginPassword.equals(""))
+                    and a.login_password = :vo.loginPassword
+                #end
+                #if ($vo.requestStatus != -1)
+                    and a.request_status = :vo.requestStatus
+                #end
+                #if ($vo.userName && !$vo.userName.equals(""))
+                    and a.user_name = :vo.user_name
+                #end
+                #if ($vo.requestKey && !$vo.requestKey.equals(""))
+                    and a.request_key = :vo.requestKey
+                #end
+                order by a.request_status asc, a.reg_date asc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.MemberRequestVO"/>
+        </query>
+
+        <query id="getMemberRequest">
+            <statement>
+            <![CDATA[
+                select a.*, b.dept_name, b.comp_name, b.grade_name, b.dept_id, b.comp_id, b.grade_id
+                from tlxr_member_request a, tlxr_member_request_key b
+                where a.tenant_id = b.tenant_id
+                and a.portal_id = b.portal_id
+                and a.request_key = b.request_key
+                and a.tenant_id = :vo.tenantId
+                and a.portal_id = :vo.portalId
+                #if ($vo.requestId && !$vo.requestId.equals(""))
+                    and a.request_id = :vo.requestId
+                #end
+                #if ($vo.loginId && !$vo.loginId.equals(""))
+                    and a.login_id = :vo.loginId
+                #end
+                #if ($vo.loginPassword && !$vo.loginPassword.equals(""))
+                    and a.login_password = :vo.loginPassword
+                #end
+                #if ($vo.requestStatus != -1)
+                    and a.request_status = :vo.requestStatus
+                #end
+                #if ($vo.userName && !$vo.userName.equals(""))
+                    and a.user_name = :vo.user_name
+                #end
+                #if ($vo.requestKey && !$vo.requestKey.equals(""))
+                    and a.request_key = :vo.requestKey
+                #end
+                order by a.request_status asc, a.reg_date asc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.MemberRequestVO"/>
+        </query>
+        <query id="insertMemberRequest">
+            <statement>
+            <![CDATA[
+            insert into tlxr_member_request (
+                        request_id,
+                        tenant_id,
+                        portal_id,
+                        login_id,
+                        user_name,
+                        login_ip,
+                        login_password,
+                        reg_date,
+                        request_status,
+                        request_key
+                    )
+                    values (
+                        :vo.requestId,
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.loginId,
+                        :vo.userName,
+                        :vo.loginIp,
+                        :vo.loginPassword,
+                        :vo.regDate,
+                        :vo.requestStatus,
+                        :vo.requestKey
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMemberRequestStatus">
+            <statement>
+            <![CDATA[
+                update tlxr_member_request
+                set request_status = :vo.requestStatus
+                where tenant_id = :vo.tenantId
+                and portal_id = :vo.portalId
+                #if ($vo.requestId && !$vo.requestId.equals(""))
+                    and request_id = :vo.requestId
+                #end
+                #if ($vo.loginId && !$vo.loginId.equals(""))
+                    and login_id = :vo.loginId
+                #end
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMemberRequestKey">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_member_request_key
+                where tenant_id = :vo.tenantId
+                and is_deleted = 'N'
+                #if ($vo.requestKey)
+                    and request_key = :vo.requestKey
+                #end
+                #if ($vo.portalId)
+                    and portal_id = :vo.portalId
+                #end
+                order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.MemberRequestVO"/>
+        </query>
+
+        <query id="insertMemberRequestKey">
+            <statement>
+            <![CDATA[
+            insert into tlxr_member_request_key (
+                        tenant_id,
+                        portal_id,
+                        request_key,
+                        reg_date,
+                        comp_id,
+                        dept_id,
+                        grade_id,
+                        comp_name,
+                        dept_name,
+                        grade_name,
+                        use_count,
+                        count_limit
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.requestKey,
+                        :vo.regDate,
+                        :vo.compId,
+                        :vo.deptId,
+                        :vo.gradeId,
+                        :vo.compName,
+                        :vo.deptName,
+                        :vo.gradeName,
+                        0,
+                        :vo.countLimit
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMemberRequestKey">
+            <statement>
+            <![CDATA[
+                update tlxr_member_request_key
+                set
+                #if ($vo.compId && !$vo.compId.equals(""))
+                    comp_id = :vo.compId,
+                    comp_name = :vo.compName,
+                #end
+                #if ($vo.deptId && !$vo.deptId.equals(""))
+                    dept_id = :vo.deptId,
+                    dept_name = :vo.deptName,
+                #end
+                #if ($vo.gradeId && !$vo.gradeId.equals(""))
+                    grade_id = :vo.gradeId,
+                    grade_name = :vo.gradeName,
+                #end
+                #if ($vo.useCount && !$vo.useCount.equals(""))
+                    use_count = :vo.useCount,
+                #end
+                reg_date = :vo.regDate
+                where tenant_id = :vo.tenantId
+                and portal_id = :vo.portalId
+                and request_key = :vo.requestKey
+            ]]>
+            </statement>
+        </query>
+
+         <query id="deleteMemberRequestKey">
+            <statement>
+            <![CDATA[
+                update tlxr_member_request_key
+                set
+                #if ($vo.compId && !$vo.compId.equals(""))
+                    comp_id = :vo.compId,
+                    comp_name = :vo.compId,
+                #end
+                #if ($vo.deptId && !$vo.deptId.equals(""))
+                    dept_id = :vo.deptId,
+                    dept_name = :vo.deptName,
+                #end
+                #if ($vo.gradeId && !$vo.gradeId.equals(""))
+                    grade_id = :vo.compId,
+                    grade_name = :vo.gradeName,
+                #end
+                is_deleted = 'Y',
+                reg_date = :vo.regDate
+                where tenant_id = :vo.tenantId
+                and portal_id = :vo.portalId
+                #if ($vo.requestKey && !$vo.requestKey.equals(""))
+                    and request_key = :vo.requestKey
+                #end
+            ]]>
+            </statement>
+        </query>
+    </queries>
+</queryservice>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="insertPage">
+            <statement>
+            <![CDATA[
+                insert into tlxr_page (
+                        tenant_id,
+                        portal_id,
+                        page_id,
+                        page_layout_id,
+                        page_theme_id,
+                        page_desc,
+                        reg_date,
+                        reg_user_id,
+                        is_home,
+                        is_personal,
+                        is_active
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.pageId,
+                        :vo.pageLayoutId,
+                        :vo.pageThemeId,
+                        :vo.pageDesc,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.isHome,
+                        :vo.isPersonal,
+                        :vo.isActive
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updatePage">
+            <statement>
+            <![CDATA[
+                update tlxr_page set
+                    #if ($vo.pageLayoutId && !$vo.pageLayoutId.equals(""))
+                       page_layout_id=:vo.pageLayoutId,
+                    #end
+                    #if ($vo.pageThemeId && !$vo.pageThemeId.equals(""))
+                       page_theme_id=:vo.pageThemeId,
+                    #end
+                    #if ($vo.pageDesc && !$vo.pageDesc.equals(""))
+                       page_desc=:vo.pageDesc,
+                    #end
+                    #if ($vo.isHome && !$vo.isHome.equals(""))
+                       is_home=:vo.isHome,
+                    #end
+                    #if ($vo.isPersonal && !$vo.isPersonal.equals(""))
+                       is_personal=:vo.isPersonal,
+                    #end
+                    #if ($vo.isActive && !$vo.isActive.equals(""))
+                       is_active=:vo.isActive,
+                    #end
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="_setHome">
+            <statement>
+            <![CDATA[
+                update tlxr_page set is_home='N'
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and is_home=:vo.isHome
+            ]]>
+            </statement>
+        </query>
+
+        <query id="setHome">
+            <statement>
+            <![CDATA[
+                update tlxr_page set
+                    is_home=:vo.isHome,
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="setPersonalize">
+            <statement>
+            <![CDATA[
+                update tlxr_page set
+                    is_personal=:vo.isPersonal,
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="setTemplate">
+            <statement>
+            <![CDATA[
+                update tlxr_page set
+                    is_template=:vo.isTemplate,
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getHome">
+            <statement>
+            <![CDATA[
+                select *
+                  from tlxr_page
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and (is_home='Y' or is_home='L')
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageVO"/>
+        </query>
+
+         <query id="getPersonalPages">
+            <statement>
+            <![CDATA[
+                select *
+                  from tlxr_page
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and is_personal='Y'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageVO"/>
+        </query>
+
+        <query id="deletePage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="clearPersonalizedPage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and reg_user_id != 'ADMIN'
+            ]]>
+            </statement>
+        </query>
+
+        <query id="clearPersonalizedUserSetting">
+            <statement>
+            <![CDATA[
+                delete from tlxr_user_setting
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and setting_code like '%' + :vo.pageId + '%' ESCAPE '_'
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getPage">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name
+                  from tlxr_page a, tlxr_tree b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and b.tenant_id=c.tenant_id
+                   and b.portal_id=c.portal_id
+                   and a.page_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' + :vo.portalId + '%' ESCAPE '_' or portal_id = :vo.portalId)
+                   and c.lang_type=:vo.langType
+                   and a.page_id=:vo.pageId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageVO"/>
+        </query>
+
+        <query id="getTemplatePages">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name
+                  from tlxr_page a, tlxr_tree b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and b.tenant_id=c.tenant_id
+                   and b.portal_id=c.portal_id
+                   and a.page_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and c.lang_type=:vo.langType
+                   and a.is_template='Y'
+                 order by c.message_name
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageVO"/>
+        </query>
+
+        <!-- Deprecated -->
+        <query id="getPageList">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name, c.lang_type
+                  from tlxr_page a, tlxr_tree b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and b.node_id='PORTAL_PAGE'
+                   and a.page_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.parent_id=:vo.parentId
+                   and c.lang_type=:vo.langType
+                 order by a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageVO"/>
+        </query>
+
+        <query id="getTotalPageCount">
+            <statement>
+            <![CDATA[
+                select count(*) as cnt from tlxr_page
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id!='ALL'
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getGlobalServiceIds">
+            <statement>
+            <![CDATA[
+                select tenant_id,
+                       portal_id
+                  from tlxr_page
+                 where page_id = :vo.pageId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.CommonVO"/>
+        </query>
+    </queries>
+</queryservice>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="insertPageTheme">
+            <statement>
+            <![CDATA[
+                insert into tlxr_page_theme (
+                        tenant_id,
+                        portal_id,
+                        theme_id,
+                        theme_name_id,
+                        theme_css_url,
+                        theme_image_url,
+                        reg_date,
+                        reg_user_id,
+                        is_default
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.themeId,
+                        :vo.themeNameId,
+                        :vo.themeCssUrl,
+                        :vo.themeImageUrl,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.isDefault
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updatePageTheme">
+            <statement>
+            <![CDATA[
+                update tlxr_page_theme set
+                    #if ($vo.themeCssUrl && !$vo.themeCssUrl.equals(""))
+                       theme_css_url=:vo.themeCssUrl,
+                    #end
+                    #if ($vo.themeImageUrl && !$vo.themeImageUrl.equals(""))
+                       theme_Image_url=:vo.themeImageUrl,
+                    #end
+                    #if ($vo.isDefault && !$vo.isDefault.equals(""))
+                       is_default=:vo.isDefault,
+                    #end
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and theme_id=:vo.themeId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="resetDefaultPageTheme">
+            <statement>
+            <![CDATA[
+                update tlxr_page_theme set is_default='',
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and is_default='Y'
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deletePageTheme">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_theme
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and theme_id=:vo.themeId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getPageTheme">
+            <statement>
+            <![CDATA[
+                select * from tlxr_page_theme
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' + :vo.portalId + '%' ESCAPE '_' or portal_id = :vo.portalId)
+                 #if ($vo.themeId && !$vo.themeId.equals(""))
+                   and theme_id=:vo.themeId
+                 #else
+                   and is_default='Y'
+                 #end
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageThemeVO"/>
+        </query>
+
+        <query id="getPageThemeList">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type from tlxr_page_theme a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.theme_name_id=b.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and b.lang_type=:vo.langType
+                 order by a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageThemeVO"/>
+        </query>
+
+    </queries>
+</queryservice>

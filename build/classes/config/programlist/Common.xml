@@ -1,0 +1,17 @@
+﻿<?xml version='1.0'?>
+<module id="sample" description="조직 관리">
+  <service id="spring" description="SSO Manager">
+    <function id="SpringTest" type="class">
+      <class>com.sds.acube.common.sample.bl.sampleBL</class>
+      <method>springTest</method>
+      <description>테스트한다.</description>
+      <isuse>Y</isuse>
+    </function>
+    <function id="SpringTest" type="jsp">
+      <path>/jsp/sample</path>
+      <name>SpringSample.jsp</name>
+      <description>SSO Test</description>
+      <isuse>Y</isuse>
+    </function>
+  </service>
+</module>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="getLoginHistoryList">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_login_history
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    #if ($vo.fromDate && !$vo.fromDate.equals("") && $vo.toDate && !$vo.toDate.equals(""))
+                        and login_time between CONVERT( datetime, :vo.fromDate, 120 ) and CONVERT( datetime, :vo.toDate, 120 )
+                    #end
+                    #if ($vo.searchType.equals("loginId"))
+                        and upper(login_id) like upper('%$vo.searchTxt%') ESCAPE '_'
+                    #end
+                    #if ($vo.searchType.equals("userName"))
+                        and upper(user_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                    #end
+                    #if ($vo.searchType.equals("loginIp"))
+                        and login_ip like '%$vo.loginIp%' ESCAPE '_'
+                    #end
+                    #if ($vo.userStatus.equals("N"))
+                        and (logout_time = '' OR logout_time is NULL)
+                    #end
+                order by login_time desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.LoginHistoryVO"/>
+        </query>
+
+        <query id="deleteLoginHistoryAll">
+            <statement>
+            <![CDATA[
+                delete from tlxr_login_history
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    #if ($vo.fromDate && !$vo.fromDate.equals("") && $vo.toDate && !$vo.toDate.equals(""))
+                        and login_time between CONVERT( datetime, :vo.fromDate, 120 ) and CONVERT( datetime, :vo.toDate, 120 )
+                    #end
+                    #if ($vo.searchType.equals("loginId"))
+                        and upper(login_id) like upper('%$vo.searchTxt%') ESCAPE '_'
+                    #end
+                    #if ($vo.searchType.equals("userName"))
+                        and upper(user_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                    #end
+                    #if ($vo.searchType.equals("loginIp"))
+                        and login_ip like '%$vo.searchTxt%' ESCAPE '_'
+                    #end
+                    #if ($vo.userStatus.equals("N"))
+                        and (logout_time = '' OR logout_time is NULL)
+                    #end
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteLoginHistory">
+            <statement>
+            <![CDATA[
+                delete from tlxr_login_history
+                where statistics_id = :vo.statisticsId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getPageStatisticsList">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name
+                  from  tlxr_page_statistics a 
+                  left  outer join tlxr_tree b
+                    on  a.tenant_id = b.tenant_id and a.portal_id = b.portal_id and a.page_id = b.node_id
+                  left  outer join tlxr_message c
+                    on  b.tenant_id = c.tenant_id and b.portal_id = c.portal_id and b.node_name_id = c.message_id
+                 where  a.tenant_id = :vo.tenantId
+                   and  a.portal_id = :vo.portalId
+                   and (c.lang_type = :vo.langType or c.lang_type is null)
+                #if ($vo.fromDate && !$vo.fromDate.equals("") && $vo.toDate && !$vo.toDate.equals(""))
+                   and  a.access_time between CONVERT( datetime, :vo.fromDate, 120 ) and CONVERT( datetime, :vo.toDate, 120 )
+                #end
+                #if ($vo.searchType.equals("pageName"))
+                   and  upper(c.message_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("accessUserId"))
+                   and  upper(a.access_user_id) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("accessUserName"))
+                   and  upper(a.access_user_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("loginIp"))
+                   and  a.login_ip like '%$vo.searchTxt%' ESCAPE '_'
+                #end
+                 order  by a.access_time desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.PageStatisticsVO"/>
+        </query>
+
+        <query id="deletePageStatisticsAll">
+            <statement>
+            <![CDATA[
+                delete
+                from tlxr_page_statistics
+                where 1=1
+                  and tenant_id = :vo.tenantId
+                  and portal_id = :vo.portalId
+                #if ($vo.fromDate && !$vo.fromDate.equals("") && $vo.toDate && !$vo.toDate.equals(""))
+                    and access_time between CONVERT( datetime, :vo.fromDate, 120 ) and CONVERT( datetime, :vo.toDate, 120 )
+                #end
+                #if ($vo.searchType.equals("pageName"))
+                    and upper(page_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("accessUserId"))
+                     and upper(login_id) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("accessUserName"))
+                    and upper(user_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                #end
+                #if ($vo.searchType.equals("loginIp"))
+                    and login_ip like '%$vo.searchTxt%' ESCAPE '_'
+                #end
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deletePageStatistics">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_statistics
+                where statistics_id = :vo.statisticsId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getContentsStatisticsList">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name
+                from tlxr_contents_statistics a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.contents_name_id=b.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and b.lang_type = :vo.langType
+                    #if ($vo.fromDate && !$vo.fromDate.equals("") && $vo.toDate && !$vo.toDate.equals(""))
+                        and access_time between CONVERT( datetime, :vo.fromDate, 120 ) and CONVERT( datetime, :vo.toDate, 120 )
+                    #end
+                    #if ($vo.searchTxt && !$vo.searchTxt.equals(""))
+                        and upper(b.message_name) like upper('%$vo.searchTxt%') ESCAPE '_'
+                    #end
+                order by a.access_time desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.ContentsStatisticsVO"/>
+        </query>
+
+        <query id="insertPageStatistics">
+            <statement>
+            <![CDATA[
+                insert into tlxr_page_statistics (
+                        tenant_id,
+                        portal_id,
+                        statistics_id,
+                        page_id,
+                        access_time,
+                        access_user_id,
+                        access_user_name,
+                        page_name,
+                        login_ip,
+                        user_agent
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.statisticsId,
+                        :vo.pageId,
+                        :vo.accessTime,
+                        :vo.accessUserId,
+                        :vo.accessUserName,
+                        :vo.pageName,
+                        :vo.loginIp,
+                        :vo.userAgent
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insertContentsStatistics">
+            <statement>
+            <![CDATA[
+                insert into tlxr_contents_statistics (
+                        tenant_id,
+                        portal_id,
+                        statistics_id,
+                        contents_id,
+                        contents_name_id,
+                        access_time,
+                        access_user_id
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.statisticsId,
+                        :vo.contentsId,
+                        :vo.contentsNameId,
+                        :vo.accessTime,
+                        :vo.accessUserId
+                    )
+            ]]>
+            </statement>
+        </query>
+
+    </queries>
+</queryservice>

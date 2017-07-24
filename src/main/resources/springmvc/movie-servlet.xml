@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <bean id="movieController" name="/movie/*.do" class="com.sds.acube.luxor.sample.controller.MovieController">
+		<property name="movieService" ref="movieService" />
+        <property name="methodNameResolver" ref="movieControllerResolver" />
+        <property name="listJSP" value="/luxor/sample/movie/list.jsp" />
+        <property name="formJSP" value="/luxor/sample/movie/form.jsp" />
+        <property name="viewJSP" value="/luxor/sample/movie/view.jsp" />
+	</bean>
+  
+    <bean id="movieControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/movie/view.do">getMovie</prop>
+                <prop key="/movie/list.do">getMovieListPage</prop>
+                <prop key="/movie/add.do">getMovieRegView</prop>
+                <prop key="/movie/mod.do">getMovieModView</prop>
+            </props>
+        </property>
+    </bean>
+  
+</beans>

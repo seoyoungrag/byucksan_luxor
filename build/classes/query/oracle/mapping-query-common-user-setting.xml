@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+	<queries>
+		<query id="insertUserSetting">
+			<statement>
+			<![CDATA[
+				insert into tlxr_user_setting (tenant_id, portal_id, user_id, setting_code, setting_value, reg_date) 
+                    values (:vo.tenantId, :vo.portalId, :vo.userId, :vo.settingCode, :vo.settingValue, :vo.regDate) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateUserSetting">
+            <statement>
+            <![CDATA[
+                update tlxr_user_setting set
+                    setting_value=:vo.settingValue
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and user_id=:vo.userId
+                   and setting_code=:vo.settingCode 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteUserSetting">
+            <statement>
+            <![CDATA[
+                delete from tlxr_user_setting 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and user_id=:vo.userId
+                   and setting_code=:vo.settingCode
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteUserAllSetting">
+            <statement>
+            <![CDATA[
+                delete from tlxr_user_setting 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and user_id=:vo.userId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteAllSetting">
+            <statement>
+            <![CDATA[
+                delete from tlxr_user_setting 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getUserSetting">
+            <statement>
+            <![CDATA[
+                select * from tlxr_user_setting 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and user_id=:vo.userId
+                   and setting_code=:vo.settingCode
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.UserSettingVO"/>
+        </query>
+
+        <query id="getUserSettingList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_user_setting 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and user_id=:vo.userId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.UserSettingVO"/>
+        </query>
+
+	</queries>
+</queryservice>

@@ -1,0 +1,297 @@
+/***********************************ACUBE LUXOR PORTAL TEMPLATE CSS 1.0**********************************
+* image url : /ep/image/blue-theme/
+* authorized by ACUBE GROUP 2010.08.01
+********************************************************************************************************/
+
+/* Top component */
+.tmenu {width:100%;float:left;  }
+
+.mainglo           {font:11px Dotum,Verdana; color:#a05f59; text-decoration:none; background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_dot.gif) no-repeat 0px 5px;}
+.mainglo  a        {font:11px Dotum,Verdana; color:#a05f59; text-decoration:none; padding:0px 8px 0px 5px;}
+.mainglo-blue         {font:11px Dotum,Verdana; color:#000000; text-decoration:none; background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_dot.gif) no-repeat 0px 5px;}
+.mainglo-blue  a      {font:11px Dotum,Verdana; color:#000000; text-decoration:none; padding:0px 8px 0px 5px;}
+.mainglo a:hover, .mainglo-blue a:hover  {font:11px Dotum,Verdana; color:#000000; text-decoration:none;}
+.input-search {height: 14px ;border: 1px solid #ffffff ;color: #696969;text-decoration: none; }
+.top-logo {float:left; }
+.arrow { float:right; padding-right:5px;font:normal 11px Dotum,Verdana; color:#bababa;}
+
+.top-menu {clear:both;  }
+.top-menu ul {padding-bottom:10px; }
+.top-menu li {float:left;padding:9px 5px 0 5px;height:18px;font:11px;}
+.top-menu-padding { padding-top:11px;}
+.bg-img {background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_menuline.gif) no-repeat 0 6px; vertical-align:middle; text-align:center; height:21px; padding-left:2px; padding-right:2px; }
+
+.top-menu a {font:bold 12px Dotum,Verdana; color:#e8dcd5; text-decoration: none; padding-left:5px; padding-right:5px; padding-bottom:10px; padding-top:10px;}
+.top-menu a:hover {font:bold 12px Dotum,Verdana;color:#ffffff; text-decoration: none;}
+.top-menu-over        {display:inline; float:left; background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_menu01.gif) no-repeat left top;   height:15px; margin-top:4px;padding:7px 0px 5px 0px; }
+.top-menu-over a { font:bold 12px Dotum,Verdana; color:#4a2e1c;text-decoration: none; background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_menu02.gif) no-repeat top right ; padding:8px 10px 7px 6px; height:20px; line-height:15px;}
+.top-menu-over a:hover {font:bold 12px Dotum,Verdana;color:#4a2e1c; text-decoration: none;line-height:15px;}
+
+/* dropdown menu style */
+.top-sub-menu {z-index:1000;margin-top:7px;}
+.top-sub-menu li {clear:both;padding:0 5px 5px 5px;}
+
+ul.dropdown {z-index:1000;}
+ul.dropdown li {}
+ul.dropdown li.hover, ul.dropdown li:hover {color:black;position:relative;}
+ul.dropdown li.hover a {color:black;}
+ul.dropdown ul {background-color:#FCFCFC;border:1px solid #091e89;position:absolute;visibility:hidden;width:150px;}
+ul.dropdown ul li {}
+ul.dropdown ul li a {border-right:medium none;color:#666666;display:inline-block;width:100%;}
+ul.dropdown ul li a:hover {color:#000000;text-decoration:none;}
+ul.dropdown ul li a:active {color:#000000;text-decoration:none;}
+ul.dropdown ul ul {left:100%;top:0;}
+ul.dropdown li:hover > ul {visibility:visible;}
+
+#mzTop.dropdown ul {background-color:#FCFCFC;border:1px solid #091e89;position:absolute;width:150px;left:-120px;padding-top:10px;}
+#mzTop.dropdown ul li {width:90%;}
+#mzTop.dropdown ul li a {padding:0px 5px 5px 5px}
+#mzTop.dropdown ul ul {left:-100%;top:0;}
+
+/* Top */
+.main-header {height:107px; background: url("/ep/luxor/ref/image/brown_theme/body_bg.gif") repeat-x 0px 0px; height:100%;}
+.main-top  { height:40px;}
+.main-menu {color: #4675a3;font:11px Dotum,Verdana;right:0; margin-top:15px; float:right;padding-top:3px;}
+.main-menu li {float:left; }
+.menu-bar {width:100%; height:34px;}
+.menu-barcenter {position:relative;; margin-left:auto; margin-right:auto;  width:1000px;}
+.main-middle-center {float: left;width:100%;}
+
+
+/* top 메뉴 수정부분 0820 */
+
+/* 아이콘 추가부분 0820 */
+.logo { width:110px; height:43px;}
+/*.top-search-icon { width:42px; height:23px;}*/
+.logout-icon{ width:59px; height:17px;}
+
+.top-second-menu { clear:both;background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_smenu01.gif) repeat-x left top; height:34px; width:970px; padding-left:20px; }
+ .submenu-list li {float:left; margin-top:11px; padding-left:10px; padding-right:10px;}
+/*  .submenu-list .end{ background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_smenu02.gif) no-repeat right top; float:right; height:34px;} */
+ .submenu-list li a  {font:11px Dotum,Verdana; color:#fcf2ee; text-decoration: none;}
+.submenu-list li a:hover {color:#ffffff; TEXT-ALIGN:center; text-decoration: underline;}
+.submenu-list {min-width:100%;}
+.submenu-list li#setPageHome {float:right;margin:7px 5px 2px 2px; height: 20px;}
+.submenu-list li#setMyMenuPage {float:right;margin:7px 5px 2px 2px; height: 20px;}
+
+.smenu {width:100%;}
+.top-search { padding-right:10px;float:right; margin-top:6px;}
+.top-search-icon {padding-top:2px}
+.top-searchbg {background:url(/ep/luxor/ref/image/brown_theme/topMenuPortlet/top_searchbg.gif) no-repeat ; padding: 3px 0px 0px 70px; margin-right: 10px;}
+
+/*footer*/
+.subfooter {clear:both; background:url(/ep/luxor/ref/image/brown_theme/footerPortlet/footer_bg.gif) repeat; width:100%; height:25px;color:#7a7a7a; margin-top:5px;}
+.logo01 {float:left;padding:1px 30px 0px 5px}
+.copy {float:right;font:11px 돋움; color:#7a7a7a;padding:7px 10px 0px 0px;}
+
+/*portlet*/
+.portlet-width   {float:left; padding:0px;}
+
+/* 컨텐츠 부분 [admin의 고정적인 content 사용 및 초기 content 디자인 세팅에 사용 */
+.content-wrap {border:1px solid #d8d8d8; min-height:20px; margin:0px 5px 5px 5px;backgroud-color:#FFFFFF;}
+.content-wrap-hide {border:0px solid #d8d8d8; margin:0px 5px 5px 5px;}
+.content-title-bar  {float:left; background: url("/ep/luxor/ref/image/brown_theme/portlet/portlet_top_left.gif") no-repeat left top; padding:8px 0px 0px 12px; width:140px; font-weight:bold; color:#FFFFFF; height:20px}
+.content-menu-bar {float:right;margin-top:6px;margin-right:8px;}
+.content-menu-list {margin:0;float:right;}
+.content-menu-list li {list-style:none;display:inline;cursor:pointer;}
+.content-wrap .content-body {padding:5px 5px 5px 5px;}
+.content-top {background: url("/ep/luxor/ref/image/brown_theme/portlet/portlet_top.gif") repeat-x; width:100%; height:28px;}
+
+.portlet-btn     {float:right; background: url("/ep/luxor/ref/image/brown_theme/portlet/portlet_top_right.gif") no-repeat right top; padding:8px 10px 0px 0px; text-align:right; height:20px}
+.portlet-box{float:left; color:#555555; width:100%; background:url(/ep/luxor/ref/image/brown_theme/portlet/portlet_body_right.gif) no-repeat bottom right; padding:0px; margin-bottom:10px}
+.portlet    {margin:0; padding:9px;background:url(/ep/luxor/ref/image/brown_theme/portlet/portlet_body_left.gif) no-repeat bottom left;}
+
+/*left menu*/
+.left-wrap  {width:100%;;overflow-y:auto;}
+.left-top   {background:url(/ep/luxor/ref/image/brown_theme/leftMenuPortlet/left_titlebg.gif) repeat-x; font: bold 14px 굴림; color:#75483a;text-align:center;width:100%; height:38px; padding-top:16px;}
+.left-menu  {width:100%;overflow-y:auto; overflow-x:auto;}
+.left-menu  li{line-height:24px;}
+
+.left-menu01 {border-bottom:1px solid #eaeaea; padding:0px 0px 0px 3px;}
+.left-menu01 a {color:#393939; text-decoration: none; cursor:pointer;}
+.left-menu01 a:hover {color:#56321b; font-weight: bold;}
+.left-menu01-over a {color:#56321b;  text-decoration: none;font-weight: bold; padding:0px 0px 0px 3px; }
+.left-menu01-over a:hover {color:#56321b; }
+.left-menu01-over { border-bottom:1px solid #eaeaea; }
+
+.left-menu02 {background-color:#fbf6f3; border-top:1px solid #eaeaea; }
+.left-menu02 a {color:#56321b; text-decoration: none;font-weight:normal; padding:0px 0px 0px 3px; }
+.left-menu02 a:hover {color:#000000; font-weight:bold;}
+.left-menu02-over {background-color:#fbf6f3;border-top:1px solid #eaeaea;}
+.left-menu02-over a {color:#000000; text-decoration: none; padding:0px 0px 0px 3px; }
+.left-menu02-over a:hover {color:#000000; }
+
+.left-menu03 {background-color:#f7f7f7;border-top:1px solid #eaeaea;}
+.left-menu03 a {color:#666666;  text-decoration: none; font-weight:normal;  padding:0px 0px 0px 3px;}
+.left-menu03 a:hover {color:#000000;}
+.left-menu03-over {background-color:#f7f7f7;border-top:1px solid #eaeaea;}
+.left-menu03-over a {color:#666666;  text-decoration: none;font-weight: normal; padding:0px 0px 0px 3px;}
+.left-menu03-over a:hover {color:#000000; }
+
+.left-menu04 {background-color:#ffffff;border-top:1px solid #eaeaea;}
+.left-menu04 a {color:#666666;  text-decoration: none; font-weight:normal;  padding:0px 0px 0px 3px;}
+.left-menu04 a:hover {color:#000000;}
+.left-menu04-over {background-color:#ffffff;border-top:1px solid #eaeaea;}
+.left-menu04-over a {color:#666666;  text-decoration: none;font-weight: normal; padding:0px 0px 0px 3px;}
+.left-menu04-over a:hover {color:#000000; }
+
+.left-menu05 { background-color:#fbf6f3;border-top:1px solid #eaeaea;}
+.left-menu05 a {color:#666666;  text-decoration: none; font-weight:normal;  padding:0px 0px 0px 3px;}
+.left-menu05 a:hover {color:#000000;}
+.left-menu05-over {background-color:#fbf6f3;border-top:1px solid #eaeaea;}
+.left-menu05-over a {color:#666666;  text-decoration: none;font-weight: normal; padding:0px 0px 0px 3px;}
+.left-menu05-over a:hover {color:#000000; }
+
+.content-wrap .content-body {padding:10px 10px 10px 10px;}
+
+/*팝업 스타일*/
+.ui-widget-header { border: 1px solid #aaaaaa; background: #cccccc url(/ep/luxor/ref/image/brown_theme/dialog/dialog_title_bg.png) 50% 50% repeat-x; font-weight: bold; }
+
+/*table style */
+.table-body-wrap {width:100%;overflow:hidden;}
+.table-body {width:100%; color:#666666;;margin-bottom:1px; }
+.table-body th {background:url(/ep/luxor/ref/image/brown_theme/board/table_tdbg.gif) ; border:1px solid #c3d2e8;font-size:12px ;color:#4a6592; text-align:center;font-weight:bold; height:21px; line-height:21px;}
+.table-body td { padding-top:2px; border:1px solid #e9e4da;font-size:12px; text-align:center;height:20px; line-height:20px;}
+.table-body th.input,.table-body td.input {padding-top:1px; padding-bottom:1px;height:20px;}
+.table-body td.body-left {padding-top:2px; text-align:left; padding-left:5px; height:20px; }
+.table-body td.body-right {text-align:right; padding-right:5px; height:20px;}
+.table-body span.text-blue { color:#4a6592;font:bold 12px Dotum,Verdana;}
+.table-body a {color:#444444; text-decoration:none;}
+.table-body a:hover {color:#7b2e00; text-decoration:none;}
+
+/* main_login style */
+.login-area {padding:0px; margin:0px; width:100%;}
+.login-box {padding:10px; margin:0px; border:solid 1px #cccccc}
+.login-title {margin:0px; color:#393939; font:13px Gulim,Dotum,Verdana; line-height:25px; font-weight:bold; background:url(/ep/luxor/ref/image/blue_theme/login/img_loginerror.png) left no-repeat ; padding:0px 0px 10px 55px;}
+.login-text   {font:12px Dotum,Verdana; color:#696969; line-height:18px; }
+.login-text a {color:#696969; text-decoration:none; font:12px Dotum,Verdana; line-height:18px; }
+.login-text a:hover {color:#5d7394; text-decoration:none;}
+.text-bar {color:#e1e1e1; padding:0px 5px}
+.id-save { font:11px Dotum,Verdana; color:#666666}
+.input-login {background:url(/ep/luxor/ref/image/blue_theme/login/login_input_text.gif) no-repeat left bottom;height:18px ;border: 1px solid #d8d8d8 ;color: #696969;text-decoration: none; font:12px Dotum,Verdana; line-height:18px; padding-left:4px;}
+.input-pw-login {background:url(/ep/luxor/ref/image/blue_theme/login/login_pw_input_text.gif) no-repeat left bottom;height:18px ;border: 1px solid #d8d8d8 ;color: #696969;text-decoration: none; font:12px Dotum,Verdana; line-height:18px; padding-left:4px;}
+
+/* 로그인 하단의 메뉴리스트*/
+.loginmenu  {color:#797979; font:12px Dotum,Verdana; border-top:solid 1px #8dbad8; border-bottom:solid 1px #e1e1e1; padding:5px;}
+.loginmenu a {color:#696969; text-decoration:none;}
+.loginmenu a:hover {color:#3c6096; text-decoration:none;}
+
+/* 아이디/비번입력 */
+.login-main {padding:2px 2px 10px 2px; margin:0px; line-height:25px; text-align:left}
+.login-btn { background:url(/ep/luxor/ref/image/blue_theme/login/btn_login.gif) no-repeat left top; height:21px; width:64px; border:none; color:0px; cursor:pointer;}
+.logout-btn {float:right; background:url(/ep/luxor/ref/image/blue_theme/login/btn_login.gif) no-repeat left top; height:21px; width:64px; border:none; color:0px; cursor:pointer;}
+
+/* 다국어 아이디/비번찾기외 */
+.login-account {padding:0px; margin:0px;}
+.logintitle {color:#797979; font:11px Dotum,Verdana; border-top:solid 1px #8dbad8; border-bottom:solid 1px #e1e1e1; padding:5px;}
+.loginsub a {color:#696969; text-decoration:none; background:url(/ep/luxor/ref/image/blue_theme/topMenuPortlet/main_icon02.gif) no-repeat 0px 5px; padding-left:12px; font:12px Dotum,Verdana; line-height:18px; }
+.loginsub a:hover {color:#5d7394; text-decoration:none;}
+.login-person {background:url(/ep/luxor/ref/image/blue_theme/login/icon_login.png) left no-repeat; padding:5px 18px; line-height:18px}
+
+/* login error 화면 */
+.login-error {color:#393939; margin:0px; padding:50px;}
+.login-box-error {padding:30px 50px; margin:auto;border-top:1px solid #8dbad8;}
+
+/*BBS*/
+.title-blog-text {float:left; font:bold 12px Dotum,Verdana;;  color:#966455;}
+.title-blog-text a {color:#966455; text-decoration:none;}
+.title-blog-text a:hover {color:#0030ff; text-decoration:none;}
+.blog-list_blog li {background: url("/ep/luxor/ref/image/brown_theme/blog_line.gif") repeat-x 0px -2px; padding:7px 0 5px 0px;}
+.blog-list_blog li.blog-title { background-color:#f3edde; }
+.blog-list_blog li.blog-bottom { background-color:#f7f7f7; }
+.text-blue-blog { font:bold 14px Dotum,Verdana; color:#966455;height:20px; line-height:20px; }
+.text-gray-red-11 { font:11px Dotum,Verdana;;  color:#ff3f3f; line-height:18px; height:22px;}
+.text-gray-red-11 a {color:#ff3f3f; text-decoration:none;}
+.text-gray-red-11 a:hover {color:#ff3f3f; text-decoration:none;}
+
+.icon-new {width:36px; height:11px; }
+.icon-stick {width:36px; height:11px; }
+.icon-notice {width:36px; height:11px; }
+.icon-security {width:36px; height:11px; }
+
+/* 빌트인 포틀릿 탭 */
+.built-in-portlet-tab{ width:100%;height:28px; padding-top:2px;}
+.built-in-portlet-tab li{float:left;margin-right:-1px;background:url(/ep/luxor/ref/image/portlet/default/bg_tab_right.gif) 100% 0 no-repeat}
+.built-in-portlet-tab li span{display:block}
+.built-in-portlet-tab li a{display:block;_float:left;height:15px;padding:7px 10px 2px 10px;background:url(/ep/luxor/ref/image/portlet/default/bg_tab_left.gif) 0 0 no-repeat;color:#666;line-height:14px;text-decoration:none}
+.built-in-portlet-tab li a:hover{color:#333}
+.built-in-portlet-tab li.selected{background-position:100% 0px}
+.built-in-portlet-tab li.selected a{background-position:0 0px;color:#333;font-weight:bold;letter-spacing:-1px}
+
+.built-in-portlet-black-bold {font:bold 12px/160% Dotum,Verdana; color:#393939;}
+.built-in-portlet-black {font:12px/160% Dotum,Verdana; color:#393939;}
+.built-in-portlet-gray-none {font:12px/160% Dotum,Verdana; color:#9d9d9d;}
+
+.built-in-portlet-main { width:100%;}
+.built-in-portlet-main li {list-style:none; margin:0; padding:2px 5px 0px 12px; width:100%;line-height:18px;background: url("../image/portlet/icon_portlet.gif") no-repeat left center;}
+.built-in-portlet-main li a:link, .portlet-main li a:visited {color:#555555; letter-spacing:0; text-decoration:none;}
+.built-in-portlet-main li a:hover, .portlet-main li a:active  {color:#2f5081;}
+.built-in-portlet-main span a:link, .portlet-main span a:visited {color:#5d7394; letter-spacing:0; text-decoration:none; font-size:11px;}
+.built-in-portlet-main span a:hover, .portlet-main span a:active  {color:#5d7394; text-decoration:underline;}
+
+.built-in-portlet-page {width:100%; padding-top:5px; padding-left:3px; }
+.built-in-portlet-page a:link, .portlet-page a:visited {color:#555555; text-decoration:none;font-size:11px;}
+.built-in-portlet-page a:hover, .portlet-page a:active  {color:#2f5081;}
+
+.built-in-icon_arrow01{width:8px; height:8px;}
+.built-in-icon_arrow02{width:8px; height:8px;}
+.dot {list-style:none; margin:0; padding:0px; border-bottom:1px dotted #d2d2d2; height:4px;}
+
+/* weather portlet */
+.weather-sample {}
+.weather-title {background:url(/ep/luxor/ref/image/portlet/weather/weather_icon01.gif) no-repeat left center;  font:bold 12px dotum; line-height:14px; color:#393939;  padding:10px 0 9px 20px;}
+.weather-time {background:url(/ep/luxor/ref/image/portlet/weather/weather_icon02.gif) no-repeat left 14px;  font:bold 12px dotum; line-height:21px; height:20px; color:#004282;  padding:15px 0 0px 60px;}
+.weather-box {border:2px solid #5e91d9; background-color:#f7f9fd; font:12px dotum; line-height:18px; color:#393939;  padding:10px;}
+.weather-ex {font:11px dotum; line-height:18px; color:#666666; line-height:16px;}
+
+.weather-table {border-top:2px solid #8dbad8;width:100%; color:#393939; margin-bottom:7px; }
+.weather-table th {padding:0px 0px 0px 0px;background-color:#f4f8ff;border:1px solid #c3d2e8;font-size:12px ;color:#4a8bae; text-align:center; font-weight:bold; height:26px;}
+.weather-table td { padding-top:2px; border:1px solid #c3d2e8;font-size:12px; text-align:center;height:20px; line-height:20px;}
+.weather-table span.weather-font-blue { color:#005dde;font:bold 14px Dotum,Verdana;}
+.weather-table span.weather-font-red { color:#d60400;font:bold 14px Dotum,Verdana;}
+.weather-table a {color:#393939; text-decoration:none;}
+.weather-table a:hover {color:#083e7b; text-decoration:none;}
+
+.weather_01{width:32px; height:32px; }
+.weather_02{width:32px; height:32px; }
+.weather_03{width:32px; height:32px; }
+.weather_04{width:32px; height:32px; }
+.weather_05{width:32px; height:32px; }
+.weather_06{width:32px; height:32px; }
+.weather_07{width:32px; height:32px; }
+
+/*웹검색*/
+.browsing-sample {}
+.browsing-main { width:100%; height:25px; line-height:30px;}
+
+.browsing-icon {background:url(/ep/luxor/ref/image/portlet/browsing/btnicon_01.gif) no-repeat left top; width:16px; height:17px; border:0;}
+
+/*환율*/
+.exchange-rate-sample {}
+.exchange-rate-search {width:100%; margin-bottom:5px; padding:7px 0px 7px 0px; background:#fbfbfb ; border-top:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb; text-align:center;}
+.exchange-rate-table {width:100%;overflow:hidden;}
+.exchange-rate-body {width:100%; color:#393939;;margin-bottom:1px; }
+.exchange-rate-body th {background:#fbfbfb ; border:1px solid #dbdbdb;font:11px/160% Dotum,Verdana; color:#848484; text-align:center;height:20px; line-height:20px;}
+.exchange-rate-body td { padding-top:2px; border:1px solid #dbdbdb;font:11px/160% Dotum,Verdana; color:#848484; text-align:center;height:18px; line-height:18px;}
+.exchange-rate-body td.portlet-text-bold {font:bold 11px/160% Dotum,Verdana; color:#393939;}
+.exchange-rate-body td.portlet-text-blue {font:11px/160% Dotum,Verdana; color:#3939d7;}
+
+/*세계시각*/
+.time-sample {}
+.time-font-locale {text-align:center;font:bold 14px/160% Dotum,Verdana;}
+.time-font-gray {text-align:center; font:bold 24px/140%  tahoma,Arial, Helvetica; color:#393939;height:35px; line-height:30px;}
+.time-font-gray02 {text-align:center; font:14px/160% Dotum,Verdana; color:#626365;background:url(../image/portlet/time_bg.gif) center no-repeat; height:21px;line-height:22px;}
+.time-font-gray03 {text-align:center; font:bold 20px/140%  tahoma,Arial, Helvetica; color:#888888;height:35px; line-height:30px;}
+.time_arrow{width:18px; height:18px;}
+
+/*메모*/
+.memo-icon {float:left; }
+
+/*주가*/
+.stock-sample {}
+.stock-main {width:260px;}
+.stock-main p {text-align:center; padding-top:5px; font:bold 11px/140% dotum; color:#666666; }
+.stock-font-blue {text-align:center; font:bold 24px/140%  tahoma,Arial, Helvetica; color:#005dde;height:35px; line-height:35px;}
+.stock-font-blue-small {text-align:right; font:bold 11px/140%  tahoma,Arial, Helvetica; color:#005dde;}
+.stock-font-red {text-align:center; font:bold 24px/140%  tahoma,Arial, Helvetica; color:#d60400;height:35px; line-height:35px;}
+.stock-font-red-small {text-align:right; font:bold 11px/140%  tahoma,Arial, Helvetica; color:#d60400;}

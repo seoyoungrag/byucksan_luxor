@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+	<queries>
+        <query id="getTree">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name as node_name from tlxr_tree a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.node_name_id=b.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.tree_id=:vo.treeId
+                   and b.lang_type=:vo.langType
+                   order by depth, seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+        
+        <query id="getAclMapTree">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name as node_name from tlxr_tree a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.node_name_id=b.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.tree_id=:vo.treeId
+                   and b.lang_type=:vo.langType
+                   order by b.message_name
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+        
+        <query id="getPersonalCatalog">
+            <statement>
+            <![CDATA[
+                select a.tenant_id, a.portal_id, a.tree_id, a.node_id, a.node_name_id, a.parent_id, a.has_child, a.depth, a.seq, a.is_active, a.use_personal , b.message_name as node_name from tlxr_tree a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.node_name_id=b.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.tree_id=:vo.treeId
+                   and a.use_personal=:vo.usePersonal
+                   and b.lang_type=:vo.langType
+                 order by depth, seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+        
+        <query id="getTreeChild">
+            <statement>
+            <![CDATA[
+                select * from tlxr_tree
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+        
+        <query id="getTreeNode">
+            <statement>
+            <![CDATA[
+                select * from tlxr_tree
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and node_id=:vo.nodeId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+        
+        <query id="getParentNode">
+            <statement>
+            <![CDATA[
+                select * from tlxr_tree
+                 where tree_id=:vo.treeId
+                   and node_id=:vo.parentId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+        </query>
+
+        <query id="getMaxSeq">
+            <statement>
+            <![CDATA[
+                select max(seq) as maxseq from tlxr_tree
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+        </query>
+        
+		<query id="insertTreeNode">
+			<statement>
+			<![CDATA[
+                insert into tlxr_tree 
+                    (tenant_id, portal_id, tree_id, node_id, node_name_id, parent_id, depth, seq, is_active) 
+                values 
+                    (:vo.tenantId, :vo.portalId, :vo.treeId, :vo.nodeId, :vo.nodeNameId, :vo.parentId, :vo.depth, :vo.seq, :vo.isActive)
+			]]>
+			</statement>
+		</query>
+        
+        <query id="updateTreeNode">
+            <statement>
+            <![CDATA[
+                update tlxr_tree set 
+                #if ($vo.nodeNameId && !$vo.nodeNameId.equals(""))
+                    node_name_id=:vo.nodeNameId, 
+                #end
+                #if ($vo.parentId && !$vo.parentId.equals(""))
+                    parent_id=:vo.parentId, 
+                #end
+                #if ($vo.depth > 0)
+                    depth=:vo.depth, 
+                #end
+                #if ($vo.seq > 0)
+                    seq=:vo.seq, 
+                #end
+                #if ($vo.hasChild && !$vo.hasChild.equals(""))
+                    has_child=:vo.hasChild,
+                #end
+                    tenant_id=:vo.tenantId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and node_id=:vo.nodeId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateTreeNodeSeq1">
+            <statement>
+            <![CDATA[
+                update tlxr_tree set 
+                    seq=seq+1 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and seq > :vo.seq
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateTreeNodeSeq2">
+            <statement>
+            <![CDATA[
+                update tlxr_tree set 
+                    seq=seq+1 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and seq > :vo.seq
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateTreeNodeDepth">
+            <statement>
+            <![CDATA[
+                update tlxr_tree set 
+                    depth=:vo.depth 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateTreeActiveStatus">
+            <statement>
+            <![CDATA[
+                update tlxr_tree set is_active=:vo.isActive
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and node_id=:vo.nodeId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteTreeNode">
+            <statement>
+            <![CDATA[
+                delete from tlxr_tree 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and tree_id=:vo.treeId
+                   and node_id=:vo.nodeId
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="getHasChildNodeList">
+			<statement>
+	    <![CDATA[
+       		SELECT DISTINCT (a.node_id), a.*
+		    FROM tlxr_tree a, tlxr_tree b
+		    WHERE a.tree_id=:vo.treeId
+			    and a.node_id=b.parent_id
+		      	and a.tenant_id=:vo.tenantId
+		      	and a.portal_id=:vo.portalId
+	    ]]>
+			</statement>
+			<result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+		</query>
+		
+		<query id="getSiblingNodeList">
+			<statement>
+	    <![CDATA[
+	        SELECT *
+			FROM tlxr_tree
+			WHERE tree_id = :vo.treeId
+				and depth = :vo.depth
+				and tenant_id = :vo.id.tenantId
+		      	and portal_id = :vo.id.portalId
+			ORDER BY seq
+	    ]]>
+			</statement>
+			<result class="com.sds.acube.luxor.common.vo.TreeVO"/>
+		</query>
+		
+		<query id="getMaxDepth">
+			<statement>
+	    <![CDATA[
+	        SELECT max(depth) as maxdepth
+			FROM tlxr_tree
+			WHERE tenant_id=:vo.tenantId
+			   and portal_id=:vo.portalId
+			   and tree_id=:vo.treeId
+	    ]]>
+			</statement>
+		</query>
+	</queries>
+</queryservice>

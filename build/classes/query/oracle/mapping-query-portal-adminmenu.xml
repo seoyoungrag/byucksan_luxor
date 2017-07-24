@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertAdminMenu">
+			<statement>
+			<![CDATA[
+				insert into tlxr_admin_menu (
+                        tenant_id, 
+                        portal_id,
+                        parent_id, 
+                        menu_id, 
+                        menu_name_id, 
+                        menu_url, 
+                        reg_date, 
+                        reg_user_id, 
+                        seq 
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.parentId,
+                        :vo.menuId,
+                        :vo.menuNameId,
+                        :vo.menuUrl,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.seq 
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateAdminMenu">
+            <statement>
+            <![CDATA[
+                update tlxr_admin_menu set
+                    #if ($vo.parentId && !$vo.parentId.equals("")) 
+                       parent_id=:vo.parentId, 
+                    #end
+                    #if ($vo.menuUrl && !$vo.menuUrl.equals("")) 
+                       menu_url=:vo.menuUrl,
+                    #end
+                    #if ($vo.isActive && !$vo.isActive.equals(""))
+                       is_active=:vo.isActive,
+                    #end
+                    #if ($vo.seq && !$vo.seq.equals(""))
+                       seq=:vo.seq,
+                    #end
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.dao.unsetHome">
+            <statement>
+            <![CDATA[
+                /* com.sds.acube.luxor.common.dao.unsetHome */
+                update tlxr_admin_menu set is_home='N' 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and is_home='Y'
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.dao.setHome">
+            <statement>
+            <![CDATA[
+                /* com.sds.acube.luxor.common.dao.setHome */
+                update tlxr_admin_menu set is_home='Y' 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteAdminMenu">
+            <statement>
+            <![CDATA[
+                delete from tlxr_admin_menu 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getChildAdminMenuCount">
+            <statement>
+            <![CDATA[
+                select count(*) as cnt from tlxr_admin_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and parent_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getAdminMenu">
+            <statement>
+            <![CDATA[
+                select * from tlxr_admin_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminMenuVO"/>
+        </query>
+
+        <query id="getAdminMenuActive">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type from tlxr_admin_menu a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.menu_name_id=b.message_id
+                   and b.lang_type=:vo.langType
+                   and a.is_active='Y'
+                 order by a.parent_id desc, a.seq, a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminMenuVO"/>
+        </query>
+
+        <query id="getAdminMenuCategoryList">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type from tlxr_admin_menu a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.menu_name_id=b.message_id
+                   and a.parent_id='CATEGORY'
+                   and b.lang_type=:vo.langType
+                 order by a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminMenuVO"/>
+        </query>
+
+        <query id="getAdminMenuList">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type from tlxr_admin_menu a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.menu_name_id=b.message_id
+                   and b.lang_type=:vo.langType
+                   and a.parent_id <> 'CATEGORY'
+                 order by a.parent_id desc, a.seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminMenuVO"/>
+        </query>
+
+	</queries>
+</queryservice>

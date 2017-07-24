@@ -1,0 +1,12 @@
+.memo-content{width:100%;height:100%;padding-left:0px;border: 0px;}
+.memo-content.default {line-height:125%; font-size:12px;  background: url("/ep/luxor/ref/image/portlet/memo/default.jpg");}
+.memo-content.default_big {line-height:133%; font-size:24px;  background: url("/ep/luxor/ref/image/portlet/memo/default_big.jpg");}
+.memo-content.blue {line-height:125%; font-size:12px;  background: url("/ep/luxor/ref/image/portlet/memo/blue.jpg");}
+.memo-content.blue_big {line-height:133%; font-size:24px;  background: url("/ep/luxor/ref/image/portlet/memo/blue_big.jpg");}
+.memo-content.orange {line-height:125%; font-size:12px;  background: url("/ep/luxor/ref/image/portlet/memo/orange.jpg");}
+.memo-content.orange_big {line-height:133%; font-size:24px;  background: url("/ep/luxor/ref/image/portlet/memo/orange_big.jpg");}
+.memo-content.feather {line-height:145%; font-size:15px;  background: url("/ep/luxor/ref/image/portlet/memo/feather.png");}
+.memo-content.feather_big {line-height:120%; font-size:30px;  background: url("/ep/luxor/ref/image/portlet/memo/feather_big.png");}
+.memo-content.gulim {font-family: gulim;}
+.memo-content.arial {font-family: arial;}
+.memo-content.arialblack {font-family: arial black;}

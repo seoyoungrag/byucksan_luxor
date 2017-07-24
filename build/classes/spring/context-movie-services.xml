@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="movieService" class="com.sds.acube.luxor.sample.service.impl.MovieServiceImpl">
+        <property name="movieDAO" ref="movieDAO" />
+        <property name="attachmentService" ref="attachmentService" />
+    </bean>
+    
+    <bean id="movieDAO" class="com.sds.acube.luxor.sample.dao.MovieDAO">
+        <property name="queryService" ref="queryService2" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="adminService" class="com.sds.acube.luxor.portal.service.impl.AdminServiceImpl">
+        <property name="messageService" ref="messageService" />
+        <property name="adminMenuDAO" ref="adminMenuDAO" />
+        <property name="adminUserDAO" ref="adminUserDAO" />
+    </bean>
+    
+    <bean id="adminMenuDAO" class="com.sds.acube.luxor.portal.dao.AdminMenuDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+    
+    <bean id="adminUserDAO" class="com.sds.acube.luxor.portal.dao.AdminUserDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+</beans>

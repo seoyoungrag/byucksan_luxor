@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="loginController" name="/login/*.do" class="com.sds.acube.luxor.common.controller.LoginController">
+		<property name="service" ref="loginService" />
+		<property name="adminService" ref="adminService" />
+        <property name="logoutSysService" ref="logoutSysService" />
+		<property name="groupPortalService" ref="groupPortalService" />
+		<property name="memberRequestService" ref="memberRequestService" />
+        <property name="accessControllService" ref="accessControllService" />
+        <property name="userSettingService" ref="userSettingService" />
+        <property name="loginPopupService" ref="loginPopupService" />
+        <property name="loginPlugService" ref="loginPlugService" />
+        <property name="orgService" ref="orgService" />
+		<property name="methodNameResolver" ref="loginControllerResolver" />
+		<property name="commonLogin" value="/luxor_login.jsp" />
+	</bean>
+  
+    <bean id="loginControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/login/adminLoginProcess.do">adminLoginProcess</prop>
+                <prop key="/login/loginProcess.do">loginProcessByPortlet</prop>
+                <prop key="/login/goCommonLogin.do">goCommonLogin</prop>
+            </props>
+        </property>
+    </bean>
+  
+</beans>

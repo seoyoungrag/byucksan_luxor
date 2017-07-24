@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+        <query id="getMemo">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+	            order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.MemoPortletVO"/>
+        </query>
+
+        <query id="getMemoList">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+	            order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.MemoPortletVO"/>
+        </query>
+
+        <query id="deleteMemo">
+            <statement>
+            <![CDATA[
+                delete
+           		from tlxr_portlet_memo
+           		where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and memo_id = :vo.memoId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insertMemo">
+            <statement>
+            <![CDATA[
+            	insert
+            	into tlxr_portlet_memo(tenant_id,portal_id,user_id,memo_id,memo_skin,memo_value,reg_date)
+            	values (:vo.tenantId,:vo.portalId,:vo.userId,:vo.memoId,:vo.memoSkin,:vo.memoValue,:vo.regDate)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMemo">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_memo
+               set memo_value = :vo.memoValue
+                   ,memo_skin = :vo.memoSkin
+               where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and memo_id = :vo.memoId
+            ]]>
+            </statement>
+        </query>
+
+		<query id="deleteMemoAll">
+			<statement>
+			<![CDATA[
+				delete
+           		from tlxr_portlet_memo
+           		where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+			]]>
+			</statement>
+		</query>
+		
+		<query id="getBookmarkCategory">
+            <statement>
+            <![CDATA[
+                select * 
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and parent_id = 'CATEGORY'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+        
+        <query id="getBookmarkListInCategory">
+            <statement>
+            <![CDATA[
+                select * 
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and parent_id = :vo.bookmarkId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+        
+         <query id="getBookmark">
+            <statement>
+            <![CDATA[
+                select * 
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_id = :vo.bookmarkId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+        
+        <query id="insertBookmarkData">
+            <statement>
+            <![CDATA[
+              	insert
+            	into tlxr_portlet_bookmark(tenant_id,portal_id,user_id,parent_id,bookmark_id,bookmark_name,bookmark_url,description,reg_date,bookmark_option)
+            	values (:vo.tenantId,:vo.portalId,:vo.userId,:vo.parentId,:vo.bookmarkId,:vo.bookmarkName,:vo.bookmarkUrl,:vo.description,:vo.regDate,:vo.bookmarkOption)
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="updateBookmarkData">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_bookmark
+               set bookmark_name = :vo.bookmarkName
+               	   ,parent_id = :vo.parentId
+                   ,bookmark_url = :vo.bookmarkUrl
+                   ,description = :vo.description
+                   ,bookmark_option = :vo.bookmarkOption
+               where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                   	and bookmark_id = :vo.bookmarkId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateCategoryInit">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_bookmark
+               set bookmark_option = ''
+               where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_option = :vo.bookmarkOption
+            ]]>
+            </statement>
+        </query>
+        
+         <query id="deleteBookmarkCategory">
+            <statement>
+           	<![CDATA[
+				delete
+           		from tlxr_portlet_bookmark
+           		where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and (bookmark_id = :vo.bookmarkId or parent_id = :vo.bookmarkId)
+			]]>
+            </statement>
+        </query>
+        
+        <query id="deleteBookmark">
+            <statement>
+             <![CDATA[
+				delete
+           		from tlxr_portlet_bookmark
+           		where tenant_id = :vo.tenantId
+                  	and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_id = :vo.bookmarkId
+			]]>
+            </statement>
+        </query>
+        
+		<query id="insertTabContents">
+			<statement>
+			<![CDATA[
+			  INSERT INTO TLXR_PORTLET_TAB
+			  (TENANT_ID, PORTAL_ID, TAB_PORTLET_ID, CONTENT_ID, SEQ, REGDATE, REG_USER_ID)
+			  VALUES
+			  (:vo.tenantId, :vo.portalId, :vo.tabPortletId, :vo.contentId, :vo.seq, SYSDATE, :vo.regUserId)
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateTabContents">
+            <statement>
+            <![CDATA[
+                UDPATE TLXR_PORTLET_TAB 
+                SET    SEQ = :vo.seq
+			  	WHERE TENANT_ID = :vo.tenantId 
+			  		  AND PORTAL_ID = :vo.portalId 
+			          AND TAB_PORTLET_ID = :vo.tabPortletId 
+			          AND CONTENT_ID = :vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteTabContents">
+            <statement>
+            <![CDATA[
+				  DELETE FROM TLXR_PORTLET_TAB
+				  WHERE TENANT_ID = :vo.tenantId 
+				        AND PORTAL_ID = :vo.portalId 
+				        AND TAB_PORTLET_ID = :vo.tabPortletId 
+				        AND CONTENT_ID = :vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getTabContentsList">
+            <statement>
+            <![CDATA[
+			        
+                  SELECT A.TENANT_ID, A.PORTAL_ID, TAB_PORTLET_ID, A.CONTENT_ID, A.SEQ, A.REGDATE, A.REG_USER_ID,MESSAGE_NAME
+                  FROM TLXR_PORTLET_TAB A, TLXR_CONTENT B, TLXR_MESSAGE C
+                  WHERE A.TENANT_ID = :vo.tenantId
+                        AND A.PORTAL_ID = :vo.portalId 
+                        AND A.PORTAL_ID = B.PORTAL_ID
+                        AND A.TENANT_ID = B.TENANT_ID 
+                        AND A.TENANT_ID = C.TENANT_ID
+                        AND A.PORTAL_ID = C.PORTAL_ID
+                        AND A.CONTENT_ID = B.CONTENT_ID
+                        AND B.CONTENT_NAME_ID = C.MESSAGE_ID
+                        AND C.LANG_TYPE= :vo.langType
+                        AND A.TAB_PORTLET_ID = :vo.tabPortletId
+                  ORDER BY SEQ				        
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.TabPortletVO"/>
+        </query>      
+        
+        <query id="getTabContents">
+            <statement>
+            <![CDATA[
+				  SELECT TENANT_ID, PORTAL_ID, TAB_PORTLET_ID, CONTENT_ID, SEQ, REGDATE, REG_USER_ID,
+				         (SELECT PORTLET_ID FROM TLXR_CONTENT WHERE CONTENT_ID = :vo.contentId) AS PORTLET_ID
+				  FROM TLXR_PORTLET_TAB
+				  WHERE TENANT_ID = :vo.tenantId 
+				        AND PORTAL_ID = :vo.portalId 
+				        AND TAB_PORTLET_ID = :vo.tabPortletId
+				        AND CONTENT_ID = :vo.contentId
+				        
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.TabPortletVO"/>
+        </query> 
+        
+        <query id="getMaxSequence">
+            <statement>
+            <![CDATA[
+				  SELECT NVL(MAX(SEQ),0) SEQ
+				  FROM TLXR_PORTLET_TAB
+				  WHERE TENANT_ID = :vo.tenantId 
+				        AND PORTAL_ID = :vo.portalId 
+				        AND TAB_PORTLET_ID = :vo.tabPortletId
+            ]]>
+            </statement>
+        </query> 
+        
+        <query id="getImgContentsList">
+            <statement>
+            <![CDATA[
+			        
+					SELECT CONTEXT_NAME AS PORTLET_ID,   
+					 	   B.CONTENT_ID, TAB_PORTLET_ID,
+					       (SELECT MESSAGE_NAME FROM TLXR_MESSAGE WHERE MESSAGE_ID = B.CONTENT_NAME_ID AND LANG_TYPE=:vo.langType) MESSAGE_NAME,
+					        DEPLOY_DESCRIPTION_XML, TYPE_OF_PORTLET, C.SEQ
+					FROM TLXR_PORTLET_CONTEXT A, TLXR_CONTENT B, TLXR_PORTLET_TAB C
+					WHERE A.TENANT_ID = B.TENANT_ID AND A.TENANT_ID = C.TENANT_ID
+					      AND A.PORTAL_ID = B.PORTAL_ID AND A.PORTAL_ID = C.PORTAL_ID
+					      AND C.TENANT_ID = :vo.tenantId AND C.PORTAL_ID = :vo.portalId
+					      AND C.CONTENT_ID = B.CONTENT_ID AND A.CONTEXT_NAME = B.PORTLET_ID
+					      AND TAB_PORTLET_ID = :vo.tabPortletId
+					ORDER BY SEQ    			        
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.ImgPortletVO"/>
+        </query>    
+	</queries>
+</queryservice>

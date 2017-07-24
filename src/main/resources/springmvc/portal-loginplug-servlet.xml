@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    
+    <bean id="loginPlugController" name="/loginPlug/*.do" class="com.sds.acube.luxor.portal.controller.LoginPlugController">
+        <property name="loginPlugService" ref="loginPlugService" />
+        <property name="methodNameResolver" ref="loginPlugControllerResolver" />
+        <property name="plugList" value="/luxor/portal/loginplug/plugList.jsp" />
+    </bean>
+  
+    <bean id="loginPlugControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/loginPlug/plugList.do">getPlugList</prop>
+            </props>
+        </property>
+    </bean>
+      
+</beans>

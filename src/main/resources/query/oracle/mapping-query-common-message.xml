@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+	<queries>
+		<query id="insertMessage">
+			<statement>
+			<![CDATA[
+				insert into tlxr_message (tenant_id, portal_id, message_id, message_name, message_type, lang_type) 
+                    values (:vo.tenantId, :vo.portalId, :vo.messageId, :vo.messageName, :vo.messageType, :vo.langType) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateMessage">
+            <statement>
+            <![CDATA[
+                update tlxr_message set
+                    #if ($vo.portalId && !$vo.portalId.equals(""))
+                       portal_id=:vo.portalId,
+                    #end
+                    #if ($vo.messageId && !$vo.messageId.equals(""))
+                       message_id=:vo.messageId,
+                    #end
+                    #if ($vo.messageName && !$vo.messageName.equals(""))
+                       message_name=:vo.messageName,
+                    #end
+                    #if ($vo.messageType && !$vo.messageType.equals(""))
+                       message_type=:vo.messageType,
+                    #end
+                    #if ($vo.langType && !$vo.langType.equals(""))
+                       lang_type=:vo.langType,
+                    #end
+                    tenant_id=:vo.tenantId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and message_id=:vo.messageId
+                   and lang_type=:vo.langType 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMessage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_message 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and message_id=:vo.messageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMessageById">
+            <statement>
+            <![CDATA[
+                select * from tlxr_message 
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_' or portal_id = :vo.portalId)
+                   and message_id=:vo.messageId 
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.MessageVO"/>
+        </query>
+
+        <query id="getMessageByIdLang">
+            <statement>
+            <![CDATA[
+                select * from tlxr_message 
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and message_id=:vo.messageId
+                   and lang_type=:vo.langType
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.MessageVO"/>
+        </query>
+
+        <query id="isDuplicate">
+            <statement>
+            <![CDATA[
+                select count(*) as cnt from tlxr_message 
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_' or portal_id = :vo.portalId)
+                   and message_name=:vo.messageName
+                   and lang_type=:vo.langType 
+                   and message_type=:vo.messageType
+            ]]>
+            </statement>
+        </query>
+
+	</queries>
+</queryservice>

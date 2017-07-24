@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<applicationconfig name="Common">
+
+	<category name="WEB-APP">
+		<variable name="URL">http://localhost:8080</variable>
+		<variable name="NAME">ep</variable>
+		<variable name="PATH">/ep</variable>
+	</category>
+	
+	<category name="MAIL">
+		<variable name="URL">http://211.168.82.46</variable>
+	</category>
+	
+	<category name="APP">
+		<variable name="URL">http://localhost:8090</variable>
+	</category>
+
+	<category name="CONFIG_LIST">
+    	<!-- <variable name="IAM">/resource/application/IAM.xml</variable>-->
+    </category>
+    
+    <category name="SERVICE_LOADER">
+    	<variable name="PORTLET_CONTEXT">com.sds.acube.luxor.portal.context.PortletContextRegistry</variable>
+    </category>
+
+    <category name="BASIC">
+        <variable name="WAS">Tomcat</variable>
+        <variable name="DATABASE">0</variable> <!-- ORABLE:0, MYSQL:1, DB2:2, ALTIBASE:3, SYBASE:4, MS:5 --> 
+        <variable name="DEBUG">N</variable>
+        <variable name="INSTALLED">Y</variable>
+        <variable name="USE_HTTPS">N</variable>
+        <variable name="USE_AES">Y</variable>
+        <variable name="TENANT_ID">ESIS000</variable>
+        <variable name="PORTAL_ID">A10000</variable>
+    </category>
+
+    <category name="CACHE">
+        <variable name="USE">Y</variable>
+        <variable name="IS_MULTI_CONTAINER">N</variable>
+        <variable name="CHECK_INTERVAL">30</variable>
+        <variable name="MAXIMUM_SIZE">10000</variable>
+    </category>
+
+    <category name="LOCALE">
+        <variable name="LANG">ko,en,zh</variable>
+        <variable name="DISPLAY-NAME">한국어,english,中国语文</variable>
+        <variable name="DEFAULT_TIMEZONE">Asia/Seoul</variable><!-- 기본 타임존  -->
+        
+<!--         <variable name="LANG">ko</variable>
+        <variable name="DISPLAY-NAME">한국어</variable>
+        <variable name="DEFAULT_TIMEZONE">Asia/Seoul</variable> -->
+    </category>
+
+    <category name="IAM">
+        <variable name="KEY">S4926dde25df402e8716110119</variable>
+    </category>
+
+    <category name="SSO">
+        <variable name="ENCODE_ALGORITHM">DES</variable>
+        <variable name="PASSWORD_ENCODE_ALGORITHM">SHA-256</variable><!-- not use : N,  strHashAlgorithm (MD2, MD5, SHA-1, SHA-256, SHA-384, SHA-512) -->
+        <variable name="TOKEN_PUBLISHING">N</variable><!-- SSO 시 IAM에서 Token 발급을 사용할지 여부 --> 
+    </category>
+ 
+    <!-- @add 2014.02.28 START -->
+    <category name="SECURITY">
+    	<variable name="METHOD">DES</variable>
+    	<variable name="ENCODING">DEFAULT</variable>
+    	<variable name="HASH">SHA-256</variable>
+    </category>
+    <category name="DES"><!-- SYMMETRIC -->
+    	<variable name="ENCODER">com.sds.acube.luxor.security.symmetric.EnDecoder</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.symmetric.EnDecoder</variable>
+    </category>
+    <category name="RSA"><!-- ASYMMETRIC -->
+    	<variable name="ENCODER">com.sds.acube.luxor.security.asymmetric.AsymmKeyEncoder</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.asymmetric.AsymmKeyDecoder</variable>
+    </category>
+    <category name="SEED">
+    	<variable name="ENCODER">com.sds.acube.luxor.security.seed.SeedWrapper</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.seed.SeedWrapper</variable>
+    </category>    
+    <category name="AES">
+    	<variable name="ENCODER">com.sds.acube.luxor.security.symmetric.AesEncoder</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.symmetric.AesDecoder</variable>
+    	<variable name="KEY">8ec6064898ac0432e2158ef6e5b9b231</variable>
+    	<variable name="SALT">0123456789ABCDEF</variable>
+    </category>
+    <category name="ARIA">
+    	<variable name="ENCODER">com.sds.acube.luxor.security.aria.AriaEncoder</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.aria.AriaDecoder</variable>
+    	<variable name="KEY">144b8139f291c8f5de28209c4c896dd13b44192799eee067</variable>
+    </category>    
+    <category name="DES3">
+    	<variable name="ALGORITHM">DESede</variable><!-- DESede(3-DES), DES -->
+    	<variable name="ENCODER">com.sds.acube.luxor.security.symmetric.DesEncoder</variable>
+    	<variable name="DECODER">com.sds.acube.luxor.security.symmetric.DesDecoder</variable>
+		<variable name="KEY">z15jHND9+KwBxm53+NkMIg==</variable>
+    </category>   
+    <category name="HASH">
+    	<variable name="ENCODER">com.sds.acube.luxor.security.hash.HashEncoder</variable>
+    </category>
+    <category name="HMAC">
+		<variable name="ENCODER">com.sds.acube.luxor.security.hash.HmacEncoder</variable>    
+		<variable name="KEY">x903e78394zuaq9a119i018</variable>
+    </category>
+    <!-- @add 2014.02.28 END -->
+ 
+    <category name="SESSION"><!-- @add 2014.02.25 -->
+    	<variable name="TIMEOUT">3600</variable>
+    </category>  
+    
+    <category name="PORTLET">
+        <variable name="USE_JSR168">N</variable>
+    	<variable name="DEPLOY_PATH">G:/workspace-juno/luxor/webapp/deploy/</variable>
+    	<variable name="UPLOAD_PATH">G:/workspace-juno/luxor/temp/</variable>
+   	</category>
+    
+    <category name="ATTACH">
+        <variable name="UPLOAD_TEMP">G:/workspace-juno/luxor/temp</variable>
+        <variable name="SFTP_SVR">localhost</variable>
+        <variable name="SFTP_PORT">7775</variable>
+        <variable name="STOR_SVR">70.6.70.218</variable>
+        <variable name="STOR_PORT">7404</variable>
+        <variable name="STOR_VOL">103</variable>
+        <variable name="STOR_FILTER">0</variable>
+    </category>
+    
+    <category name="EDITOR">
+        <variable name="TYPE">NAMO</variable> <!-- XINHA / NAMO -->
+        <variable name="CONTENT_MAX_SIZE">300</variable>
+        <variable name="NAMO_CAB_VERSION">6,0,0,64</variable>
+        <variable name="NAMO_CAB_CLASSID">1D53A344-D767-4D2E-9F4C-4466D3DB2D90</variable>
+        <variable name="NAMO_LPK_CLASSID">5220cb21-c88d-11cf-b347-00aa00a28331</variable>
+    </category>
+
+    <category name="GUEST">
+        <variable name="GROUP_ID">GUEST</variable>    
+        <variable name="USER_ID">GUEST</variable>
+        <variable name="USER_NAME">손님</variable>
+        <variable name="PORTAL_ID">1310000</variable>
+        <variable name="PORTAL_NAME">1310000</variable>
+    </category>
+</applicationconfig>

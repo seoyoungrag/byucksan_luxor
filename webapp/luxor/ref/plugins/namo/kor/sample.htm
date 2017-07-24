@@ -1,0 +1,629 @@
+<html>
+<head>
+<title>액티브스퀘어 6 예제 문서</title>
+<style>
+<!--
+p,td,ul,ol,form { line-height:150%; margin-top:0; margin-bottom:0;}
+a { color:blue; text-decoration:none; }
+img {  border-width:0; }
+-->
+</style>
+<base target="_blank">
+</head>
+
+<body topmargin="0" marginheight="0" leftmargin="0" marginwidth="0" bgcolor="#F6F6FD">
+<table cellpadding="0" cellspacing="0" style="margin-bottom:12;" align="center">
+    <tr>
+        <td>
+            <p align="left"><img src="images/topimage.gif" width="1024" height="72" border="1"></p>
+        </td>
+    </tr>
+</table>
+<table cellspacing="0" bordercolordark="white" bordercolorlight="black" align="center" cellpadding="0">
+    <tr>
+        <td valign="top"><form name="testForm">
+    <table align="center" cellpadding="0" cellspacing="0" width="706">
+        <tr>
+            <td colspan="3" valign="top" bgcolor="#d6d3Ce" style="border-top-width:1; border-right-width:2; border-bottom-width:1; border-left-width:1; border-color:rgb(99,101,99); border-style:solid;" width="703"><p style="margin-top:3; margin-bottom:4;" align="center">
+	
+	<font color="black"><span style="font-size:9pt;"><select name="menutype" size="1" style="font-size:9pt;">
+    <option value="0" selected>툴바 모두 보이기</option>
+	<option value="1">툴바 일부 보이기</option>
+	<option value="2">툴바 모두 감추기</option>
+	<option value="3">툴바 사용자 정의</option>
+    </select> <select name="tabtype" size="1" style="font-size:9pt;">
+    <option selected value="0">탭 보이기</option>
+	<option value="1">탭 감추기</option>
+    </select> <select name="rulertype" size="1" style="font-size:9pt;">
+    <option selected value="0">눈금자 모두 감추기</option>
+	<option value="1">눈금자 가로 보이기</option>
+	<option value="2">눈금자 세로 보이기</option>
+	<option value="3">눈금자 모두 보이기</option>
+    </select> 
+	
+	<select name="scrolltype" size="1" style="font-size:9pt;">    <option selected value="0">스크롤바 모두 보이기</option>
+	<option value="1">스크롤바 가로 보이기</option>
+	<option value="2">스크롤바 세로 보이기</option>
+	<option value="3">스크롤바 모두 감추기</option>
+    </select>
+	
+	<select name="doctype" size="1" style="font-size:9pt;">
+    <option selected value="0">▶ 빈문서</option>
+	<option value="1">▶ 표준검사신청서</option>
+	<option value="2">▶ 입사지원서</option>
+                <option value="3">▶ 업무일지</option>
+    </select> &nbsp;</span><span style="font-size:8pt;">이모티콘</span></font><span style="font-size:9pt;"><font color="black"><input type=button name="InsertImoticon" size=35 style="font-size:9pt; background-color:transparent; background-image:url('images/imt0.gif'); background-repeat:no-repeat; padding-top:0; padding-bottom:0; border-width:0; border-style:none; width:23; height:23; cursor:hand;" onfocus="this.blur();"></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td height="454" width="704" valign="top" colspan="3" style="border-right-width:1; border-bottom-width:1; border-left-width:1; border-right-color:rgb(99,101,99); border-bottom-color:rgb(99,101,99); border-left-color:rgb(99,101,99); border-right-style:solid; border-bottom-style:solid; border-left-style:solid;">
+    <p style="line-height:100%; margin-top:0; margin-bottom:0;">
+<font color="black"><span style="font-size:9pt;">
+
+<script language="javascript" src="NamoWec6.js"></script>
+</span></font></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="353">
+                <p style="line-height:100%; margin-top:3; margin-bottom:3;" align="center"><span style="font-size:9pt;"><font color="black"><input type=button name="GetValue" size=35 value="HTML값 보기 ↓" style="font-size:9pt; padding-top:3;"></font></span></p>
+            </td>
+            <td valign="top" width="4">
+                <p>&nbsp;</p>
+            </td>
+            <td valign="top" width="349">
+                <p style="line-height:100%; margin-top:3; margin-bottom:3;" align="center"><span style="font-size:9pt;"><font color="black"><input type=button name="GetMimeValue" size=35 value="MIME값 보기 ↓" style="font-size:9pt; padding-top:3;"></font></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" width="351" bgcolor="#d6d3Ce" style="border-width:1; border-color:rgb(99,101,99); border-style:solid;" height="172">
+                <p style="line-height:100%; margin-top:3; margin-bottom:0;">
+                <font color="black"><span style="font-size:9pt;">&nbsp;&nbsp;&nbsp;작성된 내용에 대한 값을 보여줍니다.</span></font></p>
+                <p style="line-height:100%; margin-top:0; margin-bottom:5;" align="center"><font color="black"><span style="font-size:9pt;"><textarea name="ValueContent" rows="20" cols="43"></textarea></span></font></p>
+                            <p style="line-height:100%; margin-top:1; margin-bottom:2;" align="center">
+                 
+                <font color="black"><span style="font-size:9pt;"><input type="button" value="액티브스퀘어로 전달하기 ↑" name="PutValue" style="font-size:9pt; padding-top:3;"></span></font></p>
+            </td>
+            <td valign="top" width="4" style="border-top-color:rgb(0,0,0); border-right-color:rgb(0,0,0); border-bottom-color:rgb(0,0,0); border-style:none;" height="172">
+                <p>&nbsp;</p>
+            </td>
+            <td valign="top" width="347" bgcolor="#D6D3CE" style="border-width:1; border-color:rgb(99,101,99); border-style:solid;" height="172">
+                <p style="line-height:100%; margin-top:3; margin-bottom:0;"><span style="font-size:9pt;"><font color="black">&nbsp;&nbsp;&nbsp;작성된 내용을 MIME 으로 인코딩하여 보여줍니다.</font></span></p>
+                <p style="line-height:100%; margin-top:0; margin-bottom:5;" align="center"><font color="black"><span style="font-size:9pt;"><textarea name="MimeValueContent" rows="20" cols="43"></textarea></span></font></p>
+                <p style="line-height:100%; margin-top:1; margin-bottom:2;" align="center"><font color="black"><span style="font-size:9pt;"><input type="button" value="액티브스퀘어로 전달하기 ↑" name="PutMimeValue" style="font-size:9pt; padding-top:3;"></span></font></p>
+            </td>
+        </tr>
+    </table>
+</form>
+        </td>
+        <td valign="top">
+        <table border="1" width="316" cellspacing="0" bordercolordark="white" bordercolorlight="gray">
+                <tr>
+                    <td width="8">
+                        <table cellspacing=0 cellpadding=0 align=center width="316" bgcolor="white">
+                            <COLGROUP>
+                            <TBODY>
+                            <tr>
+                                <td align=right><a href="http://www.namo.co.kr/activesquare/"><img alt="" src="http://www.namo.co.kr/images/enterprise/main_as.gif"></a></td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 액티브스퀘어</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">인터넷 기업을 위한 최고의 컨텐트 작성<br>소프트웨어</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/enterprise/"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/activesquare/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span><a href="http://www.namo.co.kr/download/list.php?group_code=EP&amp;prod_code=AS"><span
+style="font-size:9pt;"><img alt="체험판 내려싣기" src="http://www.namo.co.kr/images/icon/btn_trial_main.gif"></span></a></p>
+                                </td>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"></p>
+                                </td>
+                            </tr>
+<!-- ds -->
+                            <tr>
+                                <td align=right>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/deepsearch/"><img alt="" src="http://www.namo.co.kr/images/enterprise/main_ds.gif"></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 딥서치</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">대용량 검색도 책임지는 통합 검색엔진</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/enterprise/"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/deepsearch/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span><a href="http://www.namo.co.kr/download/list.php?group_code=EP&amp;prod_code=DS"><span
+style="font-size:9pt;"><img alt="체험판 내려싣기" src="http://www.namo.co.kr/images/icon/btn_trial_main.gif"></span></a></p>
+                                </td>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"></p>
+                                </td>
+                            </tr>
+<!-- bs -->
+                            <tr>
+                                <td align=right>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/bizsquare/"><img alt="" src="http://www.namo.co.kr/images/enterprise/main_bs.gif"></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 비즈스퀘어</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">최적의 비즈니스 업무 환경을 창출하는 XML 기반 양식 문서 에디터</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/enterprise/"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/bizsquare/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span></p>
+                                </td>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"></p>
+                                </td>
+                            </tr>
+<!-- AD -->
+                            <tr>
+                                <td align=right>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/activedisk/"><img alt="" src="http://www.namo.co.kr/images/enterprise/main_ad.gif"></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 액티브디스크</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">하드웨어 소프트웨어 일체형의 기업용 <br>웹 하드 솔루션</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/activedisk/buyinfo.php"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/activedisk/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span></p>
+                                </td>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"></p>
+                                </td>
+                            </tr>
+<!-- AP -->
+                            <tr>
+                                <td align=right>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/activephoto/"><img alt="" src="http://www.namo.co.kr/images/enterprise/main_ap2.gif"></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 액티브포토</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">쉽고 편리한 이미지 편집 소프트웨어</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/enterprise/"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/activephoto/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a>  <!--<a href="/download/list.php?group_code=EP&prod_code=AP"><img
+src="/images/icon/btn_trial_main.gif" alt="체험판 내려싣기" /></a>--></span></p>
+                                </td>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;">&nbsp;</p>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;">&nbsp;</p>
+                                </td>
+                            </tr>
+<!-- tr -->
+<!-- vo 
+                    <tr>
+                        <td align="right"><a href="/visionone/"><img src="/images/enterprise/main_vo.gif" alt="" /></a></td>
+                        <td>                         
+                            <p class="title1" style="margin: 0 10px 5px 10px;">나모 비전원</p>
+                            <p style="margin: 0 10px 10px 10px;">웹 기반의 편리한 사내정보 공유 시스템</p>
+                            <p class="title1" style="margin: 0 10px 0 10px;">
+                            <a href="/store/enterprise/"><img src="/images/icon/btn_buy_main.gif" alt="구입하기" /></a>
+                            <a href="/visionone/"><img src="/images/icon/btn_overview_main.gif" alt="제품소개" /></a>
+                            <a href="http://www.namo.co.kr/download/list.php?group_code=EP&prod_code=VO"><img src="/images/icon/btn_trial_main.gif" alt="체험판 내려싣기" /></a></p>
+                        </td>
+                        <td background="/images/enterprise/main_featurebox_bg.gif" height="95">
+                            <p style="margin: 8px 10px 0 80px;"><img src="/images/icon/bullet_circle_gray.gif" alt="" /> 현재 근무 상태 파악<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 그룹 및 사용자 관리<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 사내 공용 자원 관리<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 출장 및 휴가 예약<br />
+                            <a href="/visionone/"><img src="/images/icon/btn_more_violet.gif" style="margin: 0 0 0 130px;" alt="" /></a></p>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><img src="/images/common/main_c_line_615.gif" style="margin: 15px 0 15px 0;" alt="" /></td>                    
+                    </tr> 
+                    <!-- hsclipserver 
+                    <tr>
+                        <td align="right"><a href="/clipingserver/"><img src="/images/enterprise/main_hsclipserver.gif" alt="" /></a></td>
+                        <td>                         
+                            <p class="title1" style="margin: 0 10px 5px 10px;">나모 핸드스토리 클리핑서버</p>
+                            <p style="margin: 0 10px 10px 10px;">웹 컨텐트를 PDA로 제공하기 위한 최적의 솔루션</p>
+                            <p class="title1" style="margin: 0 10px 0 10px;">
+                            <a href="/store/enterprise/"><img src="/images/icon/btn_buy_main.gif" alt="구입하기" /></a>
+                            <a href="/clipingserver/"><img src="/images/icon/btn_overview_main.gif" alt="제품소개" /></a>
+                            </p>
+                        </td>
+                        <td background="/images/enterprise/main_featurebox_bg.gif" height="95">
+                            <p style="margin: 8px 10px 0 80px;"><img src="/images/icon/bullet_circle_gray.gif" alt="" /> PDA전용 서비스 구축 비용 저렴<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 적은 인력으로 클립제작 및 관리<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> PDA에 가장 최적화 된 솔루션<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 제작된 클립 유/무선으로 서비스<br />
+                            <a href="/clipingserver/"><img src="/images/icon/btn_more_violet.gif" style="margin: 0 0 0 130px;" alt="" /></a></p>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <!--tr>
+                        <td colspan="4"><img src="/images/common/main_c_line_615.gif" style="margin: 15px 0 15px 0;" alt="" /></td>                    
+                    </tr> 
+                    <!-- kc 
+                    <tr>
+                        <td align="right"><a href="/kcerp/"><img src="/images/enterprise/main_kc.gif" alt="" /></a></td>
+                        <td>                         
+                            <p class="title1" style="margin: 0 10px 5px 10px;">나모 KC-ERP</p>
+                            <p style="margin: 0 10px 10px 10px;">부품제조업을 위한 통합 관리 정보 시스템</p>
+                            <p class="title1" style="margin: 0 10px 0 10px;">
+                            <a href="/store/enterprise/"><img src="/images/icon/btn_buy_main.gif" alt="구입하기" /></a>
+                            <a href="/kcerp/"><img src="/images/icon/btn_overview_main.gif" alt="제품소개" /></a>
+                            <a href="/download/list.php?group_code=EP&prod_code=ERP"><img src="/images/icon/btn_trial_main.gif" alt="체험판 내려싣기" /></a></p>
+                        </td>
+                        <td background="/images/enterprise/main_featurebox_bg.gif" height="95">
+                            <p style="margin: 8px 10px 0 80px;"><img src="/images/icon/bullet_circle_gray.gif" alt="" /> Van관리<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 영업계획, 판매관리<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 출하지시서<br />
+                            <img src="/images/icon/bullet_circle_gray.gif" alt="" /> 매출채권, 단가관리<br />
+                            <a href="/kcerp/"><img src="/images/icon/btn_more_violet.gif" style="margin: 0 0 0 130px;" alt="" /></a></p>
+                        </td>
+                        <td></td>
+                    </tr--></TBODY>
+                        </table>
+                        <table cellspacing=0 cellpadding=0 width="316" style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;" align="center" bgcolor="white">
+                            <tr>
+                                <td rowspan=3 height="81"><a href="http://www.namo.co.kr/crafto/"><span style="font-size:9pt;"><img alt="나모 크라프토" src="http://www.namo.co.kr/images/service/main_cf.gif" width="80" height="64"></span></a></td>
+                                <td style="FONT-WEIGHT: bold; PADDING-TOP: 5px" height=18>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">나모 크라프토</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign=top height="28">
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><i><a href="http://crafto.namo.co.kr" target=_new><span style="font-size:9pt;">http://crafto.namo.co.kr</span></a></i><span style="font-size:9pt;"><br>창의력이 쑥쑥! 즐거운 종이모형 만들기</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://crafto.namo.co.kr/product/download.php" target=_new><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/service/bt_1.gif"></span></a><span style="font-size:9pt;"><a href="http://crafto.namo.co.kr/product/move.php" target=_new><img alt="" src="http://www.namo.co.kr/images/service/bt_2.gif"></a><a href="http://shop.namo.co.kr/index_crafto.asp" target=_new><img
+alt="" src="http://www.namo.co.kr/images/service/bt_3.gif"></a> </span> </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan=3 height="81"><a href="http://www.namo.co.kr/handstory/"><span style="font-size:9pt;"><img alt="나모 핸드스토리" src="http://www.namo.co.kr/images/service/main_hs.gif" width="80" height="64"></span></a></td>
+                                <td style="FONT-WEIGHT: bold; PADDING-TOP: 5px" height=18>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">나모 핸드스토리</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign=top height="28">
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><i><a href="http://www.handstory.co.kr/" target=_new><span style="font-size:9pt;">http://www.handstory.co.kr</span></a></i><span style="font-size:9pt;"><br>웹, 이미지, eBook 문서가 
+PDA속으로</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://www.handstory.co.kr/clip/ServiceClip.php" target=_new><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/service/bt_4.gif"></span></a><span style="font-size:9pt;"><a href="http://www.handstory.co.kr/product/download/list.php" target=_new><img alt="" src="http://www.namo.co.kr/images/service/bt_5.gif"></a><a href="http://shop.handstory.co.kr/"
+target=_new><img alt="" src="http://www.namo.co.kr/images/service/bt_3.gif"></a> </span> </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan=3 height="83"><a href="http://www.namo.co.kr/nblog/"><span style="font-size:9pt;"><img alt="나모 N블로그" src="http://www.namo.co.kr/images/service/main_nb.gif" width="80" height="64"></span></a></td>
+                                <td style="FONT-WEIGHT: bold; PADDING-TOP: 5px" height=18>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">나모 N블로그</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign=top height="30">
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><i><a href="http://nblog.namo.co.kr" target=_new><span style="font-size:9pt;">http://nblog.namo.co.kr</span></a></i><span style="font-size:9pt;"><br>자발적 참여 기반의 커뮤니티 솔루션</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://nblog.namo.co.kr/" target=_new><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/service/bt_6.gif"></span></a><span style="font-size:9pt;"><a href="http://www.namo.co.kr/nblog/feature.php"><img alt="" src="http://www.namo.co.kr/images/service/bt_7.gif"></a><a href="http://www.namo.co.kr/nblog/licence.php"><img alt="" src="http://www.namo.co.kr/images/service/bt_8.gif"></a>
+</span> </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan=3 height="81"><a href="http://www.namostores.com" target=_new><span style="font-size:9pt;"><img alt="나모 스토어즈" src="http://www.namo.co.kr/images/service/main_ns.gif" width="80" height="64"></span></a></td>
+                                <td style="FONT-WEIGHT: bold; PADDING-TOP: 5px" height=18>
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">티움 서비스</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign=top height="28">
+                                    <p style="line-height:1; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><i><a href="http://www.namostores.com" target=_new><span style="font-size:9pt;">http://www.namostores.com</span></a></i><span style="font-size:9pt;"><br>최고 기술력이 깃든 임대형 쇼핑몰 
+서비스</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="line-height:0; margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://www.namostores.com/education/education_00.phtml" target=_new><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/service/bt_9.gif"></span></a><span style="font-size:9pt;"><a href="http://www.namostores.com/open/open_01.phtml" target=_new><img alt="" src="http://www.namo.co.kr/images/service/bt_10.gif"></a><a href="http://www.namostores.com/admission/admission_01_01.phtml"
+target=_new><img alt="" src="http://www.namo.co.kr/images/service/bt_11.gif"></a> </span> </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table cellspacing=0 cellpadding=0 width="316" style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;" align="center" bgcolor="white">
+                            <COLGROUP>
+                            <COL width=80>
+                            <COL width=250>
+                            <COL width=80>
+                            <COL width=240>
+                            <TBODY>
+                            <tr>
+<!-- ws -->
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/webstudio/"><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/desktop/main_ws.gif"></span></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>나모 웹스튜디오</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">Express your potential creativity 
+easily!</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/price/"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/webstudio/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span></p>
+                                </td>
+                                <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><!-- we -->
+                                </p>
+                            </tr>
+<!--tr>
+                        <td colspan="4"><img src="/images/common/main_c_line_615.gif" style="margin: 15px 0 15px 10px;" alt="" /></td>                    
+                    </tr>                     
+                    <tr>
+                        <!-- hs>
+                        <td><a href="/handstory/"><img src="/images/desktop/main_hs.gif" alt="" /></a></td>
+                        <td>                         
+                            <p class="title1" style="margin: 0 20px 5px 10px;">나모 핸드스토리</p>
+                            <p style="margin: 0 20px 10px 10px;">웹, 이미지, eBook 문서가 PDA속으로</p>
+                            <p class="title1" style="margin: 0 0 0 10px;">
+                            <a href="http://shop.handstory.co.kr/" target="_new"><img src="/images/icon/btn_buy_main.gif" alt="구입하기" /></a>
+                            <a href="/handstory/"><img src="/images/icon/btn_overview_main.gif" alt="제품소개" /></a>
+                            <a href="http://www.handstory.co.kr/product/download/download_hs.php" target="_new"><img src="/images/icon/btn_trial_main.gif" alt="체험판 내려싣기" /></a></p>
+                        </td>
+                     
+                    </tr-->
+                            <tr>
+                                <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><!-- ict-->
+                                </p>
+                                <td>
+                                    <p style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0;"><a href="http://www.namo.co.kr/ictclass/"><span style="font-size:9pt;"><img alt="" src="http://www.namo.co.kr/images/desktop/main_ict.gif"></span></a></p>
+                                </td>
+                                <td>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;"><b>ICT클래스</b></span></p>
+                                    <p style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><span style="font-size:9pt;">창의적인 교육을 위한 웹기반 학습도구</span></p>
+                                    <p class=title1 style="line-height:1; margin-top:1px; margin-right:0px; margin-bottom:0px; margin-left:3;"><a href="http://www.namo.co.kr/store/price/ict.php"><span style="font-size:9pt;"><img alt=구입하기 src="http://www.namo.co.kr/images/icon/btn_buy_main.gif"></span></a><span style="font-size:9pt;"> <a href="http://www.namo.co.kr/ictclass/"><img alt=제품소개 src="http://www.namo.co.kr/images/icon/btn_overview_main.gif"></a> </span><a href="http://www.namo.co.kr/download/list.php?group_code=SW&amp;prod_code=ICT"><span
+style="font-size:9pt;"><img alt="체험판 내려싣기" src="http://www.namo.co.kr/images/icon/btn_trial_main.gif"></span></a></p>
+                                </td>
+                            </tr>
+                            </TBODY>
+                            <COLGROUP>
+                            <COL width=135>
+                            <COL width=280>
+                            <COL width=205>
+                            <TBODY>
+<!-- hs -->
+<!-- nb -->
+<!-- ns -->
+                            </TBODY>
+                        </table>
+  
+                    </td>
+                </tr>
+                        </table>
+        </td>
+    </tr>
+</table>
+<table cellpadding="0" cellspacing="0" width="1027" align="center" style="margin-top:5; margin-bottom:3; border-collapse:collapse;" bgcolor="#DEDEF4">
+    <tr>
+        <td width="382" height="12" style="border-top-width:1; border-right-width:1; border-bottom-width:1; border-left-width:1; border-top-color:black; border-bottom-color:black; border-left-color:black; border-top-style:solid; border-right-style:none; border-bottom-style:solid;">
+            <p style="margin-right:5;"><span style="font-size:8pt;"><font face="Microsoft Sans Serif" color="#000033"><strong>&nbsp;NamoInteractive, Inc.</strong> &nbsp;ⓒ 1997-2008 All rights reserved.</font></span><font color="#000033"><span style="font-size:9pt;">&nbsp;</span></font></p>
+        </td>
+        <td width="642" height="12" style="border-top-width:1; border-right-width:1; border-bottom-width:1; border-left-width:1; border-top-color:black; border-right-color:black; border-bottom-color:black; border-top-style:solid; border-bottom-style:solid; border-left-style:none;">
+            <p align="right" style="margin-right:5;"><font color="#000099"><span style="font-size:9pt;">▶ 
+            API 및 초기화파일에 대한 자세한 내용은  </span></font><a href="http://www.namo.co.kr/activesquare/techlist/help/devel" target="_blank"><span style="font-size:9pt;"><font color="#000099"><b>[개발자 가이드</b></font></span></a><span style="font-size:9pt;"><font color="#000099"><b>]</b></font></span><font color="#000099"><span style="font-size:9pt;">를 참고해 주세요</span></font></p>
+        </td>
+    </tr>
+</table>
+</body>
+<script language="VBScript">
+<!--
+
+Function Window_Onbeforeunload
+	Dim fRef
+	Set fRef = Document.testForm
+	fRef.Wec.SaveState "Wec"
+End Function
+
+Function Wec_OnInitCompleted
+	Dim fRef
+	Set fRef = Document.testForm
+	fRef.Wec.DoCommand "marktable"
+	fRef.Wec.DoCommand "marktag"
+	fRef.Wec.OpenFile "pages/defdoc.htm"
+	'fRef.Wec.SetBasicCSSFile "pages/format.css"
+	fRef.Wec.RestoreState "Wec"
+	fRef.Wec.InstallSourceURL = "http://www.namo.co.kr/activesquare/products/update"
+End Function
+ 
+Function StartPRN
+	Dim fRef
+	Set fRef = document.testForm
+	fRef.Wec.SetPaperSize 1    ' 용지를 A4 용지로 하고 현재 편집중인 문서 인쇄
+	fRef.Wec.PrintFile ""      ' 편집창의 내용만 프린트 시작
+End Function
+
+Function doctype_OnChange
+
+	Dim fRef
+	Dim fSel
+	Set fRef = Document.testForm
+	fSel = fRef.doctype.value
+	
+	if fSel = 0 then
+		fRef.Wec.OpenFile "pages/defdoc.htm"
+	elseif fSel = 1 then
+		fRef.Wec.OpenFile "pages/sam1.htm"
+	elseif fSel = 2 then
+		fRef.Wec.OpenFile "pages/sam2.htm"
+	elseif fSel = 3 then
+		fRef.Wec.OpenFile "pages/sam3.htm"	
+	end if
+	
+	
+End Function	
+
+Function menutype_OnChange
+
+	'--- 형식: ShowToolbar 막대종류(0,1,2), 보이기여부(0,1)
+
+	Dim fRef
+	Dim fSel
+	Set fRef = Document.testForm
+	fSel = fRef.menutype.value
+	
+	if fSel = 0 then
+		fRef.Wec.CreateToolbar "CreateToolbar = filenew fileopen | print printpreview | undo redo | hr hyperlink bookmark image tableribbon layer | listnumber listbullet indentdecrease indentincrease | marktable markpara marktag ; paralist fontlist fontsizelist lineheight | charbold charitalic charunderline charcolor charbgcolor charclear | alignleft aligncenter alignright"
+		fRef.Wec.ShowToolbar 0,1
+		fRef.Wec.ShowToolbar 1,1
+		fRef.Wec.ShowToolbar 2,1
+	elseif fSel = 1 then
+		fRef.Wec.ShowToolbar 0,0
+		fRef.Wec.ShowToolbar 1,0
+		fRef.Wec.ShowToolbar 2,1
+	elseif fSel = 2 then
+		fRef.Wec.ShowToolbar 0,0
+		fRef.Wec.ShowToolbar 1,0
+		fRef.Wec.ShowToolbar 2,0
+	elseif fSel = 3 then
+		fRef.Wec.ShowToolbar 0,0
+		fRef.Wec.CreateToolbar "CreateToolbar = Menu | fontlist fontsizelist | charbold charitalic charunderline charcolor charbgcolor | alignleft aligncenter alignright"	
+	end if	
+
+	fRef.Wec.Focus
+End Function
+
+Function rulertype_OnChange
+
+	'--- 형식: ShowRuler 가로 눈금자 보이기여부(0,1), 세로 눈금자 보이기여부(0,1)
+
+	Dim fRef
+	Dim fSel
+	Set fRef = Document.testForm
+	
+	fSel = fRef.rulertype.value
+	
+	if fSel = 0 then
+		fRef.Wec.ShowRuler 0,0
+	elseif fSel = 1 then
+		fRef.Wec.ShowRuler 1,0
+	elseif fSel = 2 then
+		fRef.Wec.ShowRuler 0,1
+	elseif fSel = 3 then
+		fRef.Wec.ShowRuler 1,1
+	end if
+	fRef.Wec.Focus
+End Function
+
+Function tabtype_OnChange
+
+	'--- 형식: ShowTab 보이기(TRUE) or 감추기(FALSE)
+
+	Dim fRef
+	Dim fSel
+	Set fRef = Document.testForm
+	
+	fSel = fRef.tabtype.value
+
+	if fSel = 0 then
+		fRef.Wec.ShowTab TRUE
+	elseif fSel = 1 then
+		fRef.Wec.ShowTab FALSE
+	end if
+
+	fRef.Wec.Focus
+End Function
+
+Function scrolltype_OnChange
+
+	'--- 형식: EnableHorzScrollbar 보이기(1) or 감추기(0)
+	'          EnableVerrtScrollbar 보이기(1) or 감추기(0)
+
+	Dim fRef
+	Dim fSel
+	Set fRef = Document.testForm
+	
+	fSel = fRef.scrolltype.value
+
+	if  fSel = 0 then
+		fRef.Wec.EnableHorzScrollbar 1
+	    fRef.Wec.EnableVertScrollbar 1
+	elseif fSel = 1 then
+		fRef.Wec.EnableHorzScrollbar 1
+	    fRef.Wec.EnableVertScrollbar 0
+	elseif fSel = 2 then
+		fRef.Wec.EnableHorzScrollbar 0
+	    fRef.Wec.EnableVertScrollbar 1
+	elseif fSel = 3 then
+		fRef.Wec.EnableHorzScrollbar 0
+	    fRef.Wec.EnableVertScrollbar 0
+	end if
+
+	fRef.Wec.Focus
+	
+End Function
+
+Function PutValue_OnClick
+ 	Dim fRef
+	Set fRef = Document.testForm
+    fRef.Wec.Value = fRef.ValueContent.value
+End Function
+
+Function PutMimeValue_OnClick
+ 	Dim fRef
+	Set fRef = Document.testForm
+    fRef.Wec.MimeValue = fRef.MimeValueContent.value
+End Function
+
+Function GetValue_OnClick
+ 	Dim fRef
+	Set fRef = Document.testForm
+    fRef.ValueContent.value = fRef.Wec.Value
+End Function
+
+Function GetMimeValue_OnClick
+ 	Dim fRef
+	Set fRef = Document.testForm
+    fRef.MimeValueContent.value = fRef.Wec.MimeValue
+End Function
+
+
+Function InsertImoticon_OnClick
+	call Imoticon
+End Function
+
+Function Imoticon
+ 	Dim fRef
+	Dim x
+	Set fRef = Document.testForm
+	Set x = Window.Open("pages/imoticon.htm","","left=300,top=250,Width=195,Height=115,status=no")
+	x.focus
+End Function
+
+Function Wec_OnCustomMenu(menuid)
+	if menuid = 1 then call StartPRN '--- 인쇄호출
+End Function
+
+Function Wec_OnCommand(cmdstr, finished)
+
+ 	Dim fRef
+	Set fRef = Document.testForm
+
+   if cmdstr="filenew" then
+   		fRef.Wec.OpenFile "pages/defdoc.htm"
+        finished = true
+   end if
+	
+End Function
+
+'[Delete]키를 '셀내용만 지우기'로 사용할 경우 아래 주석을 해제하세요.
+'초기화파일의 [Event]섹션에서 Keyboard = Yes 를 지정해 주어야 합니다.
+'셀 행이나 열을 지우려면 [Ctrl+Delete]를 누르면 됩니다.
+'
+'dim char
+'char = 0
+'sub Wec_OnKeyUp(vkey, finished)
+'   Dim fRef, cw
+'   Set fRef = Document.testForm
+'   cw = fRef.Wec.GetCurrentCellWidth
+'  if char=0 and cint(vkey) = 46 then
+'      if cw > 0 then
+'         fRef.Wec.DoCommand "delete_content"
+'         finished = true
+'      end if 
+'   elseif cw > 0 and char=17 and cint(vkey) = 46 then
+'      fRef.Wec.DoCommand "delete"
+'      finished = true
+'   end if
+'   if cint(17) then char=0
+'end sub
+'sub Wec_OnKeyDown(vkey, finished)
+'   Dim fRef, cw
+'   Set fRef = Document.testForm
+'   cw = fRef.Wec.GetCurrentCellWidth
+'   if cint(vkey)=17 then char=17
+'   if cw > 0 and char=0 and cint(vkey) = 46 then finished = true
+'end sub
+
+--></script>
+
+
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+						http://www.springframework.org/schema/util  
+						http://www.springframework.org/schema/util/spring-util-3.0.xsd  
+						http://www.springframework.org/schema/context  
+						http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+    
+    <!-- <context:property-placeholder location="classpath:config/luxor-portal-jdbc.xml" /> -->
+    <util:properties id="luxorconfig" location="classpath:config/luxor-portal-jdbc.xml"/>
+    
+	<bean name="queryService" class="org.anyframe.query.impl.QueryServiceImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="pagingSQLGenerator" ref="pagingSQLGenerator"/>
+		<property name="sqlRepository" ref="sqlLoader"/>			
+        <property name="lobHandler" ref="lobHandler"/>
+	</bean>
+
+    <bean name="queryService2" class="org.anyframe.query.impl.QueryServiceImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate2"/>
+        <property name="pagingSQLGenerator" ref="pagingSQLGenerator"/>
+        <property name="sqlRepository" ref="sqlLoader"/>            
+        <property name="lobHandler" ref="lobHandler"/>
+    </bean>
+  
+	<bean name="sqlLoader" class="org.anyframe.query.impl.config.loader.SQLLoader">
+		<property name="dynamicReload" value="5000" />	
+        <property name="mappingFiles">
+            <value>
+                 classpath:query/#{luxorconfig['luxor.portal.jdbc.db.type.name']}/mapping-query-*.xml
+            </value>        </property>	
+        <property name="nullchecks">
+            <map>
+                <entry key="VARCHAR" value=""/>
+            </map>
+        </property>
+        <property name="skipError" value="true" />	
+	</bean>
+	
+	<!-- The original JdbcTemplate definition -->
+    <bean id="jdbcTemplate" class="org.anyframe.query.impl.jdbc.PagingJdbcTemplate">
+      <property name="dataSource" ref="dataSource" />
+      <property name="exceptionTranslator" ref="exceptionTranslator" />
+    </bean>
+
+    <bean id="jdbcTemplate2" class="org.anyframe.query.impl.jdbc.PagingJdbcTemplate">
+      <property name="dataSource" ref="dataSource2" />
+      <property name="exceptionTranslator" ref="exceptionTranslator" />
+    </bean>
+    
+    <bean id="exceptionTranslator" class="org.anyframe.query.impl.util.RawSQLExceptionTranslator"/>
+    <!-- Oracle, DB2, Altibase, MySQL을 제외한 MSSQL, Sybase는 Page Generator를 만들어줘야함 -->
+	<!--<bean id="pagingSQLGenerator" class="org.anyframe.query.impl.jdbc.generator.AltibasePagingSQLGenerator"/>-->
+    <!--<bean id="pagingSQLGenerator" class="org.anyframe.query.impl.jdbc.generator.DB2PagingSQLGenerator"/>-->
+    <!--<bean id="pagingSQLGenerator" class="org.anyframe.query.impl.jdbc.generator.MySQLPagingSQLGenerator"/>-->
+    <!--<bean id="pagingSQLGenerator" class="org.anyframe.query.impl.jdbc.generator.MSSQLPagingSQLGenerator"/>-->
+    <bean id="pagingSQLGenerator" class="org.anyframe.query.impl.jdbc.generator.OraclePagingSQLGenerator"/>
+    <bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" lazy-init="true"/>
+
+    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" lazy-init="true">
+        <property name="nativeJdbcExtractor" ref="nativeJdbcExtractor"/>
+    </bean>     
+
+</beans>	

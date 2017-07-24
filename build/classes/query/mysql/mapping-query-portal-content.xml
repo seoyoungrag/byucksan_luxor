@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="insertContent">
+            <statement>
+            <![CDATA[
+                insert into tlxr_content (
+                        tenant_id,
+                        portal_id,
+                        parent_id,
+                        content_id,
+                        content_name_id,
+                        portlet_id,
+                        content_style,
+                        content_desc,
+                        reg_date,
+                        reg_user_id,
+                        seq
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.parentId,
+                        :vo.contentId,
+                        :vo.contentNameId,
+                        :vo.portletId,
+                        :vo.contentStyle,
+                        :vo.contentDesc,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.seq
+                    )
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContent">
+            <statement>
+            <![CDATA[
+                update tlxr_content set
+                    #if ($vo.portletId && !$vo.portletId.equals(""))
+                       portlet_id=:vo.portletId,
+                    #end
+                    #if ($vo.contentStyle && !$vo.contentStyle.equals(""))
+                       content_style=:vo.contentStyle,
+                    #end
+                    #if ($vo.contentDesc && !$vo.contentDesc.equals(""))
+                       content_desc=:vo.contentDesc,
+                    #end
+                    #if ($vo.seq && !$vo.contentDesc.equals(""))
+                       seq=:vo.seq,
+                    #end
+                    #if ($vo.isActive && !$vo.isActive.equals(""))
+                       is_active=:vo.isActive,
+                    #end
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContentParentId">
+            <statement>
+            <![CDATA[
+                update tlxr_content set parent_id=:vo.parentId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteContent">
+            <statement>
+            <![CDATA[
+                delete from tlxr_content
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getContent">
+            <statement>
+            <![CDATA[
+                select * from tlxr_content
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like concat('%', :vo.portalId, '%')  ESCAPED '_' or portal_id = :vo.portalId)
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalContentVO"/>
+        </query>
+
+        <query id="getContentList">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type
+                  from tlxr_content a, tlxr_message b
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.content_name_id=b.message_id
+                 #if ($vo.parentId && !$vo.parentId.equals("ROOT"))
+                   and a.parent_id=:vo.parentId
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("contentName"))
+                   and (lower(b.message_name) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("portletId"))
+                   and (lower(a.portlet_id) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("contentId"))
+                   and (lower(a.content_id) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                   and b.lang_type=:vo.langType
+                 #if ($vo.refer.equals("name"))
+                    order by b.message_name, a.reg_date desc
+                 #else
+                    order by a.reg_date desc
+                 #end
+
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalContentVO"/>
+        </query>
+
+        <query id="getContentListUsingPersonal">
+            <statement>
+            <![CDATA[
+                select a.*, b.message_name, b.lang_type
+                  from tlxr_content a, tlxr_message b, tlxr_tree c
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id=:vo.portalId
+                   and a.tenant_id=c.tenant_id
+                   and a.portal_id=c.portal_id
+                   and a.parent_id=c.node_id
+                   and c.use_personal = 'Y'
+                   and a.content_name_id=b.message_id
+                 #if ($vo.parentId && !$vo.parentId.equals("ROOT"))
+                   and a.parent_id=:vo.parentId
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("contentName"))
+                   and (lower(b.message_name) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("portletId"))
+                   and (lower(a.portlet_id) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                 #if (!$vo.searchKey.equals("") && $vo.searchWay.equals("contentId"))
+                   and (lower(a.content_id) like lower('$vo.searchKey'))  ESCAPED '_'
+                 #end
+                   and b.lang_type=:vo.langType
+                 order by a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalContentVO"/>
+        </query>
+
+        <query id="setCategoryUsePersonal">
+            <statement>
+            <![CDATA[
+                update tlxr_tree
+                 set use_personal = :vo.usePersonal
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and node_id=:vo.nodeId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="setContentUsePersonal">
+            <statement>
+            <![CDATA[
+                update tlxr_content set use_personal = :vo.usePersonal
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+    </queries>
+</queryservice>

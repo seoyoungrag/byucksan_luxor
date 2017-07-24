@@ -1,0 +1,134 @@
+#timePortlet .time-center {
+	width:100%;
+	height:100%;
+	float: left;
+}
+
+#timePortlet select {
+	border: 0px;
+	margin-bottom: 5px;
+	width: 100%;
+}
+
+
+#timePortlet #digiclock {
+	height:70px;
+	margin: auto;
+	width:215px;
+}
+
+#timePortlet #plugin_container {
+	width:100%;
+	height:100%;
+    position:relative;
+    overflow:hidden;
+    font-family:Arial, Verdana, Tahoma, Helvetica, sans-serif;
+    color:#fff;
+}
+
+#timePortlet #plugin_container p {
+    margin:0;
+    padding:0;
+}
+
+#timePortlet #left_arrow, #timePortlet #right_arrow {
+    position:absolute;
+    top:200px;
+    z-index:200;
+    cursor:pointer;
+}
+
+#timePortlet #digital_container {
+    position:absolute;
+    width:100%;
+	height:100%;
+}
+
+#timePortlet #clock {
+   width:80%;
+   height:100%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#timePortlet #hours, #timePortlet #minutes {
+    width:48%;
+    height:100%;
+    float:left;
+    position:relative;
+}
+
+#timePortlet #minutes {
+    margin-left:4px;
+}
+
+#timePortlet #hours_bg, #timePortlet #minutes_bg {
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:99;
+}
+
+#timePortlet #hours_bg img, #timePortlet #minutes_bg img{
+    width:100%;
+    height:100%;
+}
+
+#timePortlet .first_digit {
+    height:100%;
+    position:absolute;
+    top:0;
+    left:15%;
+    z-index:100;
+}
+
+#timePortlet .second_digit {
+    height:100%;
+    position:absolute;
+    top:0;
+    left:55%;
+    z-index:100;
+}
+
+#timePortlet #am_pm {
+    position:absolute;
+    top:20%;
+    left:120%;
+    z-index:110;
+}
+
+#timePortlet #timezone {
+    width:100%;
+    height:206px;
+    position:absolute;
+    top:140px;
+    left:0;
+    z-index:105;
+    color:#fff;
+}
+
+#timePortlet #timezone #city, #timePortlet #timezone .loading {
+    float:left;
+    margin:65px 0 0 45px;
+    font-weight:bold;
+    font-size:12pt;
+}
+
+#timePortlet .temp #timePortlet .metric {
+    margin-left:-3px;
+}
+
+#timePortlet #timezone #date {
+    float:right;
+    margin:65px 45px 0 0;
+    text-align:right;
+    font-size:12pt;
+}
+
+#timePortlet #timezone #date {
+    font-size:12pt;
+    padding-right:2px;
+}
+

@@ -1,0 +1,12 @@
+<script type="text/javascript">
+	$(function() {
+		var _contentId = $('#menuPortlet_20100630').closest('li.content-wrap').attr('id');
+		if(_contentId==null || _contentId==""){
+			_contentId= $('#menuPortlet_20100630').closest('li.content-wrap-hide').attr('id');
+		}
+		content.opt.preview = false;
+		content.edit(null, _contentId);
+		content.opt.preview = true;
+	});
+</script>
+<div id="menuPortlet_20100630"></div>

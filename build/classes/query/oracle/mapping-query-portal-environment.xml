@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertEnvironment">
+			<statement>
+			<![CDATA[
+				insert into tlxr_environment (
+                        tenant_id,       
+                        portal_id,      
+                        env_id,
+                        env_value,         
+                        env_desc,
+                        reg_date,
+                        env_value_set
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.envId,
+                        :vo.envValue,
+                        :vo.envDesc,
+                        :vo.regDate,
+                        :vo.envValueSet
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateEnvironment">
+            <statement>
+            <![CDATA[
+                update tlxr_environment 
+                   set env_value=:vo.envValue,
+                   #if ($vo.envDesc && !$vo.envDesc.equals(""))
+                       env_desc=:vo.envDesc,
+                   #end
+                   env_id=:vo.envId
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and env_id=:vo.envId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteEnvironment">
+            <statement>
+            <![CDATA[
+                delete from tlxr_environment 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and env_id=:vo.envId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getEnvironment">
+            <statement>
+            <![CDATA[
+                select * from tlxr_environment
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and env_id=:vo.envId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalEnvironmentVO"/>
+        </query>
+
+        <query id="getEnvironments">
+            <statement>
+            <![CDATA[
+                select * from tlxr_environment
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                 order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalEnvironmentVO"/>
+        </query>
+
+        <query id="getAllEnvironments">
+            <statement>
+            <![CDATA[
+                select * from tlxr_environment
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalEnvironmentVO"/>
+        </query>
+	</queries>
+</queryservice>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+	<queries>
+		<query id="insertSample">
+			<statement>
+			<![CDATA[
+				insert into tlxr_sample (sample_id, name, content, reg_date) 
+                    values (:vo.sampleId, :vo.name, :vo.content, :vo.regDate) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateSample">
+            <statement>
+            <![CDATA[
+                update tlxr_sample set
+                    #if ($vo.name && !$vo.name.equals("")) 
+                       name=:vo.name, 
+                    #end
+                    #if ($vo.content && !$vo.content.equals(""))
+                       content=:vo.content,
+                    #end
+                    #if ($vo.regDate && !$vo.regDate.equals(""))
+                       reg_date=:vo.regDate,
+                    #end
+                    sample_id=sample_id
+                 where sample_id=:vo.sampleId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteSample">
+            <statement>
+            <![CDATA[
+                delete from tlxr_sample where sample_id=:vo.sampleId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getSample">
+            <statement>
+            <![CDATA[
+                select * from tlxr_sample where sample_id=:vo.sampleId 
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.sample.vo.SampleVO"/>
+        </query>
+
+        <query id="getSampleCount">
+            <statement>
+            <![CDATA[
+                select count(*) as cnt from tlxr_sample where sample_id=:vo.sampleId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getSampleList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_sample order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.sample.vo.SampleVO"/>
+        </query>
+
+        <query id="getSampleList2">
+            <statement>
+            <![CDATA[
+                select * from {{table}}
+            ]]>
+            </statement>
+            <result mapper="org.anyframe.query.impl.jdbc.mapper.CallbackResultSetMapper"/>
+        </query>
+
+	</queries>
+</queryservice>

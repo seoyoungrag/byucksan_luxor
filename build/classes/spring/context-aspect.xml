@@ -1,0 +1,130 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+                
+    <!-- 로깅 -->
+    <bean id="luxorLogAspect" class="com.sds.acube.luxor.common.aspect.LuxorLogAspect" />
+    
+    <aop:config>
+        <aop:pointcut id="serviceMethod" expression="execution(* com.sds.acube.luxor..*ServiceImpl.*(..))" />
+        <aop:aspect ref="luxorLogAspect">
+            <aop:before method="log4BeforeService" pointcut-ref="serviceMethod" />
+            <aop:after-throwing throwing="exception" method="log4Exception" pointcut-ref="serviceMethod" />
+        </aop:aspect>
+    </aop:config>
+
+    
+    <!-- 통계 -->
+     <bean id="luxorStatisticsAspect" class="com.sds.acube.luxor.common.aspect.LuxorStatisticsAspect" >
+        <property name="statisticsService" ref="statisticsService" />
+        <property name="loginService" ref="loginService" />
+        <property name="adminService" ref="adminService" />
+        <property name="groupPortalService" ref="groupPortalService" />
+    </bean>
+    
+    <aop:config>
+        <aop:pointcut id="loginHistoryMethod" expression="execution(* com.sds.acube.luxor..*IDIRLoginServiceImpl.loginProcess(..))" />
+        <aop:aspect ref="luxorStatisticsAspect">
+            <aop:after-returning method="insertLoginHistory" returning="retVal" pointcut-ref="loginHistoryMethod" />
+        </aop:aspect>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="pageStatisticsMethod" expression="execution(* com.sds.acube.luxor..*PortalPageServiceImpl.getPage(..))" />
+        <aop:aspect ref="luxorStatisticsAspect">
+            <aop:after-returning method="insertPageStatistics" returning="retVal" pointcut-ref="pageStatisticsMethod" />
+        </aop:aspect>
+    </aop:config>
+    
+    <aop:config>
+        <aop:pointcut id="contentsStatisticsMethod" expression="execution(* com.sds.acube.luxor..*PortalPageZoneServiceImpl.getContentsOnPage(..))" />
+        <aop:aspect ref="luxorStatisticsAspect">
+            <aop:after-returning method="insertContentStatistics" returning="retVal" pointcut-ref="contentsStatisticsMethod" />
+        </aop:aspect>
+    </aop:config>
+
+
+    <!-- 접근제어(권한) -->
+    <bean id="accessControllService" class="com.sds.acube.luxor.common.service.impl.AccessControllServiceImpl">
+        <property name="wsClientAclProviderService" ref="wsClientAclProviderService"/>
+        <property name="treeService" ref="treeService" />
+    </bean>
+    
+    <bean id="accessControllAspect" class="com.sds.acube.luxor.common.aspect.LuxorAccessControllAspect">
+        <property name="accessControllService" ref="accessControllService" />
+    </bean>
+
+    <!-- 나의메뉴 설정시 보여지는 페이지트리 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4PageTree" 
+            expression="execution(* com.sds.acube.luxor..TreeServiceImpl.getTreeList(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4PageTree" returning="returnVO" pointcut-ref="accessControll4PageTree" />
+        </aop:aspect>
+    </aop:config>
+    
+    <!-- 페이지 접근시 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4Page" 
+            expression="execution(* com.sds.acube.luxor..PortalPageServiceImpl.getPage(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4Page" returning="returnVO" pointcut-ref="accessControll4Page" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 템플릿 페이지 접근시 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4TemplatePage" 
+            expression="execution(* com.sds.acube.luxor..PortalPageServiceImpl.getTemplatePages(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4TemplatePage" returning="returnVO" pointcut-ref="accessControll4TemplatePage" />
+        </aop:aspect>
+    </aop:config>
+    
+    <!-- 모든 메뉴 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4Menu" 
+            expression="execution(* com.sds.acube.luxor..PortalMenuServiceImpl.getMenusOn*(..))
+                     || execution(* com.sds.acube.luxor..PortalMenuServiceImpl.getMyMenus(..))
+                     || execution(* com.sds.acube.luxor..PortalMenuServiceImpl.getMenus(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4Menu" returning="returnVO" pointcut-ref="accessControll4Menu" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 모든 컨텐츠 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4Content" 
+            expression="execution(* com.sds.acube.luxor..PortalPageZoneServiceImpl.getContentsOn*(..)) 
+                     || execution(* com.sds.acube.luxor..PortalContentServiceImpl.getContentList(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4Content" returning="returnVO" pointcut-ref="accessControll4Content" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 로그인 팝업 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4LoginPopup" 
+            expression="execution(* com.sds.acube.luxor..LoginPopupServiceImpl.getPopupList(..))" />
+        <aop:aspect ref="accessControllAspect">
+            <aop:after-returning method="accessControll4LoginPopup" returning="returnVO" pointcut-ref="accessControll4LoginPopup" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- Write 권한 체크 -->
+    <aop:config>
+        <aop:pointcut id="accessControll4Write" 
+            expression="execution(* com.sds.acube.luxor..*ServiceImpl.insert*(..))
+                     || execution(* com.sds.acube.luxor..*ServiceImpl.update*(..))
+                     || execution(* com.sds.acube.luxor..*ServiceImpl.delete*(..))
+                     || execution(* com.sds.acube.luxor..*ServiceImpl.set*(..))" />  
+        <aop:aspect ref="accessControllAspect">
+            <aop:before method="accessControll4Write" pointcut-ref="accessControll4Write" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>

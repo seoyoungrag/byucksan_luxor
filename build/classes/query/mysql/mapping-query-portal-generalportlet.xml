@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="getMemo">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.MemoPortletVO"/>
+        </query>
+
+        <query id="getMemoList">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.MemoPortletVO"/>
+        </query>
+
+        <query id="deleteMemo">
+            <statement>
+            <![CDATA[
+                delete
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and memo_id = :vo.memoId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="insertMemo">
+            <statement>
+            <![CDATA[
+                insert
+                into tlxr_portlet_memo(tenant_id,portal_id,user_id,memo_id,memo_skin,memo_value,reg_date)
+                values (:vo.tenantId,:vo.portalId,:vo.userId,:vo.memoId,:vo.memoSkin,:vo.memoValue,:vo.regDate)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMemo">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_memo
+               set memo_value = :vo.memoValue
+                   ,memo_skin = :vo.memoSkin
+               where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and memo_id = :vo.memoId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMemoAll">
+            <statement>
+            <![CDATA[
+                delete
+                from tlxr_portlet_memo
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getBookmarkCategory">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and parent_id = 'CATEGORY'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+
+        <query id="getBookmarkListInCategory">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and parent_id = :vo.bookmarkId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+
+         <query id="getBookmark">
+            <statement>
+            <![CDATA[
+                select *
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_id = :vo.bookmarkId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.BookmarkPortletVO"/>
+        </query>
+
+        <query id="insertBookmarkData">
+            <statement>
+            <![CDATA[
+                insert
+                into tlxr_portlet_bookmark(tenant_id,portal_id,user_id,parent_id,bookmark_id,bookmark_name,bookmark_url,description,reg_date,bookmark_option)
+                values (:vo.tenantId,:vo.portalId,:vo.userId,:vo.parentId,:vo.bookmarkId,:vo.bookmarkName,:vo.bookmarkUrl,:vo.description,:vo.regDate,:vo.bookmarkOption)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateBookmarkData">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_bookmark
+               set bookmark_name = :vo.bookmarkName
+                   ,parent_id = :vo.parentId
+                   ,bookmark_url = :vo.bookmarkUrl
+                   ,description = :vo.description
+                   ,bookmark_option = :vo.bookmarkOption
+               where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_id = :vo.bookmarkId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateCategoryInit">
+            <statement>
+            <![CDATA[
+               update tlxr_portlet_bookmark
+               set bookmark_option = ''
+               where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_option = :vo.bookmarkOption
+            ]]>
+            </statement>
+        </query>
+
+         <query id="deleteBookmarkCategory">
+            <statement>
+            <![CDATA[
+                delete
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and (bookmark_id = :vo.bookmarkId or parent_id = :vo.bookmarkId)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteBookmark">
+            <statement>
+             <![CDATA[
+                delete
+                from tlxr_portlet_bookmark
+                where tenant_id = :vo.tenantId
+                    and portal_id = :vo.portalId
+                    and user_id = :vo.userId
+                    and bookmark_id = :vo.bookmarkId
+            ]]>
+            </statement>
+        </query>
+
+    </queries>
+</queryservice>

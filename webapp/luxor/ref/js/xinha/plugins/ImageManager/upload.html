@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Insert Image</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/ep/luxor/ref/js/xinha/popups/popup.css"/>
+<script type="text/javascript" src="/ep/luxor/ref/js/xinha/popups/popup.js"></script>
+<script type="text/javascript" src="/ep/luxor/ref/js/xinha/XinhaConfig.js"></script>
+<script type="text/javascript">
+	Xinha = window.opener.Xinha;
+	
+	function i18n(str) {
+  		return (Xinha._lc(str, 'Xinha'));
+	}
+
+	function Init() {		
+		window.resizeTo(400,100);
+  		__dlg_translate('Xinha');
+  		__dlg_init({left:100,top:100});
+	}
+
+	function onOK() {
+		document.upload_form.action = "/ep/image/xinha/upload.do?prefixid="+opener._prefixID;
+		document.upload_form.submit();
+	}
+
+	function checkExt(str) {
+		var flag = false;
+		var token = imageExt.split(",");
+		for(var i=0; i < token.length; i++) {
+			if(str.lastIndexOf(token[i]) > -1) {
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
+	function onCancel() {
+  		__dlg_close(null);
+  		return false;
+	}
+
+	function uploadDone(t_img_url) {
+		var param = new Object();
+		param['f_url'] = t_img_url;
+		param['f_border'] = "0";
+		__dlg_close(param);
+		return false;
+	}
+</script>
+</head>
+
+<body class="dialog" onload="Init()">
+
+<div class="title">Insert Image</div>
+
+<form name="upload_form" method="post" enctype="multipart/form-data" target="HIDDEN_FRAME">
+<input type="hidden" name="f_base" id="f_base"/>
+<input type="hidden" name="f_alt" id="f_alt"/>
+<input type="hidden" name="f_align" id="f_align"/>
+<input type="hidden" name="f_border" id="f_border"/>
+<input type="hidden" name="f_horiz" id="f_horiz"/>
+<input type="hidden" name="f_vert" id="f_vert"/>
+
+<div style="padding:10px">
+	<input type="file" name="f_url" id="f_url" style="width:95%"/>
+</div>
+
+<div id="buttons">
+	<button type="button" name="ok" onclick="onOK();">Upload</button>&nbsp;
+	<button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+</div>
+</form>
+
+<iframe name="HIDDEN_FRAME" id="HIDDEN_FRAME" style="display:none" width="0" height="0"></iframe>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Luxor Portal JDBC Information</comment>
+	<entry key="luxor.portal.jdbc.db.type">0</entry>
+	<entry key="luxor.portal.jdbc.db.type.name">oracle</entry>
+	<entry key="luxor.portal.jdbc.was.type">0</entry>
+	<entry key="luxor.portal.jdbc.datasource">java:comp/env/jdbc/portalDataSource</entry>
+	<entry key="luxor.portal.jdbc.spy.driver">net.sf.log4jdbc.DriverSpy</entry>
+	<entry key="luxor.portal.jdbc.driver">oracle.jdbc.OracleDriver</entry>
+	<entry key="luxor.portal.jdbc.spy.url">jdbc:log4jdbc:oracle:thin:@211.209.247.228:1522:bics</entry>
+	<entry key="luxor.portal.jdbc.url">jdbc:oracle:thin:@211.209.247.228:1522:bics</entry>
+	<entry key="luxor.portal.jdbc.username">LUXOR</entry>
+	<entry key="luxor.portal.jdbc.password">SDS000</entry>
+</properties>

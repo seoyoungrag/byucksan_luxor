@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+    <queries>
+        <query id="com.sds.acube.luxor.common.admin.user.insert">
+            <statement>
+            <![CDATA[
+                insert into tlxr_admin_user (
+                        tenant_id,
+                        portal_id,
+                        user_id,
+                        user_name,
+                        user_uid,
+                        last_update_date
+                    )
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.userId,
+                        :vo.userName,
+                        :vo.userUid,
+                        :vo.regDate
+                    )
+            ]]>
+            </statement>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.common.admin.user.delete">
+            <statement>
+            <![CDATA[
+                delete from tlxr_admin_user
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and user_id = :vo.userId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.admin.user.get">
+            <statement>
+            <![CDATA[
+                select * from tlxr_admin_user
+                 where tenant_id = :vo.tenantId
+                   and user_id = :vo.userId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminUserVO"/>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.common.admin.user.getList">
+            <statement>
+            <![CDATA[
+                select *
+                  from (
+                        select c.*,
+                               'Group' portal_name
+                        from tlxr_admin_user c
+                        where 1=1
+                        #if ($vo.tenantId)
+                            and c.tenant_id = :vo.tenantId
+                        #end
+                            and c.portal_id = '_ROOT_'
+                        union
+                        select a.* ,
+                            b.portal_name
+                        from tlxr_admin_user a,
+                            tlxr_portal_group b
+                        where 1=1
+                        #if ($vo.tenantId)
+                            and a.tenant_id = :vo.tenantId
+                            and a.tenant_id = b.tenant_id
+                        #end
+                            and a.portal_id = b.portal_id
+                       ) d
+                  order by d.last_update_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.AdminUserVO"/>
+        </query>
+
+         <query id="com.sds.acube.luxor.common.admin.user.setAclIgnoreType">
+            <statement>
+            <![CDATA[
+                update tlxr_admin_user
+                set is_ignore_acl = :vo.isIgnoreAcl
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and user_uid = :vo.userUid
+            ]]>
+            </statement>
+        </query>
+
+
+    </queries>
+</queryservice>

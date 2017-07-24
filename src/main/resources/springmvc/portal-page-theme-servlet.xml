@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="portalPageThemeController" name="/page/theme/*.do" class="com.sds.acube.luxor.portal.controller.PortalPageThemeController">
+        <property name="portalPageService" ref="portalPageService" />
+        <property name="portalPageThemeService" ref="portalPageThemeService" />
+        <property name="methodNameResolver" ref="portalPageThemeControllerResolver" />
+        <property name="pageThemeList" value="/luxor/portal/page/admin/themeList.jsp" />
+        <property name="pageThemeCollection" value="/luxor/portal/page/admin/themeCollection.jsp" />
+    </bean>
+  
+    <bean id="portalPageThemeControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/page/theme/collection.do">getPageThemeCollection</prop>
+                <prop key="/page/theme/list.do">getPageThemeList</prop>
+                <prop key="/page/theme/view.do">getPageTheme</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

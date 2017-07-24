@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!--
+	 DataBase Type(luxor.portal.jdbc.db.type)
+	┌-----┬------------┬----------------------------------┐
+	│  0  │ Oracle     │                                  │
+	├-----┼------------┤                                  │
+	│  1  │ MySQL      │                                  │
+	├-----┼------------┤ database                         │
+	│  2  │ DB2        │ type name                        │
+	├-----┼------------┤ all character                    │
+	│  3  │ Altibase   │ lower case !!!                   │
+	├-----┼------------┤ (luxor.portal.jdbc.db.type.name) │
+	│  4  │ Sybase     │                                  │
+	├-----┼------------┤                                  │
+	│  5  │ MSSQL      │                                  │
+	└-----┴------------┴----------------------------------┘	  
+
+	 WAS Type(luxor.portal.jdbc.was.type)
+	┌-----┬------------------┐
+	│  0  │ weblogic/tomcat  │
+	├-----┼------------------┤
+	│  1  │ weblogic8.1      │
+	├-----┼------------------┤
+	│  10 │ jeus             │
+	└-----┴------------------┘	  
+
+	 JDBC Driver
+	┌--------------------------┬------------------------------------------------┐
+	│Oracle                    │ oracle.jdbc.driver.OracleDriver                │
+	├--------------------------┼------------------------------------------------┤
+	│Sybase                    │ com.sybase.jdbc2.jdbc.SybDriver                │
+	├--------------------------┼------------------------------------------------┤
+	│jTDS SQL Server & Sybase  │ net.sourceforge.jtds.jdbc.Driver               │
+	├--------------------------┼------------------------------------------------┤ 
+	│Microsoft SQL Server 2000 │ com.microsoft.jdbc.sqlserver.SQLServerDriver   │
+	├--------------------------┼------------------------------------------------┤ 
+	│Microsoft SQL Server 2005↑│ com.microsoft.sqlserver.jdbc.SQLServerDriver   │
+	├--------------------------┼------------------------------------------------┤ 
+	│Weblogic SQL Server       │ weblogic.jdbc.sqlserver.SQLServerDriver        │
+	├--------------------------┼------------------------------------------------┤ 
+	│Informix                  │ com.informix.jdbc.IfxDriver                    │
+	├--------------------------┼------------------------------------------------┤ 
+	│MySQL                     │ com.mysql.jdbc.Driver                          │
+	├--------------------------┼------------------------------------------------┤ 
+	│DB2 JDBC Type2            │ COM.ibm.db2.jdbc.app.DB2Driver                 │
+	├--------------------------┼------------------------------------------------┤
+	│DB2 JDBC Type3            │ COM.ibm.db2.jdbc.net.DB2Driver                 │
+	├--------------------------┼------------------------------------------------┤
+	│DB2 Universal             │ com.ibm.db2.jcc.DB2Driver                      │
+	├--------------------------┼------------------------------------------------┤
+	│Altibase                  │ Altibase.jdbc.driver.AltibaseDriver            │
+	├--------------------------┼------------------------------------------------┤
+	│CUBRID                    │ cubrid.jdbc.driver.CUBRIDDriver                │
+	└--------------------------┴------------------------------------------------┘
+	
+	 JDBC URL
+	┌---------------------------┬------------------------------------------------------------------------------------┐
+	│Oracle                     │ jdbc:oracle:thin:@host:port:sid                                                    │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Sybase                     │ jdbc:sybase:Tds:host:port/databasename                                             │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│jTDS SQL Server & Sybase   │ jdbc:jtds:sqlserver://host:port/databasename;tds=version;lastupdatecount=true      │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Microsoft SQL Server 2000  │ jdbc:microsoft:sqlserver://host:port;DatabaseName=databasename                     │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Microsoft SQL Server 2005↑ │ jdbc:sqlserver://host:port;DatabaseName=databasename                               │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Weblogic SQL Server        │ jdbc:bea:sqlserver://host:port                                                     │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Informix                   │ jdbcc:informix-sqli://host:port/databasename:informixserver=dbservername           │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│MySQL                      │ jdbc:mysql://host:port/databasename?propertyName1=propertyValue1...                │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│DB2                        │ jdbc:db2://host:port/databasename                                                  │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│Altibase                   │ jdbc:Altibase://host:port/databasename                                             │
+	├---------------------------┼------------------------------------------------------------------------------------┤
+	│CUBRID                     │ jdbc:cubrid:host:port:databasename                                                 │
+	└---------------------------┴------------------------------------------------------------------------------------┘		
+-->
+<properties>
+	<comment>Luxor Portal JDBC Information</comment>
+	<entry key="luxor.portal.jdbc.db.type">0</entry>
+	<entry key="luxor.portal.jdbc.db.type.name">oracle</entry>
+	<entry key="luxor.portal.jdbc.was.type">0</entry>
+	<entry key="luxor.portal.jdbc.datasource">portalDS</entry>
+	<entry key="luxor.portal.jdbc.spy.driver">net.sf.log4jdbc.DriverSpy</entry>
+	<entry key="luxor.portal.jdbc.driver">oracle.jdbc.OracleDriver</entry>
+	<entry key="luxor.portal.jdbc.spy.url">jdbc:log4jdbc:oracle:thin:@70.7.34.153:1521:ora10</entry>
+	<entry key="luxor.portal.jdbc.url">jdbc:oracle:thin:@70.7.34.153:1521:ora10</entry>
+	<entry key="luxor.portal.jdbc.username">LUXOR</entry>
+	<entry key="luxor.portal.jdbc.password">sds000</entry>
+</properties>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+    <queries>
+    
+        <query id="com.sds.acube.luxor.portal.portlet.context.insert">
+            <statement>
+            <![CDATA[
+                insert into tlxr_portlet_context (tenant_id, portal_id, type_of_portlet, context_name, category_id, deploy_description_xml, status_code, last_update_date, exception)
+                    values (:vo.tenantId, :vo.portalId, :vo.typeOfPortlet, :vo.contextName, :vo.categoryId, :vo.deployDescriptionXml, :vo.statusCode, :vo.regDate, :vo.exception)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.insert">
+            <statement>
+            <![CDATA[
+                insert into tlxr_portlet_category (tenant_id, portal_id, category_id, category_name, last_update_date)
+                    values (:vo.tenantId, :vo.portalId, :vo.categoryId, :vo.categoryName, :vo.regDate)
+            ]]>
+            </statement>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.update">
+            <statement>
+            <![CDATA[
+                update tlxr_portlet_context set
+                       category_id = :vo.categoryId,
+                       status_code = :vo.statusCode,
+                       type_of_portlet = :vo.typeOfPortlet,
+                       deploy_description_xml = :vo.deployDescriptionXml,
+                       last_update_date = :vo.modDate
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and context_name = :vo.contextName
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.update4undeploy">
+            <statement>
+            <![CDATA[
+                update tlxr_portlet_context set
+                       status_code = :vo.statusCode
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and context_name = :vo.contextName
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.updateDeployDescriptionXML">
+            <statement>
+            <![CDATA[
+                update tlxr_portlet_context set
+                       deploy_description_xml = :vo.deployDescriptionXml,
+                       last_update_date = :vo.modDate
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and context_name = :vo.contextName
+            ]]>
+            </statement>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.update">
+            <statement>
+            <![CDATA[
+                update tlxr_portlet_category set
+                       category_name = :vo.categoryName
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and category_id = :vo.categoryId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.delete">
+            <statement>
+            <![CDATA[
+                delete from tlxr_portlet_context
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and context_name = :vo.contextName
+            ]]>
+            </statement>
+        </query>
+
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.delete">
+            <statement>
+            <![CDATA[
+                delete from tlxr_portlet_category
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and category_id = :vo.categoryId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.get">
+            <statement>
+            <![CDATA[
+                select a.*, b.category_name from tlxr_portlet_context a, tlxr_portlet_category b
+                 where a.tenant_id = :vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' + :vo.portalId + '%' ESCAPE '_' or portal_id = :vo.portalId)
+                   and a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.category_id = b.category_id
+                   and a.context_name = :vo.contextName
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletManagementVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.checkDup">
+            <statement>
+            <![CDATA[
+                select a.*, b.category_name from tlxr_portlet_context a, tlxr_portlet_category b
+                 where a.tenant_id = :vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group)
+                   and a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.category_id = b.category_id
+                   and a.context_name = :vo.contextName
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletManagementVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.checkExist">
+            <statement>
+            <![CDATA[
+                select count(*) cnt from tlxr_portlet_context
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and context_name = :vo.contextName
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.get">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portlet_category
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and category_id = :vo.categoryId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletCategoryVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.getName">
+            <statement>
+            <![CDATA[
+                select c.category_id,
+                       m.message_name category_name
+                  from tlxr_message m,
+                       tlxr_portlet_category c
+                 where m.tenant_id = :vo.tenantId
+                   and m.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' + :vo.portalId + '%' ESCAPE '_' or portal_id = :vo.portalId)
+                   and m.tenant_id = c.tenant_id
+                   and m.portal_id = c.portal_id
+                   and m.message_id = c.category_name
+                   and m.lang_type = :vo.langType
+                   and c.category_id = :vo.categoryId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletCategoryVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.getList4Deploy">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portlet_context
+                 where status_code=1 or status_code=3
+                 order by last_update_date
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletManagementVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.getList">
+            <statement>
+            <![CDATA[
+                select a.*, b.category_name
+                from tlxr_portlet_category b,
+                    (select tenant_id, portal_id, context_name,type_of_portlet,category_id,status_code,deploy_description_xml,last_update_date,exception,
+                    SUBSTRING( DEPLOY_DESCRIPTION_XML, CHARINDEX( '<title>', DEPLOY_DESCRIPTION_XML ) + 7, CHARINDEX( '</title>', DEPLOY_DESCRIPTION_XML ) - CHARINDEX( '<title>', DEPLOY_DESCRIPTION_XML ) - 7 ) as title
+                    from TLXR_PORTLET_CONTEXT) a
+                 where a.tenant_id = :vo.tenantId
+                   and a.portal_id = :vo.portalId
+                   and a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.category_id = b.category_id
+               #if (!$vo.categoryId.equals(""))
+                   and a.category_id = :vo.categoryId
+               #end
+               #if ($vo.searchWay.equals("displayName") && !$vo.searchKey.equals(""))
+                   and (lower(a.title) like lower('$vo.searchKey')) ESCAPE '_'
+               #end
+               #if ($vo.searchWay.equals("contextName") && !$vo.searchKey.equals(""))
+                   and (lower(a.context_name) like lower('$vo.searchKey')) ESCAPE '_'
+               #end
+                 order by a.last_update_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletManagementVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.context.getListAll">
+            <statement>
+            <![CDATA[
+                select * from tlxr_portlet_context
+                 order by last_update_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletManagementVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.portal.portlet.category.getList">
+            <statement>
+            <![CDATA[
+                select c.tenant_id,
+                       c.portal_id,
+                       c.category_id,
+                       c.last_update_date,
+                       m.message_name category_name
+                  from tlxr_message m,
+                       tlxr_portlet_category c
+                 where m.tenant_id = :vo.tenantId
+                   and m.portal_id = :vo.portalId
+                   and m.tenant_id = c.tenant_id
+                   and m.portal_id = c.portal_id
+                   and m.message_id = c.category_name
+                   and m.lang_type = :vo.langType
+                 order by c.last_update_date
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortletCategoryVO"/>
+        </query>
+
+    </queries>
+</queryservice>

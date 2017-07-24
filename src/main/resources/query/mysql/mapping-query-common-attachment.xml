@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="com.sds.acube.luxor.common.attachment.insert">
+			<statement>
+			<![CDATA[
+				insert into tlxr_attachment(tenant_id, portal_id, attachment_id, seq, module_div, client_filename, server_filename, file_size, last_update_date, store_file_id)
+				values(:vo.tenantId, :vo.portalId, :vo.attachmentId, :vo.seq, :vo.moduleDiv, :vo.clientFilename, :vo.serverFilename, :vo.fileSize, :vo.regDate, :vo.storeFileId)
+			]]>
+			</statement>
+		</query>
+
+        <query id="com.sds.acube.luxor.common.attachment.delete">
+            <statement>
+            <![CDATA[
+                delete 
+				  from tlxr_attachment 
+				 where tenant_id = :vo.tenantId
+				   and portal_id = :vo.portalId
+				   and attachment_id = :vo.attachmentId
+				   and server_filename = :vo.serverFilename
+				   and file_size = :vo.fileSize
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="com.sds.acube.luxor.common.attachment.deleteGroup">
+            <statement>
+            <![CDATA[
+                delete 
+				  from tlxr_attachment 
+				 where tenant_id = :vo.tenantId
+				   and portal_id = :vo.portalId
+				   and attachment_id = :vo.attachmentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.attachment.get">
+            <statement>
+            <![CDATA[
+                select * 
+				  from tlxr_attachment
+				 where tenant_id = :vo.tenantId
+				   and portal_id = :vo.portalId
+				   and attachment_id = :vo.attachmentId
+				   and seq = :vo.seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.AttachmentVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.attachment.getList">
+            <statement>
+            <![CDATA[
+                select * 
+				  from tlxr_attachment
+				 where tenant_id = :vo.tenantId
+				   and portal_id = :vo.portalId
+				   and attachment_id = :vo.attachmentId
+				 order by seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.AttachmentVO"/>
+        </query>
+
+	</queries>
+</queryservice>

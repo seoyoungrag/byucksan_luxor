@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="portalPageService" class="com.sds.acube.luxor.portal.service.impl.PortalPageServiceImpl">
+        <property name="treeService" ref="treeService" />
+        <property name="messageService" ref="messageService" />
+        <property name="portalMenuService" ref="portalMenuService" />
+        <property name="portalPageZoneService" ref="portalPageZoneService" />
+        <property name="portalPageDAO" ref="portalPageDAO" />
+        <property name="wsClientAclProviderService" ref="wsClientAclProviderService"/>   
+        <property name="groupPortalService" ref="groupPortalService"/>   
+    </bean>
+    
+    <bean id="portalPageDAO" class="com.sds.acube.luxor.portal.dao.PortalPageDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+
+    <bean id="portalPageThemeService" class="com.sds.acube.luxor.portal.service.impl.PortalPageThemeServiceImpl">
+    	<property name="groupPortalService" ref="groupPortalService" />
+        <property name="messageService" ref="messageService" />
+        <property name="portalPageThemeDAO" ref="portalPageThemeDAO" />
+    </bean>
+    
+    <bean id="portalPageThemeDAO" class="com.sds.acube.luxor.portal.dao.PortalPageThemeDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+
+    <bean id="portalPageLayoutService" class="com.sds.acube.luxor.portal.service.impl.PortalPageLayoutServiceImpl">
+    	<property name="groupPortalService" ref="groupPortalService" />
+        <property name="messageService" ref="messageService" />
+        <property name="portalPageLayoutDAO" ref="portalPageLayoutDAO" />
+    </bean>
+    
+    <bean id="portalPageLayoutDAO" class="com.sds.acube.luxor.portal.dao.PortalPageLayoutDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+
+    <bean id="portalPageZoneService" class="com.sds.acube.luxor.portal.service.impl.PortalPageZoneServiceImpl">
+    	<property name="groupPortalService" ref="groupPortalService" />
+        <property name="portalPageZoneDAO" ref="portalPageZoneDAO" />
+    </bean>
+    
+    <bean id="portalPageZoneDAO" class="com.sds.acube.luxor.portal.dao.PortalPageZoneDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+
+</beans>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="com.sds.acube.luxor.common.logoutsys.insert">
+			<statement>
+			<![CDATA[
+				insert into tlxr_logoutsys (
+                        tenant_id, 
+                        portal_id,
+                        system_id, 
+                        system_name, 
+                        logout_url
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.systemId,
+                        :vo.systemName,
+                        :vo.logoutUrl
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="com.sds.acube.luxor.common.logoutsys.update">
+            <statement>
+            <![CDATA[
+                update tlxr_logoutsys set
+                       logout_url = :vo.logoutUrl
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and system_id = :vo.systemId 
+            ]]>
+            </statement>
+        </query>
+
+		<query id="com.sds.acube.luxor.common.logoutsys.updateStatus">
+            <statement>
+            <![CDATA[
+                update tlxr_logoutsys set
+                       status = :vo.status
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and system_id = :vo.systemId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.logoutsys.delete">
+            <statement>
+            <![CDATA[
+                delete from tlxr_logoutsys 
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and system_id = :vo.systemId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.logoutsys.getListAll">
+            <statement>
+            <![CDATA[
+                select a.system_id, 
+                	   a.status,
+                       a.logout_url, 
+                       b.message_name system_name 
+                  from tlxr_logoutsys a, tlxr_message b
+                 where a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.tenant_id = :vo.tenantId
+                   and a.portal_id = :vo.portalId
+                   and a.system_name = b.message_id
+                   and b.lang_type = :vo.langType
+                 order by b.message_name desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LogoutSysVO"/>
+        </query>
+        
+        <query id="com.sds.acube.luxor.common.logoutsys.getList">
+            <statement>
+            <![CDATA[
+                select a.system_id,
+                       a.status, 
+                       a.logout_url, 
+                       b.message_name system_name 
+                  from tlxr_logoutsys a, tlxr_message b
+                 where a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.tenant_id = :vo.tenantId
+                   and a.portal_id = :vo.portalId
+                   and a.system_name = b.message_id
+                   and b.lang_type = :vo.langType
+                   and a.status = 1
+                 order by b.message_name desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LogoutSysVO"/>
+        </query>
+
+        <query id="com.sds.acube.luxor.common.logoutsys.get">
+            <statement>
+            <![CDATA[
+                select a.system_id, 
+                       a.logout_url, 
+                       a.system_name message_id,
+                       b.message_name system_name 
+                  from tlxr_logoutsys a, tlxr_message b
+                 where a.tenant_id = b.tenant_id
+                   and a.portal_id = b.portal_id
+                   and a.tenant_id = :vo.tenantId
+                   and a.portal_id = :vo.portalId
+                   and a.system_id = :vo.systemId 
+                   and a.system_name = b.message_id
+                   and b.lang_type = :vo.langType
+                 order by b.message_name desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LogoutSysVO"/>
+        </query>
+
+	</queries>
+</queryservice>

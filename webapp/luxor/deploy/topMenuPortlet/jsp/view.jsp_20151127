@@ -1,0 +1,170 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<%@ page import="com.sds.acube.luxor.common.util.*" %>
+<%@ page import="com.sds.acube.luxor.framework.config.*" %>
+<%@ page import="com.sds.acube.luxor.common.vo.UserProfileVO" %>
+<%@page import="com.sds.acube.luxor.common.ConstantList"%>
+<%@page import="java.util.Locale"%>
+<%@page import="com.sds.acube.luxor.portal.vo.AdminUserVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sds.acube.luxor.portal.vo.UserPortalVO"%>
+<%/*
+	상단 메뉴를 구성하는 페이지
+	기본적으로 상단 메뉴는 기본 3단으로 구성되지만 
+	CSS 수정을 통하여 1단, 2단, 3단으로 구성 가능함
+	
+	Javascript는 js/portlet_main.js, css는 css/portlet_main.css 에 정의되어있음
+	imagePath = 표현할 페이지의 테마경로/portletId/
+*/%>
+
+<%
+	boolean usePersonalMenu = "Y".equals(LuxorConfig.getEnvString(request, "USE_PERSONAL_MENU"));
+	String contextPath = request.getContextPath();
+	String currentPath = (String)request.getAttribute("currentPath");
+	String portletContext = (String)request.getAttribute("portletContext");
+	UserProfileVO userProfile = (UserProfileVO)session.getAttribute("userProfile");
+	List<UserPortalVO> userPortalList = (List<UserPortalVO>)session.getAttribute("JOIN_PORTAL_IDS");
+	String userUid = ""; 
+	String deptId = "";
+	if(userProfile != null) {
+		userUid = userProfile.getUserUid();
+		deptId = userProfile.getDeptId();
+	}
+	String themeImageUrl = UtilRequest.getString(request, "themeImageUrl");
+	String initHome = CommonUtil.nullTrim((String)session.getAttribute(ConstantList.US_CODE_INITIAL_PAGE));
+	Locale langType = (Locale)session.getAttribute("LANG_TYPE");
+
+	//어드민여부판단
+	AdminUserVO[] admins = LuxorConfig.getAdminList();
+	boolean isAdmin = false;
+	String adminUserUid = "";
+	String isIgnoreAcl = "";
+	String portalId = CommonUtil.nullTrim((String)session.getAttribute("PORTAL_ID"));
+	List<String> accessIdList = (List<String>)session.getAttribute("ACCESS_ID_LIST");
+	if(admins != null) {
+		for(int j = 0 ; j < admins.length ; j++) {
+			if(admins[j].getAdminType() == 0) {
+				if(accessIdList.contains(admins[j].getUserUid())) {
+					portalId = "_ROOT_";
+					adminUserUid = admins[j].getUserUid();
+					isIgnoreAcl = admins[j].getIsIgnoreAcl();
+					isAdmin = true;
+				}
+			} else if(admins[j].getAdminType() == 1) { 
+				if(accessIdList.contains(admins[j].getUserUid()) && admins[j].getPortalId().equals(CommonUtil.nullTrim((String)session.getAttribute("PORTAL_ID")))) {
+					portalId = admins[j].getPortalId();
+					adminUserUid = admins[j].getUserUid();
+					isIgnoreAcl = admins[j].getIsIgnoreAcl();
+					isAdmin = true;
+				}
+			} 
+		}
+	}
+%>
+
+
+<script type="text/javascript">
+	var portal_label_76 = "<spring:message code="portal.label.76" />";
+	var portal_label_77 = "<spring:message code="portal.label.77" text="컨텐츠 추가" />";
+	var portal_alert_msg_56 = "<spring:message code="portal.alert.msg.56" text="검색 결과가 없습니다." />";
+	var user_alert_msg_9 = "<spring:message code="user.alert.msg.9" text="초기화면으로 설정하시겠습니까?" />";
+	var portal_alert_msg_9 = "<spring:message code="portal.alert.msg.9" text="오류가 발생했습니다." />";
+	var portal_alert_msg_13 = "<spring:message code="portal.alert.msg.13" text="저장되었습니다." />";
+	var portal_authorization_msg_2 = "<spring:message code="portal.authorization.msg.2" text="로그인이 필요합니다." />";
+	var portal_tooltip_msg_01 = "<spring:message code="portal.mymenu.alert.1" text="마이메뉴에서 해제하시려면 클릭하세요" />";
+	var portal_tooltip_msg_02 = "<spring:message code="portal.mymenu.alert.2" text="마이메뉴에 등록하시려면 클릭하세요" />";
+	var portal_tooltip_msg_03 = "<spring:message code="portal.mymenu.alert.3" text="초기 페이지로 등록된 페이지입니다." />";
+	var portal_tooltip_msg_04 = "<spring:message code="portal.mymenu.alert.4" text="이 페이지를 초기페이지로 등록하시려면 클릭하세요" />";
+	var userUid = "<%=userUid%>";
+	var initHome = "<%=initHome%>";
+	var langType = "<%=langType%>";
+	luxor.usePersonalMenu = <%=usePersonalMenu%>;
+	luxor.isLoggedIn = <%= (userProfile != null) %>;
+
+	function goAdminPage() {
+		window.open("<%=contextPath%>/luxor/admin","luxor_admin","");
+	}
+
+	function setAclIgnore(type) {
+		postJson('adminController','setAclIgnoreType','isIgnoreAcl='+type+'&portalId=<%=portalId%>&userUid=<%=adminUserUid%>',function(data) {
+			self.location.reload();
+		});	
+	}
+</script>
+
+<div id="<%=portletContext%>" class="main-header">
+	<div class="main-top"> 
+		<div class="mainCenter">
+			<!-- ACUBE Logo -->
+			<div class="top-logo">
+				<a href="/ep"><img src="<%=themeImageUrl%>/<%=portletContext%>/top_logo.gif" alt="ACUBE" title="ACUBE" class="logo" /></a>
+			</div>
+			<!-- 상단메뉴 -->
+			<div class="etcinfo">
+		        <div class="main-menu">
+					<ul id="mzTop" class="dropdown">
+						<% if(isAdmin == true) { %>
+						<li class="mainglo"><a href="javascript:;" onclick="goAdminPage();"><spring:message code="portal.label.216" text="관리자화면" /></a></li>
+			       		<li style="position: relative;bottom: 4px;margin-right: 10px;">
+				       		<%if(isIgnoreAcl.equals("N")) {%><span class="smain-btn"><a href="javascript:setAclIgnore('Y');"><spring:message code="portal.label.217" text="권한 체크 해제" /></a></span><% } %>
+				       		<%if(isIgnoreAcl.equals("Y")) {%><span class="smain-btn"><a href="javascript:setAclIgnore('N');"><spring:message code="portal.label.218" text="권한 체크 적용" /></a></span><% } %>
+			       		</li>
+						<% } %>
+						<li style="position: relative;bottom: 4px;margin-right: 10px;">
+						<% if(userPortalList != null && userPortalList.size() > 1) { %>
+							<select id="searchPortal" style="width:150px">
+								<% for(int i = 0 ; i < userPortalList.size() ; i++) { %>
+									<% if(CommonUtil.nullTrim((String)session.getAttribute("PORTAL_ID")).equals(userPortalList.get(i).getPortalId())) { %>
+								    	<option value='<%=userPortalList.get(i).getConUserUID()%>' id='<%=userPortalList.get(i).getPortalId() %>' selected="selected"><%=userPortalList.get(i).getPortalName() %></option>
+								    <% } else { %>
+								    	<option value='<%=userPortalList.get(i).getConUserUID()%>' id='<%=userPortalList.get(i).getPortalId() %>'><%=userPortalList.get(i).getPortalName() %></option>
+								<% } %>
+								<% } %>
+	   						</select>
+						<% } %>
+						</li>
+					</ul>
+		       	</div>
+		    </div>
+	    </div>
+  	</div>
+	<div class="menu-bar">
+		<div class="main-middle-center">
+			<!-- 중간메뉴 -->
+			<ul id="mzMiddle" class="top-menu dropdown" style="padding-left:3px;"></ul>
+	        <!-- 검색부분 -->
+	        <div class="top-search" id="top_search">
+				<dl>
+					<dd>
+						<select id="searchWay" title="<spring:message code="portal.label.210" text="검색조건" />">
+							<option value="usersearch"><spring:message code="portal.label.74" text="인명검색" /></option>
+							<option value="menusearch"><spring:message code="portal.label.75" text="메뉴검색" /></option>
+						</select>
+						<input type="text" id="searchKey" class="input-search" style="width:135px;" title="<spring:message code="portal.label.21" text="검색어" />" />
+						<a href="#" id="doSearch"><img src="<%=themeImageUrl%>/<%=portletContext%>/top_search.gif" alt="<spring:message code="portal.btn.label.8" text="검색" />" title="<spring:message code="portal.btn.label.8" text="검색"/>" class="top-search-icon" /></a>
+					</dd>
+				</dl>
+	        </div>
+		</div>
+	</div>
+    <!-- 하단메뉴 -->
+	<div class="smenu">
+		<div class="top-second-menu">
+			<ul class="submenu-list dropdown" id="mzBottom">
+			</ul>
+		</div>
+	</div>
+</div>
+
+<%-- 검색결과 팝업 --%>
+<div id="search_result_dialog" class="dialog" style="width:180px;border:1px solid #828282;">
+	<div id="search_result" style="overflow:auto;padding:5px;height:200px;"></div>
+	<div style="border-top:1px solid #c2c2c2;background:#F5F5F5;text-align:right;padding:3px;">
+		<a href='#' onclick="$('#search_result_dialog').hide()"><span style="color:#454545"><b><spring:message code="portal.btn.label.29" text="닫기"/></b></span></a>
+	</div>
+</div>
+
+<input type="hidden" id="userUid" value="<%=userUid%>" />
+<input type="hidden" id="deptId" value="<%=deptId%>" />

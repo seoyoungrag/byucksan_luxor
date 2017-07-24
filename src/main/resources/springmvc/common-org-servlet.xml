@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="orgController" name="/org/*.do" class="com.sds.acube.luxor.common.controller.OrgController">
+		<property name="orgService" ref="orgService" />
+		<property name="methodNameResolver" ref="orgControllerResolver" />
+        <property name="gradeList" value="/luxor/common/org/gradeList.jsp" />
+        <property name="positionList" value="/luxor/common/org/positionList.jsp" />
+        <property name="titleList" value="/luxor/common/org/titleList.jsp" />
+        <property name="dutyList" value="/luxor/common/org/dutyList.jsp" />
+        <property name="gradeTree" value="/luxor/common/user/acl/gradeTree.jsp" />
+        <property name="positionTree" value="/luxor/common/user/acl/positionTree.jsp" />
+        <property name="titleTree" value="/luxor/common/user/acl/titleTree.jsp" />
+        <property name="dutyTree" value="/luxor/common/user/acl/dutyTree.jsp" />
+        <property name="orgTree" value="/luxor/common/user/acl/orgTree.jsp" />
+	</bean>
+  
+    <bean id="orgControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/org/getGradeList.do">getGradeList</prop>
+                <prop key="/org/getTitleList.do">getTitleList</prop>
+                <prop key="/org/getDutyList.do">getDutyList</prop>
+                <prop key="/org/getPositionList.do">getPositionList</prop>
+                <prop key="/org/getGradeTree.do">getGradeTree</prop>
+                <prop key="/org/getPositionTree.do">getPositionTree</prop>
+                <prop key="/org/getTitleTree.do">getTitleTree</prop>
+                <prop key="/org/getDutyTree.do">getDutyTree</prop>
+                <prop key="/org/getOrgTree.do">getOrgTree</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

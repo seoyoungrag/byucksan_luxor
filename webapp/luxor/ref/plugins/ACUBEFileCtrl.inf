@@ -1,0 +1,9 @@
+[version]
+signature="$CHICAGO$"
+AdvancedINF=2.0
+
+[Setup Hooks]
+InstallHook=InstallHook
+
+[InstallHook]
+run=%EXTRACT_DIR%\ACUBEFileCtrl.exe

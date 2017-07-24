@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertPlug">
+			<statement>
+			<![CDATA[
+				insert into tlxr_login_plug (
+                        tenant_id, 
+                        portal_id, 
+                        plug_id, 
+                        plug_title, 
+                        plug_url, 
+                        plug_type, 
+                        start_date, 
+                        end_date, 
+                        reg_date, 
+                        reg_user_id
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.plugId,
+                        :vo.plugTitle,
+                        :vo.plugUrl,
+                        :vo.plugType,
+                        :vo.startDate,
+                        :vo.endDate,
+                        :vo.regDate,
+                        :vo.regUserId
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updatePlug">
+            <statement>
+            <![CDATA[
+                update tlxr_login_plug set
+                       plug_title = :vo.plugTitle,
+                       plug_url = :vo.plugUrl,
+                       plug_type = :vo.plugType,
+                       start_date = :vo.startDate,
+                       end_date = :vo.endDate,
+                       is_external = :vo.isExternal
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and plug_id = :vo.plugId 
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="updatePlugActiveInfo">
+            <statement>
+            <![CDATA[
+                update tlxr_login_plug set
+                      is_active = :vo.isActive
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and plug_id = :vo.plugId 
+            ]]>
+            </statement>
+        </query>
+
+		<query id="deletePlug">
+            <statement>
+            <![CDATA[
+                delete from tlxr_login_plug
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and plug_id = :vo.plugId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getPlug">
+            <statement>
+            <![CDATA[
+                select * from tlxr_login_plug
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and plug_id = :vo.plugId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LoginPlugVO"/>
+        </query>
+        
+        <query id="getPlugListAll">
+            <statement>
+            <![CDATA[
+                select * from tlxr_login_plug
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                 #if($vo.searchKey && !$vo.searchKey.equals(""))
+                   and start_date <= :vo.searchKey
+                   and end_date >= :vo.searchKey
+                 #end
+                 order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LoginPlugVO"/>
+        </query>
+		
+		<query id="getPlugList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_login_plug
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and is_active = 'Y'
+                 #if($vo.searchKey && !$vo.searchKey.equals(""))
+                   and start_date <= :vo.searchKey
+                   and end_date >= :vo.searchKey
+                 #end
+                 order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LoginPlugVO"/>
+        </query>
+	</queries>
+</queryservice>

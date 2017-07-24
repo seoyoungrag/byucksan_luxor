@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <bean id="portalAclMapController" name="/admin/aclmap/*.do" class="com.sds.acube.luxor.portal.controller.PortalAclMapController">
+        <property name="methodNameResolver" ref="portalAclMapControllerResolver" />
+        <property name="treeService" ref="treeService" />
+        <property name="portalContentService" ref="portalContentService" />
+        <property name="accessControllService" ref="accessControllService" />
+        <property name="mapPage" value="/luxor/portal/aclmap/map.jsp" />
+	</bean>
+  
+    <bean id="portalAclMapControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/admin/aclmap/map.do">getMap</prop>
+            </props>
+        </property>
+    </bean>
+      
+</beans>

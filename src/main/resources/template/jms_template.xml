@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+	<header>
+		<version>1.0</version>
+		<message-type>%MESSAGE_TYPE%</message-type>
+		<sender>
+			<name>%SENDER_NAME%</name>
+			<info>%SENDER_INFO%</info>
+		</sender>
+		<receiver>
+			<name>%RECEIVER_NAME%</name>
+			<info>%RECEIVER_INFO%</info>
+		</receiver>
+	</header>
+	<body>
+		<![CDATA[%MESSAGE_BODY%]]>
+	</body>
+</message>

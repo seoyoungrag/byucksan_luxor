@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="adminController" name="/admin/*.do" class="com.sds.acube.luxor.portal.controller.AdminController">
+		<property name="adminService" ref="adminService" />
+		<property name="methodNameResolver" ref="adminControllerResolver" />
+        <property name="adminIndex" value="/luxor/portal/admin/index.jsp" />
+        <property name="adminMenuManager" value="/luxor/portal/admin/adminMenuManager.jsp" />
+        <property name="adminMenuList" value="/luxor/portal/admin/adminMenuList.jsp" />
+        <property name="adminMenuCategoryList" value="/luxor/portal/admin/adminMenuCategoryList.jsp" />
+        <property name="adminUserList" value="/luxor/portal/admin/adminUserListForm.jsp" />
+        <property name="cacheClear" value="/luxor/common/cacheClear.jsp" />
+	</bean>
+	
+    <bean id="adminControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/admin/index.do">getAdminIndex</prop>
+                <prop key="/admin/manager.do">getAdminManager</prop>
+                <prop key="/admin/getAdminMenuList.do">getAdminMenuList</prop>
+                <prop key="/admin/getAdminMenuCategoryList.do">getAdminMenuCategoryList</prop>
+                <prop key="/admin/getAdminUserList.do">getAdminUserList</prop>
+                <prop key="/admin/cacheClear.do">cacheClear</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="treeService" class="com.sds.acube.luxor.common.service.impl.TreeServiceImpl">
+        <property name="messageService" ref="messageService" />
+        <property name="treeDAO" ref="treeDAO" />
+    </bean>
+
+    <bean id="treeDAO" class="com.sds.acube.luxor.common.dao.TreeDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+    
+</beans>

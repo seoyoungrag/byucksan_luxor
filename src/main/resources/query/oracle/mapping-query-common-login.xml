@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertLoginHistory">
+			<statement>
+			<![CDATA[
+				insert into tlxr_login_history (
+                        tenant_id,       
+                        portal_id, 
+						statistics_id,
+						session_id,
+						user_uid,
+						login_id,
+						user_name,
+						login_ip,
+						login_time,
+						comp_name,
+						dpt_name,
+						grade_name,
+						user_agent
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.statisticsId,
+                        :vo.sessionId,
+                        :vo.userUid,
+                        :vo.loginId,
+                        :vo.userName,
+                        :vo.loginIp,
+                        :vo.loginTime,
+                        :vo.compName,
+                        :vo.dptName,
+                        :vo.gradeName,
+                        :vo.userAgent                        
+                    ) 
+			]]>
+			</statement>
+		</query>
+	
+        <query id="updateLoginHistory">
+            <statement>
+            <![CDATA[
+                update tlxr_login_history 
+                   set logout_time=:vo.logoutTime
+                 where session_id=:vo.sessionId
+            ]]>
+            </statement>
+        </query>
+		
+        <query id="getLastLoginInfo">
+            <statement>
+            <![CDATA[
+                select session_id, login_ip, num 
+                from ( 
+                	select session_id, login_ip, rownum num 
+                	from (
+                		select session_id, login_ip
+                		from tlxr_login_history
+		                where tenant_id = :vo.tenantId
+		                  and portal_id=:vo.portalId
+                          and login_id = :vo.loginId
+		                  and (logout_time = '' OR logout_time is NULL)
+		                 )
+		            )
+		        where num = 1
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.LoginHistoryVO"/>
+        </query>
+  
+       <query id="getLoginTimeInfo">
+            <statement>
+            <![CDATA[
+               select login_time
+                from(
+					select * from TLXR_LOGIN_HISTORY 
+					where user_uid = :vo.userUid 
+					order by login_time desc
+					)
+				 where rownum = 1
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.LoginHistoryVO"/>
+        </query>
+        
+        <query id="checkLoginLLE">
+            <statement>
+            <![CDATA[
+                select session_id, login_ip, login_time, num 
+                from ( 
+                	select session_id, login_ip, login_time, rownum num 
+                	from (
+                		select session_id, login_ip, login_time
+                		from tlxr_login_history
+		                where 	tenant_id = :vo.tenantId
+		                  	and portal_id=:vo.portalId
+                            and login_id = :vo.loginId
+		                  	and (logout_time = '' OR logout_time is NULL)
+		                    #if ($vo.loginTime) 
+		                    	and login_time > :vo.loginTime
+		                 	#end
+		                    #if ($vo.sessionId && !$vo.sessionId.equals("")) 
+		                  		and session_id = :vo.sessionId
+		                 	#end
+		                order by login_time desc
+		                 )
+		            )
+		        where num = 1
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.common.vo.LoginHistoryVO"/>
+        </query>
+        
+	</queries>
+</queryservice>

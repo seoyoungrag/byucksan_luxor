@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertMenu">
+			<statement>
+			<![CDATA[
+				insert into tlxr_menu (
+                        tenant_id,       
+                        portal_id,      
+                        page_id,         
+                        content_id,  
+                        zone_id,     
+                        parent_id,    
+                        menu_id,         
+                        reg_date,    
+                        reg_user_id, 
+                        has_child,
+                        depth,
+                        seq,                 
+                        script,
+                        target_zone
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.pageId,
+                        :vo.contentId,
+                        :vo.zoneId,
+                        :vo.parentId,
+                        :vo.menuId,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.hasChild,
+                        :vo.depth,
+                        :vo.seq,
+                        :vo.script,
+                        :vo.targetZone
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateMenu">
+            <statement>
+            <![CDATA[
+                update tlxr_menu set
+                    #if ($vo.hasChild && !$vo.hasChild.equals(""))
+                        has_child=:vo.hasChild,
+                    #end
+                    #if ($vo.depth > 0)
+                        depth=:vo.depth, 
+                    #end
+                    #if ($vo.seq > 0)
+                        seq=:vo.seq, 
+                    #end
+                    #if ($vo.isActive && !$vo.isActive.equals(""))
+                       is_active=:vo.isActive,
+                    #end
+                    #if ($vo.targetZone)
+                       target_zone=:vo.targetZone,
+                    #end
+                    script=:vo.script, 
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and (page_id=:vo.pageId or page_id='ALL')
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="updateMenuDisplayName">
+            <statement>
+            <![CDATA[
+                update tlxr_menu set
+                   	display_name_id = :vo.displayNameId,
+                    mod_date=:vo.modDate,
+                    mod_user_id=:vo.modUserId 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and (page_id=:vo.pageId or page_id='ALL')
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMenuSeq">
+            <statement>
+            <![CDATA[
+                update tlxr_menu set seq=:vo.seq
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and (page_id=:vo.pageId or page_id='ALL')
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateMenuToAll">
+            <statement>
+            <![CDATA[
+                update tlxr_menu 
+                set page_id=:vo.pageId
+                #if ($vo.targetZone.equals("null"))
+                    , target_zone=''
+                #end
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMenu">
+            <statement>
+            <![CDATA[
+                delete from tlxr_menu 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMenusOnZone">
+            <statement>
+            <![CDATA[
+                delete from tlxr_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMenusOnContent">
+            <statement>
+            <![CDATA[
+                delete from tlxr_menu 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMenusOnPage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_menu 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMaxMenuSeq">
+            <statement>
+            <![CDATA[
+                select max(seq) as maxseq from tlxr_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and parent_id=:vo.parentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getAddedMenu">
+            <statement>
+            <![CDATA[
+                select * from tlxr_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and content_id=:vo.contentId
+                   and zone_id=:vo.zoneId 
+                   and menu_id=:vo.menuId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMenu">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name,                
+                     (select count(*) from tlxr_menu 
+                      where parent_id =:vo.menuId and content_id=:vo.contentId
+                        and zone_id=:vo.zoneId  and (page_id=:vo.pageId or page_id ='ALL' )
+                     ) as child_cnt,
+                     nvl((select menu_id from tlxr_menu 
+                      where parent_id =:vo.menuId and content_id=:vo.contentId
+                        and zone_id=:vo.zoneId  and (page_id=:vo.pageId or page_id ='ALL' )
+                        and seq=1
+                     ),'') as child_id                                         
+                  from tlxr_menu a, tlxr_tree b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.menu_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and c.lang_type=:vo.langType
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and c.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and (a.page_id=:vo.pageId or a.page_id='ALL')
+                   and a.content_id=:vo.contentId
+                   and a.zone_id=:vo.zoneId
+                   and a.menu_id=:vo.menuId           
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+                   order by page_id
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getParentMenu">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name 
+                  from tlxr_menu a, tlxr_tree b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.menu_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and c.lang_type=:vo.langType
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)
+                   and c.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)
+                   and (a.page_id=:vo.pageId or a.page_id='ALL')
+                   and a.content_id=:vo.contentId
+                   and a.zone_id=:vo.zoneId 
+                   and a.menu_id=:vo.parentId                   
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMenusOnParent">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name, d.message_name as display_name
+                 from tlxr_tree b, 
+                  (select * from tlxr_menu where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)) a,
+			       (select * from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) c,
+			       (select distinct tenant_id, message_id, message_name from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) d
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.display_name_id=d.message_id
+                   and a.menu_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)
+                   and a.page_id=:vo.pageId
+                   and a.content_id=:vo.contentId
+                   and a.zone_id=:vo.zoneId
+                   and a.parent_id=:vo.parentId  
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMenusOnZone">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name, d.message_name as display_name
+                  from tlxr_tree b, 
+                  (select * from tlxr_menu where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)) a,
+			       (select * from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) c,
+			       (select distinct tenant_id, message_id, message_name from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) d
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.tenant_id=d.tenant_id
+                   and a.menu_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.display_name_id=d.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and (a.page_id=:vo.pageId or a.page_id='ALL')
+                   and a.content_id=:vo.contentId
+                   and a.zone_id=:vo.zoneId 
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+                 order by a.depth, a.seq, c.message_name 
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMenusOnContent">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name, d.message_name as display_name
+                  from tlxr_tree b,
+                  (select * from tlxr_menu where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)) a,
+			       (select * from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) c,
+			       (select distinct tenant_id, message_id, message_name from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) d
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.tenant_id=d.tenant_id
+                   and a.menu_id=b.node_id
+                   and a.display_name_id=d.message_id
+                   and b.node_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and (a.page_id=:vo.pageId or a.page_id='ALL')
+                   and a.content_id=:vo.contentId
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+                 order by a.depth, a.seq, c.message_name
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <!-- 페이지 가져오기 (복사) 할때 사용됨 -->
+        <query id="getMenusOnPage">
+            <statement>
+            <![CDATA[
+                select * from tlxr_menu
+                 where tenant_id=:vo.tenantId
+                   and portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                   and page_id=:vo.pageId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMyMenus">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name, d.message_name as display_name
+                  from tlxr_tree b, 
+                  (select * from tlxr_menu where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId)) a,
+			       (select * from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) c,
+			       (select distinct tenant_id, message_id, message_name from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) d 
+                 where a.tenant_id=b.tenant_id
+                   and a.tenant_id=c.tenant_id
+                   and a.menu_id=b.node_id
+                   and b.node_name_id=c.message_id
+                   and a.display_name_id =d.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.reg_user_id=:vo.regUserId
+                   and a.page_id like 'MYMENU__%'  ESCAPE '_'  
+                   and b.tree_id='PORTAL_PAGE'
+                   and b.is_active!='N'
+                   and b.portal_id in (
+						select portal_id 
+				       	from tlxr_portal_group 
+				       	where child_portal like '%' || :vo.portalId || '%'  ESCAPE '_'  
+				       	or portal_id = :vo.portalId)
+                 order by a.depth, a.seq, c.message_name
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+        <query id="getMenus">
+            <statement>
+            <![CDATA[
+				select *
+				from (select distinct c.message_name,
+			       a.node_id as page_id,
+			       b.menu_id, d.message_name as display_name
+			  	from tlxr_tree a,
+			       (select * from tlxr_menu where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId and page_id not like '%MYMENU%'   ESCAPE '_'  )) b,
+			       (select * from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) c,
+			       (select distinct tenant_id, message_id, message_name from tlxr_message where portal_id in (
+			        select portal_id 
+			          from tlxr_portal_group 
+			         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId) and lang_type=:vo.langType) d 
+			 	where a.node_id=b.menu_id
+				   and a.node_name_id=c.message_id
+				   and b.display_name_id =d.message_id
+				   and a.tenant_id=:vo.tenantId
+				   and a.portal_id in (
+				        select portal_id 
+				          from tlxr_portal_group 
+				         where child_portal like '%' || :vo.portalId || '%' ESCAPE '_' 
+				            or portal_id = :vo.portalId
+				       )
+				   and a.tree_id='PORTAL_PAGE'
+				   and a.is_active!='N'
+				order by c.message_name)
+				#if ($vo.searchKey && !$vo.searchKey.equals(""))
+					where (message_name like '%$vo.searchKey%' ESCAPE '_'  and (display_name = '' or display_name is null)) or display_name like '%$vo.searchKey%' ESCAPE '_' 
+			    #end
+            ]]> 
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+        
+        <query id="getTargetedPages">
+            <statement>
+            <![CDATA[
+            	select distinct b.page_id, b.menu_id, b.target_zone, b.content_id 
+				from tlxr_tree a, tlxr_menu b
+				where (a.node_id=b.page_id or b.page_id = 'ALL')
+                   and a.tenant_id=:vo.tenantId
+                   and b.tenant_id=:vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'   ESCAPE '_'  or portal_id = :vo.portalId)
+                   and b.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'   ESCAPE '_'  or portal_id = :vo.portalId)
+                   and b.target_zone is not null
+                   and a.tree_id='PORTAL_PAGE'
+                   and a.is_active!='N'
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalMenuVO"/>
+        </query>
+
+	</queries>
+</queryservice>

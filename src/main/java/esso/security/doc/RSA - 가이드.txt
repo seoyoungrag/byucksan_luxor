@@ -1,0 +1,54 @@
+2007-06-25 ACUBE Portal
+==============================================================================
+비대칭키 (public/private) key 암복호화 방식
+
+
+ 비대칭키 사용 방법
+
+ - 암복호화 API 사용시 공개키/개인키 파일을 지정하지 않으면 다음 파일이 사용됩니다.
+     ${CLASSPATH}/security/acube_public.key
+     ${CLASSPATH}/security/acube_private.key
+
+
+ - 공개키/개인키 파일은 rsaKey.cmd(sh) 쉘을 실행시켜서 생성할 수 있습니다.
+    (쉘 파일의 클래스 패스에 lib/ep_sso_xxx.jar 파일을 추가 후 실행하십시오)
+   ex) ep/acube_classes> ./rsaKey.sh
+
+ - 생성된 key 파일은 ${CLASSPATH}/security/ 폴더로 이동시켜서 사용하세요
+
+
+ - 인코딩시에는 개인키가 사용되며, 디코딩시에는 공개키가 사용됩니다.
+
+ - 암복호화 라이브러리(lib/bcprov-jdk14-133.jar)는 자바 버젼별로 다릅니다.
+    JDK1.3 : jce-jdk13-130.jar
+    JDK1.4 : bcprov-jdk14-133.jar
+    (암복호화 라이브러리는 http://www.bouncycastle.org에서 구할 수 있습니다)
+
+
+
+ 디코딩 예제
+---------------------------------------------------------
+import com.sds.acube.ep.security.*;
+    ...
+    SecurityFactory fac = SecurityFactory.getInstance();
+    SecurityDecoder decoder = fac.getDecoder("RSA");
+
+    String encodedData = request.getParameter("D1");
+    String decodedData = decoder.decode(encodedData);
+    ...
+---------------------------------------------------------
+
+
+ SSO 예제
+---------------------------------------------------------
+import com.sds.acube.ep.sso.*;
+    ...
+    PortalSSO sso = new PortalSSO(request);
+    int fieldCount = sso.getFieldCount();
+    out.println("<br><br>field count : " + fieldCount);
+    for (int i=1; i <= fieldCount; i++)
+    {
+        out.println("<br>F" + i + " : " + sso.getString("F" + i));
+    }
+    ...
+---------------------------------------------------------

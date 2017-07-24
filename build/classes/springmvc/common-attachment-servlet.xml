@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="attachmentController" name="/attachment/*.do" class="com.sds.acube.luxor.common.controller.AttachmentController">
+		<property name="service" ref="attachmentService" />
+		<property name="methodNameResolver" ref="attachmentControllerResolver" />
+	</bean>
+	
+    <bean id="attachmentControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/attachment/image.do">imageAsStream</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

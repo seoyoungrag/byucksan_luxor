@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    
+    <bean id="sampleController" name="/sample/*.do" class="com.sds.acube.luxor.sample.controller.SampleController">
+		<property name="sampleService" ref="sampleService" />
+		<property name="methodNameResolver" ref="sampleControllerResolver" />
+        <property name="listJSP" value="/luxor/sample/list.jsp" />
+        <property name="viewJSP" value="/luxor/sample/view.jsp" />
+        <property name="modifyViewJSP" value="/luxor/sample/form.jsp" />
+	</bean>
+  
+    <bean id="sampleControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/sample/list.do">getSampleListPage</prop>
+                <prop key="/sample/view.do">getSample</prop>
+                <prop key="/sample/insert.do">insertSample</prop>
+                <prop key="/sample/modifyView.do">modifyView</prop>
+                <prop key="/sample/delete.do">deleteSample</prop>
+            </props>
+        </property>
+    </bean>
+      
+</beans>

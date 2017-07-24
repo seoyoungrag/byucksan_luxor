@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="portalPageLayoutController" name="/page/layout/*.do" class="com.sds.acube.luxor.portal.controller.PortalPageLayoutController">
+        <property name="portalPageService" ref="portalPageService" />
+        <property name="portalPageLayoutService" ref="portalPageLayoutService" />
+        <property name="methodNameResolver" ref="portalPageLayoutControllerResolver" />
+        <property name="pageLayoutList" value="/luxor/portal/page/admin/layoutList.jsp" />
+        <property name="pageLayoutCollection" value="/luxor/portal/page/admin/layoutCollection.jsp" />
+    </bean>
+  
+    <bean id="portalPageLayoutControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/page/layout/collection.do">getPageLayoutCollection</prop>
+                <prop key="/page/layout/list.do">getPageLayoutList</prop>
+                <prop key="/page/layout/view.do">getPageLayout</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

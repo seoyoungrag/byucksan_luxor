@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="statisticsController" name="/statistics/*.do" class="com.sds.acube.luxor.common.controller.StatisticsController">
+		<property name="statisticsService" ref="statisticsService" />
+		<property name="methodNameResolver" ref="statisticsControllerResolver" />
+        <property name="loginHistory" value="/luxor/common/statistics/userLoginHistory.jsp" />
+        <property name="loginHistoryList" value="/luxor/common/statistics/loginHistoryList.jsp" />
+        <property name="pageStatistics" value="/luxor/common/statistics/pageStatistics.jsp" />
+        <property name="pageStatisticsList" value="/luxor/common/statistics/pageStatisticsList.jsp" />
+        <property name="contentsStatistics" value="/luxor/common/statistics/contentsStatistics.jsp" />
+        <property name="contentsStatisticsList" value="/luxor/common/statistics/contentsStatisticsList.jsp" />
+        <property name="userLoginHistoryMkFile" value="/luxor/common/statistics/userLoginHistoryMkFile.jsp" />
+        <property name="pageStatisticsMkFile" value="/luxor/common/statistics/pageStatisticsMkFile.jsp" />
+	</bean>
+  
+    <bean id="statisticsControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/statistics/getLoginHistory.do">getLoginHistory</prop>
+                <prop key="/statistics/getLoginHistoryList.do">getLoginHistoryList</prop>
+                <prop key="/statistics/getPageStatistics.do">getPageStatistics</prop>
+                <prop key="/statistics/getPageStatisticsList.do">getPageStatisticsList</prop>
+                <prop key="/statistics/getContentsStatistics.do">getContentsStatistics</prop>
+                <prop key="/statistics/getContentsStatisticsList.do">getContentsStatisticsList</prop>
+                <prop key="/statistics/getLoginHistoryMkFile.do">getLoginHistoryMkFile</prop>
+                <prop key="/statistics/getPageStatisticsMkFile.do">getPageStatisticsMkFile</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

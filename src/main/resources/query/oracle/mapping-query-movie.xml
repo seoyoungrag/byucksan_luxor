@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+<queryservice>
+	<queries>
+		<query id="insertMovie">
+			<statement>
+			<![CDATA[
+				insert into tlxr_movie (code, title, content, release_date, reg_date, attachment_id) 
+                    values (:vo.code, :vo.title, :vo.content, :vo.releaseDate, :vo.regDate, :vo.attachmentId) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updateMovie">
+            <statement>
+            <![CDATA[
+                update tlxr_movie set
+                    #if ($vo.title && !$vo.title.equals("")) 
+                       title=:vo.title, 
+                    #end
+                    #if ($vo.content && !$vo.content.equals(""))
+                       content=:vo.content,
+                    #end
+                    #if ($vo.attachmentId && !$vo.attachmentId.equals(""))
+                       attachment_id=:vo.attachmentId,
+                    #end
+                    #if ($vo.releaseDate && !$vo.releaseDate.equals(""))
+                       release_date=:vo.releaseDate,
+                    #end
+                    mod_date=:vo.modDate
+                 where code=:vo.code 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteMovie">
+            <statement>
+            <![CDATA[
+                delete from tlxr_movie where code=:vo.code
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMovie">
+            <statement>
+            <![CDATA[
+                select * from tlxr_movie where code=:vo.code 
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.sample.vo.MovieVO"/>
+        </query>
+
+        <query id="getMovieCount">
+            <statement>
+            <![CDATA[
+                select count(*) as cnt from tlxr_movie 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMovieList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_movie order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.sample.vo.MovieVO"/>
+        </query>
+
+	</queries>
+</queryservice>

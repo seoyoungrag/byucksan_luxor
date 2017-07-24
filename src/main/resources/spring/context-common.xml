@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cxf="http://cxf.apache.org/core"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+      http://cxf.apache.org/core 
+      http://cxf.apache.org/schemas/core.xsd
+      http://cxf.apache.org/jaxws 
+      http://cxf.apache.org/schemas/jaxws.xsd">
+    
+    <!-- Load CXF modules from cxf.jar -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> 
+
+    <!-- Uncomment when you debug web service -->
+    <!-- It shows all inbound/outbound soap messages -->
+    <!--
+    <cxf:bus>
+        <cxf:features>
+            <cxf:logging />
+        </cxf:features>
+    </cxf:bus>
+    -->
+		
+    <jaxws:endpoint id="wsPortalMessageService" implementor="#messageService" address="/PortalMessageService"/>
+    <jaxws:endpoint id="wsPortalTreeService" implementor="#treeService" address="/PortalTreeService"/>    
+    <jaxws:endpoint id="wsPortalContentService" implementor="#portalContentService" address="/PortalContentService" />
+    <jaxws:endpoint id="wsPortalMenuService" implementor="#portalMenuService" address="/PortalMenuService"/>
+    
+    <jaxws:endpoint id="wsPortalPageService" implementor="#portalPageService" address="/PortalPageService"/>    
+    <jaxws:endpoint id="wsPortalPageThemeService" implementor="#portalPageThemeService" address="/PortalPageThemeService"/>
+    <jaxws:endpoint id="wsPortalPageLayoutService" implementor="#portalPageLayoutService" address="/PortalPageLayoutService"/>
+    <jaxws:endpoint id="wsPortalPageZoneService" implementor="#portalPageZoneService" address="/PortalPageZoneService"/>
+    <jaxws:endpoint id="wsPortletManagementService" implementor="#portletManagementService" address="/PortletManagementService"/>
+    <jaxws:endpoint id="wsPortalStatisticsService" implementor="#statisticsService" address="/PortalStatisticsService"/>    
+
+    <jaxws:client id="wsClientOrgProviderService" 
+	    serviceClass="com.sds.acube.luxor.ws.client.orgservice.OrgProvider4WS"
+	    address="http://127.0.0.1:8080/acube/ws/OrgProvider" />
+    
+    <jaxws:client id="wsClientAclProviderService" 
+	    serviceClass="com.sds.acube.luxor.ws.client.aclservice.AclProvider4WS"
+	    address="http://127.0.0.1:8080/acube/ws/AclProvider" />
+
+	<!--  Message Resources -->
+    <bean name="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+                <value>WEB-INF/classes/message/message-portal</value>
+                <value>WEB-INF/classes/message/message-user</value>
+			</list>
+		</property>
+		<property name="cacheSeconds">
+			<!--
+			    Set the number of seconds to cache loaded properties files.
+        		Default is "-1", indicating to cache forever (just like java.util.ResourceBundle).
+        		A positive number will cache loaded properties files for the given number of seconds. This is essentially the interval between refresh checks. Note that a refresh attempt will first check the last-modified timestamp of the file before actually reloading it; so if files don't change, this interval can be set rather low, as refresh attempts will not actually reload.
+        		A value of "0" will check the last-modified timestamp of the file on every message access. Do not use this in a production environment! 
+			-->
+			<value>10</value> 
+		</property> 
+		<property name="defaultEncoding"> <value>UTF-8</value> </property>
+	</bean>
+</beans>

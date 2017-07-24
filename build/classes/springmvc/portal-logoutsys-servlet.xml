@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="logoutSysController" name="/logoutsys/*.do" class="com.sds.acube.luxor.portal.controller.LogoutSysController">
+		<property name="logoutSysService" ref="logoutSysService" />
+		<property name="methodNameResolver" ref="logoutSysControllerResolver" />
+		<property name="listForm" value="/luxor/portal/logoutsys/listForm.jsp" />
+		<property name="registerForm" value="/luxor/portal/logoutsys/registerForm.jsp" />
+	</bean>
+	
+    <bean id="logoutSysControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/logoutsys/getListAll.do">getListAll</prop>
+                <prop key="/logoutsys/registerForm.do">registerForm</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

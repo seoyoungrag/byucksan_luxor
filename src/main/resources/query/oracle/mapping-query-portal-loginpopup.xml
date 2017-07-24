@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertPopup">
+			<statement>
+			<![CDATA[
+				insert into tlxr_login_popup (
+                        tenant_id, 
+                        portal_id, 
+                        popup_id, 
+                        popup_title, 
+                        popup_url, 
+                        popup_type, 
+                        start_date, 
+                        end_date, 
+                        reg_date, 
+                        reg_user_id,
+                        window_width,
+                        window_height,
+                        position_top,
+                        position_left 
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.popupId,
+                        :vo.popupTitle,
+                        :vo.popupUrl,
+                        :vo.popupType,
+                        :vo.startDate,
+                        :vo.endDate,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.windowWidth,
+                        :vo.windowHeight,
+                        :vo.positionTop,
+                        :vo.positionLeft
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="updatePopup">
+            <statement>
+            <![CDATA[
+                update tlxr_login_popup set
+                       popup_title = :vo.popupTitle,
+                       popup_url = :vo.popupUrl,
+                       popup_type = :vo.popupType,
+                       start_date = :vo.startDate,
+                       end_date = :vo.endDate,
+                       window_width = :vo.windowWidth,
+                       window_height = :vo.windowHeight,
+                       position_top = :vo.positionTop,
+                       position_left = :vo.positionLeft
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and popup_id = :vo.popupId 
+            ]]>
+            </statement>
+        </query>
+
+		<query id="deletePopup">
+            <statement>
+            <![CDATA[
+                delete from tlxr_login_popup
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and popup_id = :vo.popupId 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getPopup">
+            <statement>
+            <![CDATA[
+                select * from tlxr_login_popup
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                   and popup_id = :vo.popupId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LoginPopupVO"/>
+        </query>
+        
+        <query id="getPopupList">
+            <statement>
+            <![CDATA[
+                select * from tlxr_login_popup
+                 where tenant_id = :vo.tenantId
+                   and portal_id = :vo.portalId
+                 #if($vo.searchKey && !$vo.searchKey.equals(""))
+                   and start_date <= :vo.searchKey
+                   and end_date >= :vo.searchKey
+                 #end
+                 order by reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.LoginPopupVO"/>
+        </query>
+
+	</queries>
+</queryservice>

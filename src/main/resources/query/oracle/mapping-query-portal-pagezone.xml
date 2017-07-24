@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queryservice PUBLIC "-//ANYFRAME//DTD QUERYSERVICE//EN"
+"http://www.anyframejava.org/dtd/anyframe-core-query-mapping-3.2.dtd">
+
+<queryservice>
+	<queries>
+		<query id="insertContentOnZone">
+			<statement>
+			<![CDATA[
+				insert into tlxr_page_zone (
+                        tenant_id, 
+                        portal_id,                
+                        page_id, 
+                        zone_id,
+                        content_id,
+                        reg_date, 
+                        reg_user_id, 
+                        seq,
+                        is_deleted
+                    ) 
+                    values (
+                        :vo.tenantId,
+                        :vo.portalId,
+                        :vo.pageId,
+                        :vo.zoneId,
+                        :vo.contentId,
+                        :vo.regDate,
+                        :vo.regUserId,
+                        :vo.seq,
+                        :vo.isDeleted
+                    ) 
+			]]>
+			</statement>
+		</query>
+
+        <query id="deleteContentOnZone">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId 
+                   and reg_user_id=:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteAllContentOnZone">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and zone_id=:vo.zoneId 
+                   and reg_user_id=:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="deleteAllContentOnPage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId 
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="deleteAllContentPersonalizedPage">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId 
+                   and reg_user_id=:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+        
+        <query id="cleanDeletedContent">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone a
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId 
+                   and reg_user_id=:vo.regUserId
+                   and is_deleted = 'Y'
+                   and not exists
+                   (select content_id from tlxr_page_zone b
+                 where b.reg_user_id='ADMIN' and b.page_id=:vo.pageId  and a.content_id=b.content_id)
+            ]]>
+            </statement>
+        </query>
+        
+         <query id="clearContentsToSetTheFixedContent">
+            <statement>
+            <![CDATA[
+                delete from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+                   and reg_user_id !='ADMIN' 
+                   and is_fixed = 'Y' 
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateSeq">
+            <statement>
+            <![CDATA[
+                update tlxr_page_zone set zone_id=:vo.zoneId
+                #if ($vo.seq)    
+                , seq=:vo.seq 
+                #end
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+                   and reg_user_id =:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContentStyle">
+            <statement>
+            <![CDATA[
+                update tlxr_page_zone 
+                   set is_auto_height=:vo.isAutoHeight,
+                       content_style_for_each=:vo.contentStyleForEach 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and zone_id=:vo.zoneId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContentFixedFlag">
+            <statement>
+            <![CDATA[
+                update tlxr_page_zone set is_fixed=:vo.isFixed 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContentDeletedFlag">
+            <statement>
+            <![CDATA[
+                update tlxr_page_zone set is_deleted=:vo.isDeleted 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and content_id=:vo.contentId
+                   and reg_user_id =:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="updateContentDeletedFlagAll">
+            <statement>
+            <![CDATA[
+                update tlxr_page_zone set is_deleted=:vo.isDeleted 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and reg_user_id =:vo.regUserId
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getMaxSeqOnZone">
+            <statement>
+            <![CDATA[
+                select max(seq) as maxseq from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and zone_id=:vo.zoneId
+                   and (reg_user_id='ADMIN' or reg_user_id=:vo.regUserId)
+            ]]>
+            </statement>
+        </query>
+
+        <query id="getContentOnZone">
+            <statement>
+            <![CDATA[
+                select * from tlxr_page_zone 
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+        
+        <query id="getUnpersonalizedAdminContents">
+            <statement>
+            <![CDATA[
+                select * from tlxr_page_zone a
+                 where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and page_id=:vo.pageId
+                   and reg_user_id='ADMIN'
+                   and is_fixed = 'N'
+                   and not exists
+                   (select content_id from tlxr_page_zone b
+                 where b.reg_user_id=:vo.regUserId
+                 	and portal_id=:vo.portalId
+                   	and page_id=:vo.pageId 
+                   	and tenant_id=:vo.tenantId)
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+
+        <query id="getContentsOnZone">
+            <statement>
+            <![CDATA[
+                 select a.*, b.parent_id, b.content_id, b.content_name_id, b.portlet_id, b.content_desc, b.content_style, c.message_name
+                  from tlxr_page_zone a, tlxr_content b, tlxr_message c
+                 where a.tenant_id=b.tenant_id
+                   and a.portal_id=b.portal_id
+                   and b.tenant_id=c.tenant_id
+                   and b.portal_id=c.portal_id
+                   and a.content_id=b.content_id
+                   and b.content_name_id=c.message_id
+                   and a.tenant_id=:vo.tenantId
+                   and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%'   ESCAPE '_'  or portal_id = :vo.portalId)
+                   and c.lang_type=:vo.langType
+                   and a.page_id=:vo.pageId
+                   and a.zone_id=:vo.zoneId
+                 #if ($vo.refer && ($vo.refer.equals("UM") || $vo.refer.equals("DD")))       
+                   and (a.reg_user_id='ADMIN' or a.reg_user_id=:vo.regUserId)
+                   and a.is_deleted='N'
+                 #else
+                   and a.reg_user_id='ADMIN'
+                 #end
+                 order by a.reg_user_id, zone_id, a.seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+
+        <query id="getContentsOnPage">
+            <statement>
+            <![CDATA[
+                select a.*, b.parent_id, b.content_id, b.content_name_id, b.portlet_id, b.content_desc, b.content_style, c.message_name, replace(a.zone_id, 'content', 'middle') as seq_id
+                    from tlxr_page_zone a, tlxr_content b, tlxr_message c
+                where a.tenant_id=b.tenant_id
+                    and a.portal_id=b.portal_id
+                    and b.tenant_id=c.tenant_id
+                    and b.portal_id=c.portal_id
+                    and a.content_id=b.content_id
+                    and b.content_name_id=c.message_id
+                    and a.tenant_id=:vo.tenantId
+                    and a.portal_id in (select portal_id from tlxr_portal_group where child_portal like '%' || :vo.portalId || '%' ESCAPE '_'  or portal_id = :vo.portalId)
+                    and c.lang_type=:vo.langType
+                    and a.page_id=:vo.pageId
+                 #if ($vo.refer && ($vo.refer.equals("UM") || $vo.refer.equals("DD")))       
+                    and (a.reg_user_id='ADMIN' or a.reg_user_id=:vo.regUserId)
+                 #else
+                    and a.reg_user_id='ADMIN'
+                 #end
+                 	order by seq_id, is_fixed desc, a.seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+
+        <query id="getPagesHasContent">
+            <statement>
+            <![CDATA[
+                select * from tlxr_page_zone
+                where tenant_id=:vo.tenantId
+                   and portal_id=:vo.portalId
+                   and content_id=:vo.contentId
+                   and reg_user_id='ADMIN'
+               	   order by seq
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+        
+        
+        <query id="getContentIncludingPages">
+            <statement>
+            <![CDATA[
+                select a.*, c.message_name 
+                from luxor.tlxr_page_zone a, luxor.tlxr_tree b, luxor.tlxr_message c 
+				where content_id = :vo.contentId
+					and a.tenant_id = b.tenant_id 
+					and b.tenant_id = c.tenant_id
+					and a.portal_id = b.portal_id 
+					and b.portal_id = c.portal_id
+					and a.page_id = b.node_id
+					and b.node_name_id = c.message_id
+					and c.lang_type= :vo.langType
+					and a.tenant_id = :vo.tenantId
+					and b.portal_id = :vo.portalId
+					and a.reg_user_id='ADMIN'
+					order by a.reg_date desc
+            ]]>
+            </statement>
+            <result class="com.sds.acube.luxor.portal.vo.PortalPageZoneVO"/>
+        </query>
+
+	</queries>
+</queryservice>

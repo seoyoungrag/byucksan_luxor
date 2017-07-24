@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="memberRequestController" name="/memberRequest/*.do" class="com.sds.acube.luxor.common.controller.MemberRequestController">
+		<property name="memberRequestService" ref="memberRequestService" />
+		<property name="methodNameResolver" ref="memberRequestControllerResolver" />
+		<property name="requestView" value="/luxor/common/org/memberRequest.jsp" />
+		<property name="termsView" value="/luxor/common/org/memberRequestTerms.jsp" />
+		<property name="approvalView" value="/luxor/common/org/memberRequestApproval.jsp" />
+		<property name="memberRequestKeyView" value="/luxor/common/org/memberRequestKey.jsp" />
+		<property name="approvalListView" value="/luxor/common/org/memberRequestApprovalList.jsp" />
+		<property name="memberRequestKeyListView" value="/luxor/common/org/memberRequestKeyList.jsp" />
+	</bean>
+  
+    <bean id="memberRequestControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/memberRequest/getRequestView.do">getRequestView</prop>
+                <prop key="/memberRequest/getTermsView.do">getTermsView</prop>
+                <prop key="/memberRequest/insertMemberRequest.do">insertMemberRequest</prop>
+                <prop key="/memberRequest/validateRequestId.do">validateRequestId</prop>
+                <prop key="/memberRequest/getRequestedAccount.do">getRequestedAccount</prop>
+                <prop key="/memberRequest/getMemberRequest.do">getMemberRequest</prop>
+                <prop key="/memberRequest/updateMemberRequestStatus.do">updateMemberRequestStatus</prop>
+                <prop key="/memberRequest/getApprovalView.do">getApprovalView</prop>
+                <prop key="/memberRequest/getApprovalList.do">getApprovalList</prop>
+                <prop key="/memberRequest/confirmMemberRequest.do">confirmMemberRequest</prop>
+                
+                <prop key="/memberRequest/getMemberRequestKeyView.do">getMemberRequestKeyView</prop>
+                <prop key="/memberRequest/getMemberRequestKeyList.do">getMemberRequestKeyList</prop>
+                <prop key="/memberRequest/getMemberRequestKey.do">getMemberRequestKey</prop>
+                <prop key="/memberRequest/insertMemberRequestKey.do">insertMemberRequestKey</prop>
+                <prop key="/memberRequest/updateMemberRequestKey.do">updateMemberRequestKey</prop>
+                <prop key="/memberRequest/deleteMemberRequestKey.do">deleteMemberRequestKey</prop>
+            </props>
+        </property>
+    </bean>
+  
+</beans>

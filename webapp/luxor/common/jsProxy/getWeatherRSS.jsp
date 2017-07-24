@@ -1,0 +1,1 @@
+<%@ page contentType="application/xml; charset=utf-8" %><%@ page import="java.net.*" %><%@ page import="com.sds.acube.luxor.common.util.*" %><% String abc = CommonUtil.callURL("http://www.kma.go.kr/wid/queryDFS.jsp?gridx=61&gridy=125",null,null,"UTF-8");out.println(abc); %>

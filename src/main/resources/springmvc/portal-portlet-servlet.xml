@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    
+    <bean id="portletManagementController" name="/portlet/*.do" class="com.sds.acube.luxor.portal.controller.PortletManagementController">
+		<property name="service" ref="portletManagementService" />
+		<property name="groupPortalService" ref="groupPortalService" />
+		<property name="treeService" ref="treeService" />
+		<property name="methodNameResolver" ref="portletManagementControllerResolver" />
+        <property name="form" value="/luxor/portal/portlet/registerForm.jsp" />
+        <property name="xmlForm" value="/luxor/portal/portlet/registerFormXML.jsp" />
+        <property name="deployStatusForm" value="/luxor/portal/portlet/deployStatusForm.jsp" />
+        <property name="iframeLoadForm" value="/luxor/portal/portlet/iframeTemplate.jsp"/>
+        <property name="helpPageLoadForm" value="/luxor/portal/portlet/helpPageTemplate.jsp"/>
+        <property name="categoryForm" value="/luxor/portal/portlet/categoryForm.jsp"/>
+        <property name="exportForm" value="/luxor/portal/portlet/exportForm.jsp"/>
+	</bean>
+  
+    <bean id="portletManagementControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/portlet/portletRegister.do">portletRegister</prop>
+                <prop key="/portlet/portletRegisterXMLConfirm.do">portletRegisterXMLConfirm</prop>
+                <prop key="/portlet/loadRegisterForm.do">loadRegisterForm</prop>
+                <prop key="/portlet/loadRegisterFormXML.do">loadRegisterFormXML</prop>
+                <prop key="/portlet/deployStatusInfo.do">deployStatusInfo</prop>
+                <prop key="/portlet/category.do">loadCategoryForm</prop>
+                <prop key="/portlet/iframeLoad.do">iframeLoad</prop>
+                <prop key="/portlet/helpPageLoad.do">helpPageLoad</prop>
+                <prop key="/portlet/genericPortletLoad.do">genericPortletLoad</prop>
+                <prop key="/portlet/portletRegisterByXML.do">portletRegisterByXML</prop>
+                <prop key="/portlet/exportXML.do">exportXML</prop>
+            </props>
+        </property>
+    </bean>
+      
+</beans>

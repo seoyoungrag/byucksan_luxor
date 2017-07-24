@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.SimpleLayout"/>
+    </appender>
+
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        <param name="Threshold" value="DEBUG" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="1024KB" />
+        <param name="MaxBackupIndex" value="10" />
+        <param name="ImmediateFlush" value="true" />
+        <param name="File" value="C:/_harmony/temp/logs/common.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%-5p] [%d] [%c] : %m%n" />
+        </layout>
+    </appender>
+    
+	<logger name="com.sds.acube.luxor" additivity="false">
+		<level value="DEBUG" />
+        <appender-ref ref="console"/>
+	</logger>
+    
+    <!--log SQL and replace SQL with the given pattern for preventing SQL Injection with jdbc-support plugin -->
+	<logger name="org.anyframe.jdbc.support.CompleteQueryPostProcessor" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org.anyframe.jdbc.support.InjectionPatternPostProcessor" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>    
+    
+    <!-- log SQL (pre-execution) plus exceptions caused by SQL -->
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="ERROR" />
+        <appender-ref ref="console" />
+	</logger>
+	
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="jdbc.sqltimming" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="jdbc.connection" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="console"/>
+    </root>
+
+</log4j:configuration>

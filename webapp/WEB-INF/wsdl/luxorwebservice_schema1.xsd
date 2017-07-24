@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://webservice.luxor.acube.sds.com/" targetNamespace="http://webservice.luxor.acube.sds.com/" version="1.0">
+<xs:element name="createContent" type="tns:createContent"/>
+<xs:element name="createContentResponse" type="tns:createContentResponse"/>
+<xs:element name="createPortlet" type="tns:createPortlet"/>
+<xs:element name="createPortletResponse" type="tns:createPortletResponse"/>
+<xs:element name="getContent" type="tns:getContent"/>
+<xs:element name="getContentList" type="tns:getContentList"/>
+<xs:element name="getContentListResponse" type="tns:getContentListResponse"/>
+<xs:element name="getContentResponse" type="tns:getContentResponse"/>
+<xs:element name="getPortelt" type="tns:getPortelt"/>
+<xs:element name="getPorteltResponse" type="tns:getPorteltResponse"/>
+<xs:element name="getPortletList" type="tns:getPortletList"/>
+<xs:element name="getPortletListResponse" type="tns:getPortletListResponse"/>
+<xs:element name="removeContent" type="tns:removeContent"/>
+<xs:element name="removeContentResponse" type="tns:removeContentResponse"/>
+<xs:element name="removePortlet" type="tns:removePortlet"/>
+<xs:element name="removePortletResponse" type="tns:removePortletResponse"/>
+<xs:element name="updateContent" type="tns:updateContent"/>
+<xs:element name="updateContentResponse" type="tns:updateContentResponse"/>
+<xs:element name="updatePortlet" type="tns:updatePortlet"/>
+<xs:element name="updatePortletResponse" type="tns:updatePortletResponse"/>
+<xs:complexType name="removeContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="portalContentVO">
+    <xs:complexContent>
+      <xs:extension base="tns:messageVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="contentDesc" type="xs:string"/>
+          <xs:element minOccurs="0" name="contentId" type="xs:string"/>
+          <xs:element minOccurs="0" name="contentNameId" type="xs:string"/>
+          <xs:element minOccurs="0" name="contentStyle" type="xs:string"/>
+          <xs:element minOccurs="0" name="isActive" type="xs:string"/>
+          <xs:element minOccurs="0" name="parentId" type="xs:string"/>
+          <xs:element minOccurs="0" name="portletId" type="xs:string"/>
+          <xs:element name="seq" type="xs:int"/>
+          <xs:element minOccurs="0" name="usePersonal" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="messageVO">
+    <xs:complexContent>
+      <xs:extension base="tns:commonVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="langType" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageName" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageNameAll" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageType" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="commonVO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="accessIdList" nillable="true" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="compId" type="xs:string"/>
+      <xs:element minOccurs="0" name="modDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="modUserId" type="xs:string"/>
+      <xs:element name="pageSize" type="xs:int"/>
+      <xs:element minOccurs="0" name="portalId" type="xs:string"/>
+      <xs:element minOccurs="0" name="refer" type="xs:string"/>
+      <xs:element minOccurs="0" name="regDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="regUserId" type="xs:string"/>
+      <xs:element minOccurs="0" name="request" type="xs:anyType"/>
+      <xs:element minOccurs="0" name="searchKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="searchWay" type="xs:string"/>
+      <xs:element minOccurs="0" name="tenantId" type="xs:string"/>
+      <xs:element name="totalCnt" type="xs:int"/>
+      <xs:element name="cPage" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removeContentResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getContentResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createContentResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removePortlet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="portletManagementVO">
+    <xs:complexContent>
+      <xs:extension base="tns:messageVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activeCheck" type="xs:string"/>
+          <xs:element minOccurs="0" name="categoryId" type="xs:string"/>
+          <xs:element minOccurs="0" name="categoryName" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="checkbox" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="contextName" type="xs:string"/>
+          <xs:element minOccurs="0" name="deployDescriptionXml" type="xs:string"/>
+          <xs:element minOccurs="0" name="editUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="exception" type="xs:string"/>
+          <xs:element minOccurs="0" name="fileName" type="xs:string"/>
+          <xs:element minOccurs="0" name="filePath" type="xs:string"/>
+          <xs:element minOccurs="0" name="goUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="helpUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastUpdateDate" type="xs:dateTime"/>
+          <xs:element name="loginFlag" type="xs:int"/>
+          <xs:element minOccurs="0" name="outline" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="scriptRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ssoInfo" type="xs:string"/>
+          <xs:element name="statusCode" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="styleRef" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+          <xs:element name="typeOfPortlet" type="xs:int"/>
+          <xs:element minOccurs="0" name="viewUrl" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="removePortletResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateContent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateContentResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updatePortlet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updatePortletResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPortletList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPortletListResponse">
+    <xs:sequence>
+      <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="return" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getContentList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getContentListResponse">
+    <xs:sequence>
+      <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="return" type="tns:portalContentVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPortelt">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPorteltResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="tns:portletContextVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="portletContextVO">
+    <xs:complexContent>
+      <xs:extension base="tns:messageVO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="categoryId" type="xs:string"/>
+          <xs:element minOccurs="0" name="categoryName" type="xs:string"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element minOccurs="0" name="displayName" type="xs:string"/>
+          <xs:element minOccurs="0" name="editUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="goUrl" type="xs:string"/>
+          <xs:element minOccurs="0" name="helpUrl" type="xs:string"/>
+          <xs:element name="loginFlag" type="xs:int"/>
+          <xs:element minOccurs="0" name="portletContextName" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="scripts" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ssoInfo" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="styles" nillable="true" type="xs:string"/>
+          <xs:element name="supports">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="title" type="xs:string"/>
+          <xs:element name="typeOfPortlet" type="xs:int"/>
+          <xs:element minOccurs="0" name="viewUrl" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractMap">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="hashMap">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMap">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="createPortlet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:portletManagementVO"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createPortletResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

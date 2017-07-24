@@ -1,0 +1,23 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ page import="com.sds.acube.luxor.portal.vo.*" %>
+<%@ page import="com.sds.acube.luxor.common.util.*" %>
+
+<%
+	String currentPath = (String)request.getAttribute("currentPath");
+	String portletContext = (String)request.getAttribute("portletContext");
+	String themeImageUrl = UtilRequest.getString(request, "themeImageUrl");
+%>
+<script type="text/javascript">
+//IE7 이하의 경우 width100% 상속이 끊기는 현상이 있음
+$(document).ready(function() {
+	if($.browser.msie && ($.browser.version=='6.0' || $.browser.version=='7.0')) {
+		$('#<%=portletContext%>').width($('#<%=portletContext%>').closest('.luxor-footer').width());
+	}
+});
+</script>
+<div id="<%=portletContext%>" class="subfooter">
+	<div class="logo01"><img src="<%=themeImageUrl%>/<%=portletContext%>/footer_logo.gif" alt="ACUBE" title="ACUBE" /></div>
+	<div class="copy">COPYRIGHT @ ACUBE COMPANY ALL RIGHTS RESERVED.</div>
+</div>

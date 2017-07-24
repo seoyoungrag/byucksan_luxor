@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:util="http://www.springframework.org/schema/util" 
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+      					http://www.springframework.org/schema/util  
+						http://www.springframework.org/schema/util/spring-util-3.0.xsd  
+	   					http://www.springframework.org/schema/context  
+	  					http://www.springframework.org/schema/context/spring-context-2.5.xsd">	
+      
+      <!-- <context:property-placeholder location="classpath:config/luxor-portal-jdbc.xml" /> -->
+      <util:properties id="luxorconfig" location="classpath:config/luxor-portal-jdbc.xml"/>
+
+	<!-- Use p6spy START -->
+	<!-- <bean id="dataSource" class="com.p6spy.engine.spy.P6DataSource">
+        <constructor-arg>
+            <ref local="dataSourceTarget"/>
+        </constructor-arg>
+    </bean>
+    
+	<bean id="dataSource2" class="com.p6spy.engine.spy.P6DataSource">
+        <constructor-arg>
+            <ref local="dataSource2Target"/>
+        </constructor-arg>
+    </bean>     -->
+	<!-- Use p6spy END --> 
+
+	<!-- WAS DataSource 사용시-->
+
+    <!-- <bean id="dataSourceTarget" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="#{luxorconfig['luxor.portal.jdbc.datasource']}"/>
+    </bean>
+
+    <bean id="dataSource2Target" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="#{luxorconfig['luxor.portal.jdbc.datasource']}"/>
+    </bean>	 -->
+
+	<!---->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{luxorconfig['luxor.portal.jdbc.spy.driver']}"/>
+        <property name="url" value="#{luxorconfig['luxor.portal.jdbc.spy.url']}"/>
+        <property name="username" value="#{luxorconfig['luxor.portal.jdbc.username']}"/>
+        <property name="password" value="#{luxorconfig['luxor.portal.jdbc.password']}"/>
+    </bean> 
+
+    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{luxorconfig['luxor.portal.jdbc.driver']}"/>
+        <property name="url" value="#{luxorconfig['luxor.portal.jdbc.url']}"/>
+        <property name="username" value="#{luxorconfig['luxor.portal.jdbc.username']}"/>
+        <property name="password" value="#{luxorconfig['luxor.portal.jdbc.password']}"/>
+    </bean> 
+<!-- 
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{luxorconfig['luxor.portal.jdbc.driver']}"/>
+        <property name="url" value="#{luxorconfig['luxor.portal.jdbc.url']}"/>
+        <property name="username" value="#{luxorconfig['luxor.portal.jdbc.username']}"/>
+        <property name="password" value="#{luxorconfig['luxor.portal.jdbc.password']}"/>
+    </bean> 
+
+    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{luxorconfig['luxor.portal.jdbc.driver']}"/>
+        <property name="url" value="#{luxorconfig['luxor.portal.jdbc.url']}"/>
+        <property name="username" value="#{luxorconfig['luxor.portal.jdbc.username']}"/>
+        <property name="password" value="#{luxorconfig['luxor.portal.jdbc.password']}"/>
+    </bean>  -->
+    	
+</beans>

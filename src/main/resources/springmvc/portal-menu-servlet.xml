@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="portalMenuController" name="/menu/*.do" class="com.sds.acube.luxor.portal.controller.PortalMenuController">
+		<property name="portalMenuService" ref="portalMenuService" />
+		<property name="messageService" ref="messageService" />
+		<property name="methodNameResolver" ref="portalMenuControllerResolver" />
+	</bean>
+  
+    <bean id="portalMenuControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/menu/delete.do">deleteMenu</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

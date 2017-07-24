@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>luxor</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:/spring/context-*.xml
+		</param-value>
+	</context-param>
+
+	<session-config>
+		<session-timeout>240</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/luxor/common/error404.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/luxor/common/error500.jsp</location>
+	</error-page>
+
+	<!-- Define the basename for a resource bundle for I18N -->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>message/message-*</param-value>
+	</context-param>
+	<!--
+		<context-param> <param-name>SERVLET</param-name>
+		<param-value>/servlet</param-value> </context-param>
+	-->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.sds.acube.luxor.framework.listener.SessionListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.sds.acube.luxor.framework.listener.SessionAttrListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>com.sds.acube.luxor.framework.servlet.LuxorDispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/springmvc/*-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<description></description>
+		<display-name>AjaxUploadServlet</display-name>
+		<servlet-name>AjaxUploadServlet</servlet-name>
+		<servlet-class>com.sds.acube.luxor.framework.servlet.AjaxUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjaxUploadServlet</servlet-name>
+		<url-pattern>/servlet/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AjaxUploadServlet</servlet-name>
+		<url-pattern>/servlet/upload/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+
+	<!-- cxf-configuration-START -->
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
+
+	<mime-mapping>
+		<extension>wsdl</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>xsd</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+	<!-- cxf-configuration-END -->
+
+	<welcome-file-list>
+		<welcome-file>luxor_index.jsp</welcome-file>
+		<welcome-file>luxor_index.html</welcome-file>
+	</welcome-file-list>
+
+	<security-constraint>
+		<display-name>upload constraints</display-name>
+		<web-resource-collection>
+			<web-resource-name>upload</web-resource-name>
+			<url-pattern>/servlet/upload</url-pattern>
+			<url-pattern>/servlet/upload/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+	</security-constraint>
+
+
+</web-app>

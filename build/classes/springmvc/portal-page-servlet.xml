@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    
+    <bean id="portalPageController" name="/page/*.do" class="com.sds.acube.luxor.portal.controller.PortalPageController">
+        <property name="treeService" ref="treeService" />
+        <property name="portalMenuService" ref="portalMenuService" />
+		<property name="portalPageService" ref="portalPageService" />
+		<property name="groupPortalService" ref="groupPortalService" />
+		<property name="portalContentService" ref="portalContentService" />
+        <property name="portalPageLayoutService" ref="portalPageLayoutService" />
+        <property name="portalPageThemeService" ref="portalPageThemeService" />
+		<property name="methodNameResolver" ref="portalPageControllerResolver" />
+        <property name="index" value="/luxor/portal/page/pageLayout.jsp" />
+        <property name="pageList" value="/luxor/portal/page/admin/list.jsp" />
+        <property name="pageSetup" value="/luxor/portal/page/admin/pageSetup.jsp" />
+        <property name="pageManager" value="/luxor/portal/page/admin/pageManager.jsp" />
+        <property name="pageSelector" value="/luxor/portal/page/admin/pageSelector.jsp" />
+        <property name="personalPageSelector" value="/luxor/portal/page/personalPageSelector.jsp" />
+        <property name="previewIndex" value="/luxor/common/jsProxy/getContentPreview.jsp" />
+        <property name="main" value="/luxor/bics_index.jsp" />
+	</bean>
+  
+    <bean id="portalPageControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+                <prop key="/page/selector.do">getPageSelector</prop>
+                <prop key="/page/personalPageSelector.do">getPersonalPageSelector</prop>
+                <prop key="/page/manager.do">getPageManager</prop>
+                <prop key="/page/index.do">getPortalPage</prop>
+                <prop key="/page/main.do">getPortalMainPage</prop>
+                <prop key="/page/list.do">getPageList</prop>
+                <prop key="/page/setup.do">getSetupPage</prop>
+                <prop key="/page/update.do">updatePage</prop>
+                <prop key="/page/delete.do">deletePage</prop>
+                <prop key="/page/getPreviewPage.do">getPreviewPage</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="portalPageZoneController" class="com.sds.acube.luxor.portal.controller.PortalPageZoneController">
+        <property name="portalPageZoneService" ref="portalPageZoneService" />
+        <property name="userSettingService" ref="userSettingService" />
+    </bean>
+
+      
+</beans>

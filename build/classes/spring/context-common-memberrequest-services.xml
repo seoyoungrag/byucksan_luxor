@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="memberRequestService" class="com.sds.acube.luxor.common.service.impl.MemberRequestServiceImpl">
+        <property name="memberRequestDao" ref="memberRequestDao"/>   
+        <property name="orgService" ref="wsClientOrgProviderService"/>
+    </bean>
+    
+    <bean id="memberRequestDao" class="com.sds.acube.luxor.common.dao.MemberRequestDAO">
+        <property name="queryService" ref="queryService" />
+    </bean>
+</beans>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="LuxorWebServiceImplService" targetNamespace="http://webservice.luxor.acube.sds.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservice.luxor.acube.sds.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+<import namespace="http://webservice.luxor.acube.sds.com/" schemaLocation="luxorwebservice_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="createPortletResponse">
+    <wsdl:part name="parameters" element="tns:createPortletResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePortlet">
+    <wsdl:part name="parameters" element="tns:updatePortlet">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateContent">
+    <wsdl:part name="parameters" element="tns:updateContent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removePortlet">
+    <wsdl:part name="parameters" element="tns:removePortlet">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPortletListResponse">
+    <wsdl:part name="parameters" element="tns:getPortletListResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPortletList">
+    <wsdl:part name="parameters" element="tns:getPortletList">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeContentResponse">
+    <wsdl:part name="parameters" element="tns:removeContentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createContentResponse">
+    <wsdl:part name="parameters" element="tns:createContentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePortletResponse">
+    <wsdl:part name="parameters" element="tns:updatePortletResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeContent">
+    <wsdl:part name="parameters" element="tns:removeContent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createPortlet">
+    <wsdl:part name="parameters" element="tns:createPortlet">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPortelt">
+    <wsdl:part name="parameters" element="tns:getPortelt">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removePortletResponse">
+    <wsdl:part name="parameters" element="tns:removePortletResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContent">
+    <wsdl:part name="parameters" element="tns:getContent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateContentResponse">
+    <wsdl:part name="parameters" element="tns:updateContentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createContent">
+    <wsdl:part name="parameters" element="tns:createContent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPorteltResponse">
+    <wsdl:part name="parameters" element="tns:getPorteltResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContentListResponse">
+    <wsdl:part name="parameters" element="tns:getContentListResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContentList">
+    <wsdl:part name="parameters" element="tns:getContentList">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getContentResponse">
+    <wsdl:part name="parameters" element="tns:getContentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="LuxorWebService">
+    <wsdl:operation name="removeContent">
+      <wsdl:input name="removeContent" message="tns:removeContent">
+    </wsdl:input>
+      <wsdl:output name="removeContentResponse" message="tns:removeContentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getContent">
+      <wsdl:input name="getContent" message="tns:getContent">
+    </wsdl:input>
+      <wsdl:output name="getContentResponse" message="tns:getContentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createContent">
+      <wsdl:input name="createContent" message="tns:createContent">
+    </wsdl:input>
+      <wsdl:output name="createContentResponse" message="tns:createContentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removePortlet">
+      <wsdl:input name="removePortlet" message="tns:removePortlet">
+    </wsdl:input>
+      <wsdl:output name="removePortletResponse" message="tns:removePortletResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateContent">
+      <wsdl:input name="updateContent" message="tns:updateContent">
+    </wsdl:input>
+      <wsdl:output name="updateContentResponse" message="tns:updateContentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePortlet">
+      <wsdl:input name="updatePortlet" message="tns:updatePortlet">
+    </wsdl:input>
+      <wsdl:output name="updatePortletResponse" message="tns:updatePortletResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPortletList">
+      <wsdl:input name="getPortletList" message="tns:getPortletList">
+    </wsdl:input>
+      <wsdl:output name="getPortletListResponse" message="tns:getPortletListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getContentList">
+      <wsdl:input name="getContentList" message="tns:getContentList">
+    </wsdl:input>
+      <wsdl:output name="getContentListResponse" message="tns:getContentListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPortelt">
+      <wsdl:input name="getPortelt" message="tns:getPortelt">
+    </wsdl:input>
+      <wsdl:output name="getPorteltResponse" message="tns:getPorteltResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createPortlet">
+      <wsdl:input name="createPortlet" message="tns:createPortlet">
+    </wsdl:input>
+      <wsdl:output name="createPortletResponse" message="tns:createPortletResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LuxorWebServiceImplServiceSoapBinding" type="tns:LuxorWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="removeContent">
+      <soap:operation soapAction="urn:RemoveContent" style="document"/>
+      <wsdl:input name="removeContent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeContentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createContent">
+      <soap:operation soapAction="urn:CreateContent" style="document"/>
+      <wsdl:input name="createContent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createContentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getContent">
+      <soap:operation soapAction="urn:GetContent" style="document"/>
+      <wsdl:input name="getContent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getContentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removePortlet">
+      <soap:operation soapAction="urn:RemovePortlet" style="document"/>
+      <wsdl:input name="removePortlet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removePortletResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateContent">
+      <soap:operation soapAction="urn:UpdateContent" style="document"/>
+      <wsdl:input name="updateContent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateContentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePortlet">
+      <soap:operation soapAction="urn:UpdatePortlet" style="document"/>
+      <wsdl:input name="updatePortlet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updatePortletResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPortletList">
+      <soap:operation soapAction="urn:GetPortletList" style="document"/>
+      <wsdl:input name="getPortletList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPortletListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getContentList">
+      <soap:operation soapAction="urn:GetContentList" style="document"/>
+      <wsdl:input name="getContentList">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getContentListResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPortelt">
+      <soap:operation soapAction="urn:GetPortelt" style="document"/>
+      <wsdl:input name="getPortelt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPorteltResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createPortlet">
+      <soap:operation soapAction="urn:CreatePortlet" style="document"/>
+      <wsdl:input name="createPortlet">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createPortletResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LuxorWebServiceImplService">
+    <wsdl:port name="LuxorWebServiceImplPort" binding="tns:LuxorWebServiceImplServiceSoapBinding">
+      <soap:address location="http://localhost:9090/LuxorWebServiceImplPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

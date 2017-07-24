@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       
+    <bean id="groupPortalController" name="/admin/groupportal/*.do" class="com.sds.acube.luxor.portal.controller.GroupPortalController">
+		<property name="groupPortalService" ref="groupPortalService" />
+		<property name="methodNameResolver" ref="groupPortalControllerResolver" />
+		<property name="portalListForm" value="/luxor/portal/admin/portalListForm.jsp" />
+		<property name="portalRegisterForm" value="/luxor/portal/admin/portalRegisterForm.jsp" />
+	</bean>
+	
+    <bean id="groupPortalControllerResolver" 
+            class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+        <property name="mappings">
+            <props>
+            	<prop key="/admin/groupportal/getPortalList.do">getPortalList</prop>
+            	<prop key="/admin/groupportal/loadRegisterForm.do">loadRegisterForm</prop>
+            	<prop key="/admin/groupportal/portalRegister.do">portalRegister</prop>
+            </props>
+        </property>
+    </bean>
+    
+</beans>

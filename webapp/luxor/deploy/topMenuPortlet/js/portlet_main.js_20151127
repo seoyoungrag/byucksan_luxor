@@ -1,0 +1,407 @@
+// Event Handler
+var topMenuPortlet = {
+	onload : function() {
+	},
+	onunload : function() {
+	},
+	onexception : function() {
+	},
+	onmaximize : function() {
+	},
+	onminimize : function() {
+	},
+	onnormalize : function() {
+	},
+	onedit : function() {
+	},
+	onview : function() {
+	},
+	onhelp : function() {
+	},
+	onrefresh : function() {
+	},
+	alertTitle : function() {
+	},
+	userSearch : function() {
+		var url = "";
+		var txtSrch = $('#searchKey').val();
+		var viewType = "1";		// 0:tree/userList/selectBox  1:tree/userList  2:userList/selectBox  3:userList  4:tree
+		var returnMethod = "no";
+		var treeType = "0";	//트리 Type  *0 : From User Dept Code to Root Code  *1 : From User Dept Code to Institution Code *2 : From User Dept Code to Company Code *3 : From User Dept Code to Root Code (Exclude Other Company) 
+
+		url = "/ep/user/userMng.do?returnMethod="+returnMethod+"&treeType="+treeType+"&nType=0&searchType=byName&searchName="+encodeURIComponent(txtSrch)+"&viewType="+viewType+"&isSearch=Y";
+
+		luxor.popup(url,{width:880,height:580});
+	}
+};
+
+$(document).ready(function() {
+	var contentId = $('#mzTop').closest('li').attr('id');
+	var mzTop_param = "pageId="+currentPageId+"&contentId="+contentId;
+
+	// 상단메뉴 데이터 로딩
+	callJson("portalMenuController", "getMenusOnContent", mzTop_param, function(data) {
+		for(var i=0; i < data.length; i++) {
+			var _nodeId = data[i].menuId;
+			var _parentId = data[i].parentId;
+			var _menuName = data[i].messageName;
+			var _hasChild = data[i].hasChild;
+			var _script = data[i].script == null ? "" : data[i].script;
+			var _zoneId = data[i].zoneId;
+			var _targetZone = data[i].targetZone;
+			var _displayName = data[i].displayName;
+			//따로 지정한 메뉴명이 있다면, 페이지명을 쓰지 않고 메뉴명을 씀
+			if(_displayName != "" && _displayName != null) {
+				_menuName = _displayName;
+			}
+			// 기본 페이지 링크
+			var _href = "/ep/page/index.do?pageId="+_nodeId;
+			
+			// 임의의 Script 정의가 있는 경우에는 페이지 링크 대신 onclick으로 대체
+			if(!luxor.isNullOrEmpty(_targetZone)) {
+				_href = 'javascript:targetFrameLoad("'+_href+'","'+_nodeId+'","'+_targetZone+'","header");';
+			} else if(!luxor.isNullOrEmpty(_script)) {
+				_href = "#";
+			} 
+			
+			// 임의의 script 정의가 있는 경우 스크립트 HEAD에 삽입
+			$('head').append("<script type='text/javascript'>function "+contentId+"_"+_nodeId+"() { try { "+_script+" } catch(e) {} }<\/script>");
+
+			var _targetDIV = _parentId=='ROOT' ? _zoneId : 'sp_'+_zoneId+_parentId;
+
+			// 각각 zone별로 메뉴추가
+			switch(_targetDIV) {
+				case 'mzTop':
+					$('#'+_targetDIV).append("<li id='sp_"+_zoneId+_nodeId+"' class='mainglo'><a href='"+_href+"' onclick='"+contentId+"_"+_nodeId+"()'>"+_menuName+"</a></li>");
+					break;
+				case 'mzMiddle':
+					// 메뉴 분리바
+					var seperateBar = "<li class='bg-img-bics'></li>";
+					$('#'+_targetDIV).append("<li id='sp_"+_zoneId+_nodeId+"' style='z-index:1000;'><a href='"+_href+"' onclick='"+contentId+"_"+_nodeId+"()'>"+_menuName+"</a></li>"+seperateBar);
+					break;
+				case 'mzBottom':
+					$('#'+_targetDIV).append("<li id='sp_"+_zoneId+_nodeId+"'><a href='"+_href+"' onclick='"+contentId+"_"+_nodeId+"()'>"+_menuName+"</a></li>");
+					break;
+				default:
+					// 서브메뉴가 존재하는 경우 hidden으로 넣어놓음
+					if($('#'+_targetDIV+' > ul > li').size()==0) {
+						if(_zoneId == 'mzTop') {
+							$('#'+_targetDIV).append("<br /><ul class='top-sub-menu' style='z-index:100000;margin-top:0px'></ul>");
+						} else if(_zoneId == 'mzMiddle') {
+							$('#'+_targetDIV).append("<br /><ul class='top-sub-menu' style='z-index:100000;'></ul>");
+						} else {
+							$('#'+_targetDIV).append("<br /><ul class='top-sub-menu' style='z-index:100000;margin-top:0px;'></ul>");
+						}
+					}
+					$('#'+_targetDIV+' > ul').append("<li id='sp_"+_zoneId+_nodeId+"'><a href='"+_href+"' onclick='"+contentId+"_"+_nodeId+"()'>"+_menuName+"</a></li>");
+			}//END switch
+		}//END for
+		
+		// 마지막 메뉴의 border-bottom 제거
+		$('ul.top-sub-menu li:last-child').css('border-bottom','none');
+		// 메뉴 분리바 중 마지막꺼 제거
+		$('#mzMiddle > li.bg-img:last').remove();
+		// 하위 메뉴가 있는경우 >>를 표시해줌
+		$("#mzBottom.dropdown li ul li:has(ul)").find("a:first").append("<span class='arrow'>&gt;&gt;</span>");
+		$("#mzMiddle.dropdown li ul li:has(ul)").find("a:first").append("<span class='arrow'>&gt;&gt;</span>");
+		$("#mzTop.dropdown li ul li:has(ul)").find("a:first").prepend("<span class='arrow'>&lt;&lt;</span>");
+		
+		// 마이메뉴
+		if(luxor.usePersonalMenu && luxor.isLoggedIn) {
+			//홈설정
+			callJson("portalPageController", "getHome", "", function(data) {
+				if(data != null) {
+		        	if(data.pageId != currentPageId || (data.pageId == currentPageId && initHome != "")) {
+		        		if(initHome == currentPageId) {
+		        			$('#mzBottom').append("<li class='isHomePageOn' id='setPageHome' title='"+portal_tooltip_msg_03+"'><a></a></li>");
+		        		} else {
+		        			$('#mzBottom').append("<li class='isHomePageOff' id='setPageHome' title='"+portal_tooltip_msg_04+"'><a></a></li>");
+		        		}
+		        	} 
+				} else {
+					$('#mzBottom').append("<li class='isHomePageOff' id='setPageHome' title='"+portal_tooltip_msg_04+"'><a></a></li>");
+				}
+	        	return false;
+			});
+			
+			var isMyMenuPage = false;
+			$('#mzMiddle').append("<li class='bg-img'></li><li id='sp_mymenu' style='z-index:1000;'><a id='mymenu_anchor' href='#'>"+portal_label_76+"</a></li>");
+			callJson("portalMenuController", "getMyMenus", "", function(mymenu) {
+				if(mymenu.length > 0) {
+					$('#sp_mymenu').append("<br /><ul class='top-sub-menu' style='z-index:1000'></ul>");
+				}
+				
+				for(var j=0; j < mymenu.length; j++) {
+					var myMenuId = mymenu[j].menuId;
+					var myMenuName = mymenu[j].messageName;
+					var myHref = "/ep/page/index.do?pageId="+myMenuId;
+					if(mymenu[j].displayNameId != 'display_none') {
+						var param = "messageId="+mymenu[j].displayNameId+"&langType="+langType;
+						callJson("messageController", "getMessageByIdLang", param, function(data) {
+							if(data.messageName.indexOf("&") > -1) {
+								data.messageName = data.messageName.replace(/amp;/gi,"");
+							}
+							if(currentPageId == myMenuId) {
+								$('#mzBottom').append("<li class='myMenuOn' id='setMyMenuPage' title='"+portal_tooltip_msg_01+"'><a></a></li>");
+								isMyMenuPage = true;
+							} 
+							$('#sp_mymenu > ul').append("<li id='sp_"+myMenuId+"'><a href='"+myHref+"'>"+data.messageName+"</a></li>");
+						});
+					} else {
+						if(currentPageId == myMenuId) {
+							$('#mzBottom').append("<li class='myMenuOn' id='setMyMenuPage' title='"+portal_tooltip_msg_01+"'><a></a></li>");
+							isMyMenuPage = true;
+						} 
+						$('#sp_mymenu > ul').append("<li id='sp_"+myMenuId+"'><a href='"+myHref+"'>"+myMenuName+"</a></li>");
+					}
+				}
+				
+				setTimeout(function(){
+					if(mymenu.length == 0 || isMyMenuPage == false) {
+						$('#mzBottom').append("<li class='myMenuOff' id='setMyMenuPage' title='"+portal_tooltip_msg_02+"'><a></a></li>");
+					}
+				},300);
+			});
+		} else {
+			callJson("portalPageController", "getHome", "", function(data) {
+				if(data != null) {
+		        	if(data.pageId != currentPageId || (data.pageId == currentPageId && initHome != "")) {
+		        		if(initHome == currentPageId) {
+		        			$('#mzBottom').append("<li class='isHomePageOn' id='setPageHome' title='"+portal_tooltip_msg_03+"'><a></a></li>");
+		        		} else {
+		        			$('#mzBottom').append("<li class='isHomePageOff' id='setPageHome' title='"+portal_tooltip_msg_04+"'><a></a></li>");
+		        		}
+		        	} 
+				} else {
+					$('#mzBottom').append("<li class='isHomePageOff' id='setPageHome' title='"+portal_tooltip_msg_04+"'><a></a></li>");
+				}
+	        	return false;
+			});
+		}
+		if(typeof(isPersonal) != 'undefined' && luxor.isLoggedIn) {
+			// 마이 컨텐츠 추가를 클릭했을때 처리 핸들러는 contentManager.js에 정의되어있음
+			if(isPersonal == true) {
+				$('#mzBottom').append("<li id='sp_mycontent_from_top' style='float:right;'><a id='mycontent_anchor' href='#'><strong>"+portal_label_77+"</strong></a><a id='mycontent_editmode' href='#'>"+portal_content_label_15+"</a></li>");
+			}
+		}
+		
+	    try {
+	    	// IE6 처리
+	    	if($.browser.msie && $.browser.version=='6.0') {
+	    		$('ul.top-sub-menu').css('padding','10px 0 0 0');
+	    		$('ul.top-sub-menu').css('margin','0');
+	    		$('ul.top-sub-menu a').css('padding','0');
+	    		$('ul.top-sub-menu li').css('margin-bottom','0');
+	    		$('ul.top-sub-menu li').css('width','150px');
+	    		
+		    	$("ul.dropdown li").hoverIntent(function(e) {
+		    		$('ul:first',this).css('visibility','visible');
+		    	}, function() {
+		            $('ul:first',this).css('visibility', 'hidden');
+		    	});
+	    	}
+	    } catch(e) {}
+
+	});
+
+	// 마이메뉴 클릭
+	$('#mymenu_anchor').live('click', function() {
+		var _contentId = $(this).closest('li[class^=content-wrap]').attr('id');
+		luxor.popup('/ep/page/personalPageSelector.do?contentId='+contentId, {
+			width:650,
+			height:500,
+			scrollbars:'1',
+			resizable:'1'
+		});
+	});
+	
+	//현재 페이지를 홈으로 설정하는 icon클릭시
+	$('#setPageHome').live('click', function() {
+		//홈으로 설정시
+		if($(this).attr('class') == 'isHomePageOff') {
+			if(confirm(user_alert_msg_9)) {
+				var param = "pageId="+currentPageId;
+				callJson("userController", "setHome", param, function(data) {
+			        if(data._errorCode=='-9999') {
+			        	alert(portal_alert_msg_9);
+			        } else {
+			            alert(portal_alert_msg_13);
+			            document.location.href ="/ep";
+			        }
+				});
+			}
+		} 
+	});
+	
+	$('#setMyMenuPage').live('click', function() {
+		//해제시
+		if($(this).attr('class') == 'myMenuOn') {
+			var param = "pageId=MYMENU_"+userUid+"&contentId="+$(this).closest('li[class^=content-wrap]').attr('id')+"&zoneId=mzMiddle&menuId="+currentPageId;
+			$(this).attr('class','myMenuOff');
+			callJson("portalMenuController", "deleteMenu", param, function() {
+				$('#sp_mymenu ul').html('');
+				callJson("portalMenuController", "getMyMenus", "", function(mymenu) {
+					for(var j=0; j < mymenu.length; j++) {
+						var myMenuId = mymenu[j].menuId;
+						var myMenuName = mymenu[j].messageName;
+						var myHref = "/ep/page/index.do?pageId="+myMenuId;
+						$('#sp_mymenu > ul').append("<li id='sp_"+myMenuId+"'><a href='"+myHref+"'>"+myMenuName+"</a></li>");
+					}
+				});
+			});
+		} else { //등록시
+			var param = "pageId=MYMENU_"+userUid+"&contentId="+$(this).closest('li[class^=content-wrap]').attr('id')+"&zoneId=mzMiddle&parentId=ROOT&menuId="+currentPageId;
+			$(this).attr('class','myMenuOn');
+			callJson("portalMenuController", "insertMenu", param, function() {
+				var myHref = "/ep/page/index.do?pageId="+currentPageId;
+				callJson("portalMenuController", "getMyMenus", "", function(mymenu) {
+					if(mymenu.length > 0 && $('#sp_mymenu ul').attr('class') != 'top-sub-menu') {
+						$('#sp_mymenu').append("<br /><ul class='top-sub-menu' style='z-index:1000'></ul>");
+					}
+					$('#sp_mymenu ul').append("<li id='sp_"+currentPageId+"'><a href='"+myHref+"'>"+currentPageName+"</a></li>");
+				});
+			});
+		}
+	});
+
+	// 사용자 & 메뉴 검색
+	$('#doSearch').click(function(e) {
+		if(luxor.isLoggedIn==false) {
+			alert(portal_authorization_msg_2);
+			return false;
+		}
+		
+		if($('#searchWay').val()=="usersearch") {
+			// 사용자 검색
+			topMenuPortlet.userSearch();
+		} else {
+			// 메뉴 검색
+			$('#search_result').html('');
+			callJson("portalMenuController", "getMenus", "searchKey="+encodeURIComponent($('#searchKey').val()), function(data) {
+				for(var j=0; j < data.length; j++) {
+					var pageId = data[j].pageId;
+					var menuName = "";
+					if(data[j].displayName == null || data[j].displayName == '') {
+						
+						menuName = data[j].messageName.replace($('#searchKey').val(),"<span class='bold red'>"+$('#searchKey').val()+"</span>");
+					} else {
+						menuName = data[j].displayName.replace($('#searchKey').val(),"<span class='bold red'>"+$('#searchKey').val()+"</span>");
+					}
+					var menuHref = "/ep/page/index.do?pageId="+pageId;
+					
+					$('#search_result').append("<div class='menu-search-result'><a href='"+menuHref+"'>"+menuName+"</a></div>");
+				}
+				
+				if(data.length==0) {
+					$('#search_result').append("<div style='padding:3px;text-align:center;'>"+portal_alert_msg_56+"</div>");
+				}
+				
+				var pos = $('#searchKey').position();
+				$('#search_result_dialog').css('top', pos.top+19);
+				$('#search_result_dialog').css('left', pos.left);
+				$('#search_result_dialog').show();
+			});
+		}
+	});
+	
+	$('#searchKey').keyup(function(e) {
+		if(e.keyCode==13) {
+			$('#doSearch').click();
+		}
+	});
+	
+	$('#searchPortal').live('change', function(e) {
+		 var portalId = $('#searchPortal option:selected').attr('id');
+		 callJson("loginController", "switchPortal", "portalId="+portalId+"&userUID="+$(this).val(), function(data) {
+			 top.location.href="/ep";
+		});
+	});
+});
+
+/**
+ * Mouse Hover Define
+ * Reference : http://css-tricks.com/examples/SimplejQueryDropdowns
+ */
+(function($){
+	/* hoverIntent by Brian Cherne */
+	$.fn.hoverIntent = function(f,g) {
+		// default configuration options
+		var cfg = {
+			sensitivity: 9,
+			interval: 10,
+			timeout: 10
+		};
+		// override configuration options with user supplied object
+		cfg = $.extend(cfg, g ? { over: f, out: g } : f );
+
+		// instantiate variables
+		// cX, cY = current X and Y position of mouse, updated by mousemove event
+		// pX, pY = previous X and Y position of mouse, set by mouseover and polling interval
+		var cX, cY, pX, pY;
+
+		// A private function for getting mouse position
+		var track = function(ev) {
+			cX = ev.pageX;
+			cY = ev.pageY;
+		};
+
+		// A private function for comparing current and previous mouse position
+		var compare = function(ev,ob) {
+			ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t);
+			// compare mouse positions to see if they've crossed the threshold
+			if ( ( Math.abs(pX-cX) + Math.abs(pY-cY) ) < cfg.sensitivity ) {
+				$(ob).unbind("mousemove",track);
+				// set hoverIntent state to true (so mouseOut can be called)
+				ob.hoverIntent_s = 1;
+				return cfg.over.apply(ob,[ev]);
+			} else {
+				// set previous coordinates for next time
+				pX = cX; pY = cY;
+				// use self-calling timeout, guarantees intervals are spaced out properly (avoids JavaScript timer bugs)
+				ob.hoverIntent_t = setTimeout( function(){compare(ev, ob);} , cfg.interval );
+			}
+		};
+
+		// A private function for delaying the mouseOut function
+		var delay = function(ev,ob) {
+			ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t);
+			ob.hoverIntent_s = 0;
+			return cfg.out.apply(ob,[ev]);
+		};
+
+		// A private function for handling mouse 'hovering'
+		var handleHover = function(e) {
+			// next three lines copied from jQuery.hover, ignore children onMouseOver/onMouseOut
+			var p = (e.type == "mouseover" ? e.fromElement : e.toElement) || e.relatedTarget;
+			while ( p && p != this ) { try { p = p.parentNode; } catch(e) { p = this; } }
+			if ( p == this ) { return false; }
+
+			// copy objects to be passed into t (required for event object to be passed in IE)
+			var ev = jQuery.extend({},e);
+			var ob = this;
+
+			// cancel hoverIntent timer if it exists
+			if (ob.hoverIntent_t) { ob.hoverIntent_t = clearTimeout(ob.hoverIntent_t); }
+
+			// else e.type == "onmouseover"
+			if (e.type == "mouseover") {
+				// set "previous" X and Y position based on initial entry point
+				pX = ev.pageX; pY = ev.pageY;
+				// update "current" X and Y position based on mousemove
+				$(ob).bind("mousemove",track);
+				// start polling interval (self-calling timeout) to compare mouse coordinates over time
+				if (ob.hoverIntent_s != 1) { ob.hoverIntent_t = setTimeout( function(){compare(ev,ob);} , cfg.interval );}
+
+			// else e.type == "onmouseout"
+			} else {
+				// unbind expensive mousemove event
+				$(ob).unbind("mousemove",track);
+				// if hoverIntent state is true, then call the mouseOut function after the specified delay
+				if (ob.hoverIntent_s == 1) { ob.hoverIntent_t = setTimeout( function(){delay(ev,ob);} , cfg.timeout );}
+			}
+		};
+		
+		// bind the function to the two event listeners
+		return this.mouseover(handleHover).mouseout(handleHover);
+	};
+})(jQuery);
